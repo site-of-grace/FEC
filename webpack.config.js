@@ -1,13 +1,14 @@
-var path = require("path");
-var SRC_DIR = path.join(__dirname, "/src");
-var DIST_DIR = path.join(__dirname, "/public/dist");
+/* eslint-disable no-undef */
+var path = require('path');
+var SRC_DIR = path.join(__dirname, '/src');
+var DIST_DIR = path.join(__dirname, '/public/dist');
 
 module.exports = {
-  mode: "development",
+  mode: 'development',
   entry: `${SRC_DIR}/index.js`,
   output: {
-    filename: "bundle.js",
-    path: DIST_DIR,
+    filename: 'bundle.js',
+    path: DIST_DIR
   },
   module: {
     rules: [
@@ -15,9 +16,9 @@ module.exports = {
         test: /\.jsx?/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader'
         }
       }
     ]
   }
-}
+};
