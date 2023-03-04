@@ -4,7 +4,7 @@ Hack Reactor Frontend Capstone
 Community Agreements
 
 1. Roles and Responsibilities for each team meber
-  Team Lead: 
+  Team Lead:
   Team Goal Tracker: Matt / Stanley
   Lead of Mental Breaks: Matt
 2. How will you be communicating with each other?
@@ -26,3 +26,9 @@ Community Agreements
    -Be respectful of everyone's roles, work, opinions.
 8. How will the team support each other?
    -Consider workload of each other and reach out if we need help.
+
+
+
+Babel & Webpack Link w/ install
+https://docs.google.com/document/d/1RrittlpGKXDzzW9ODc9NRsF0fM_0-CNRMxgSuBfK41g/edit?usp=sharing
+
