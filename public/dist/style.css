@@ -2,3 +2,8 @@ h1 {
   color: red;
 }
 
+.widget {
+  border-style: solid;
+  margin-bottom: 10px;
+  padding: 10px;
+}
