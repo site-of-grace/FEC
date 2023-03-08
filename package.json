@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "live": "npx webpack server",
+    "live": "npx webpack serve",
     "react-dev": "webpack --mode development --watch",
     "server-dev": "npx nodemon server/index.js"
   },
