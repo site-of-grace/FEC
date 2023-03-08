@@ -2,8 +2,86 @@ h1 {
   color: red;
 }
 
+
+/*======================= OVERVIEW CSS START ===========================*/
 .widget {
   border-style: solid;
   margin-bottom: 10px;
   padding: 10px;
 }
+
+
+#overview2-3 {
+  width: 66%;
+  border-style: solid;
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+#overview1-3 {
+  width: 33%;
+  border-style: solid;
+  display: inline-block;
+  padding: 10px;
+}
+
+#overviewWidget {
+  border-style: solid;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+}
+
+
+.cart {
+  display: flex;
+  margin: 10px;
+}
+
+
+#sizeSelector {
+  border-style: solid;
+  display: inline-block;
+  padding: 10px;
+  width: 66%;
+  margin-right: 10px;
+}
+
+.dropDown {
+  border-style: none;
+  float: right;
+}
+
+#quantitySelector {
+  border-style: solid;
+  display: inline-block;
+  padding: 10px;
+  width: 33%;
+}
+
+#addToBag {
+  border-style: solid;
+  display: inline-block;
+  padding: 10px;
+  width: 80%;
+  margin-right: 10px;
+}
+
+
+#favorite {
+  border-style: solid;
+  width: 20%;
+  position: relative;
+}
+
+#favoriteButton {
+  border-style: none;
+  background-color: transparent;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+/*======================= OVERVIEW CSS END ===========================*/
