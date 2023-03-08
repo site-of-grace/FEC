@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessage } from '../../store/productSlice';
-
-import React, {useState, useEffect} from 'react';
 import ProductInformation from './productInformation.jsx';
 import ImageGallery from './image.jsx';
 var axios = require('axios');
