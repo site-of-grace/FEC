@@ -1,11 +1,28 @@
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMessage } from '../../store/productSlice';
+
 import React, {useState, useEffect} from 'react';
 import ProductInformation from './productInformation.jsx';
 import ImageGallery from './image.jsx';
 var axios = require('axios');
 
-
 const Overview = () => {
+  const { products } = useSelector((state) => state.text); // store.slice
+  const dispatch = useDispatch();
 
+  /* 
+  useEffect(() => {
+    // make axios
+    dispatch(setMessage('Hello FEC!'))
+    dispatch(setMessage('Hello FEC!'))
+  }, [products])
+  
+  const clickHandler = () => {
+    dispatch(setMessage('Hello FEC!'))
+  }
+
+  */
 
   useEffect(() => {
     axios.get('/FEC')
