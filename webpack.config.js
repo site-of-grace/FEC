@@ -7,7 +7,7 @@ module.exports = {
   mode: 'development',
   devServer: {
     static: './public/dist',
-    hot: true,
+    hot: true
   },
   entry: `${SRC_DIR}/index.js`,
   output: {
@@ -22,6 +22,26 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
+      },
+      // CSS rules
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true
+            }
+          }
+        ],
+        include: /\.module\.css$/
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+        exclude: /\.module\.css$/
       }
     ]
   }
