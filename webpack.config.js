@@ -5,6 +5,10 @@ var DIST_DIR = path.join(__dirname, '/public/dist');
 
 module.exports = {
   mode: 'development',
+  devServer: {
+    static: './public/dist',
+    hot: true,
+  },
   entry: `${SRC_DIR}/index.js`,
   output: {
     filename: 'bundle.js',
