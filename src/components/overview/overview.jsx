@@ -9,13 +9,13 @@ const Overview = () => {
   const { products } = useSelector((state) => state.text); // store.slice
   const dispatch = useDispatch();
 
-  /* 
+  /*
   useEffect(() => {
     // make axios
     dispatch(setMessage('Hello FEC!'))
     dispatch(setMessage('Hello FEC!'))
   }, [products])
-  
+
   const clickHandler = () => {
     dispatch(setMessage('Hello FEC!'))
   }
