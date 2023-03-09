@@ -5,7 +5,7 @@ import Review from './review.jsx';
 const ReviewList = ({reviews, averageReviews}) => {
 	const [curReviews, setCurReviews] = useState([reviews[0], reviews[1]]);
 	const [curReviewPos, setCurReviewPos] = useState(0);
-
+	const [selectedImg, setSelectedImg] = useState(false);
 
 	useEffect(() => setCurReviews([reviews[0], reviews[1]]), [reviews]); //On reviews change
 
@@ -18,9 +18,13 @@ const ReviewList = ({reviews, averageReviews}) => {
 
 	return (
 		<div>
+			{selectedImg ? <div id='review-imgModel'>
+				<img className={'review-selectedImg'} src={selectedImg}></img>
+				<button onClick={() => setSelectedImg(false)} style={{'color': 'red', 'fontSize': '50px'}}>X</button>
+			</div> : null}
 			{curReviews.map((curReview) => {
 				if (curReview) {
-					return <Review key={curReview['review_id']} review={curReview}/>
+					return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>
 				}
 			})}
 			{reviews[curReviewPos + 2] ? <button onClick={handleExpand}>More Reviews</button> : null}
