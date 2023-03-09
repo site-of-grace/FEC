@@ -9,10 +9,10 @@ const App = () => {
   return (
     <div>
       <h1>Hello FEC</h1>
-      {/* <Overview /> */}
+      <Overview />
       <Rating />
-      {/* <Questions />
-      <RelatedItems /> */}
+      <Questions />
+      <RelatedItems />
     </div>
     )
 }

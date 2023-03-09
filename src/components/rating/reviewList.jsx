@@ -7,8 +7,8 @@ const ReviewList = ({reviews, averageReviews}) => {
 	const [curReviewPos, setCurReviewPos] = useState(0);
 	const [selectedImg, setSelectedImg] = useState(false);
 
-	useEffect(() => setCurReviews([reviews[0], reviews[1]]), [reviews]); //On reviews change
 
+	useEffect(() => setCurReviews([reviews[0], reviews[1]]), [reviews]); //On reviews change
 	var handleExpand = () => {
 		var newPos = curReviewPos+2;
 		setCurReviewPos(newPos);
@@ -20,7 +20,7 @@ const ReviewList = ({reviews, averageReviews}) => {
 		<div>
 			{selectedImg ? <div id='review-imgModel'>
 				<img className={'review-selectedImg'} src={selectedImg}></img>
-				<button onClick={() => setSelectedImg(false)} style={{'color': 'red', 'fontSize': '50px'}}>X</button>
+				<button onClick={() => setSelectedImg(false)}>✕</button>
 			</div> : null}
 			{curReviews.map((curReview) => {
 				if (curReview) {

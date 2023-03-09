@@ -2,16 +2,21 @@ import React, {useState} from 'react';
 
 import axios from 'axios';
 
-const Review = ({review, setSelectedImg, handleHelpfulness}) => {
+const Review = ({review, setSelectedImg}) => {
 	const [expand, setExpand] = useState(false);
 	const [voted, setVoted] = useState(false);
 
+	const [updateHelpfulness, setUpdateHelpfulness] = useState(false);
 
 	var handleHelpfulness = () => {
 		setVoted(true);
 		if (!voted) {
 			const body = {reviewId: review['review_id']};
 			axios.put('/reviews/helpful', body)
+			.then(() => {
+				review.helpfulness++;
+				setUpdateHelpfulness(true);
+			})
 			.catch((error) => {
 				console.log('Error sending put request =>', error);
 			})
