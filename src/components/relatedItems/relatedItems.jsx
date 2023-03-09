@@ -1,11 +1,11 @@
 import React from 'react';
-
+import styles from './styles.module.css';
 const RelatedItems = () => {
 
 
   return (
-    <div className='widget'>
-      <h1>RELATED ITEMS</h1>
+    <div >
+      <h1 className={styles.title}>RELATED ITEMS</h1>
     </div>
   )
 }
