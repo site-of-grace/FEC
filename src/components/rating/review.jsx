@@ -1,12 +1,28 @@
 import React, {useState} from 'react';
 
-const Review = ({review, setSelectedImg}) => {
+import axios from 'axios';
+
+const Review = ({review, setSelectedImg, handleHelpfulness}) => {
 	const [expand, setExpand] = useState(false);
+	const [voted, setVoted] = useState(false);
+
+
+	var handleHelpfulness = () => {
+		setVoted(true);
+		if (!voted) {
+			const body = {reviewId: review['review_id']};
+			axios.put('/reviews/helpful', body)
+			.catch((error) => {
+				console.log('Error sending put request =>', error);
+			})
+		}
+	};
+
 
 	var stars = [];
 	var date = new Date(review.date);
 	var date = date.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
-
+	review.response = 'Thanks for the review and the purchase!'
 	for (var i = 0; i < 5; i++) {
 		if (i <= review.rating) {
 			stars.push(<img className='review-star' key={i} src='./icons/fullStar.png'></img>)
@@ -18,7 +34,7 @@ const Review = ({review, setSelectedImg}) => {
 	return (
 		<div className='review'>
 			{stars}
-			<div className='review-date'>{date}</div>
+			<div className='review-date-name'>{review['reviewer_name']}, {date}</div>
 			<div className='review-summary'>{review.summary}</div>
 			<div className='review-body'>
 				{expand ? review.body : review.body.slice(0, 250)}
@@ -29,9 +45,11 @@ const Review = ({review, setSelectedImg}) => {
 				return <img onClick={() => setSelectedImg(curPhoto.url)} className='review-photo' src={curPhoto.url} key={curPhoto.id}></img>
 			})}
 			{review.recommend ? <p style={{'fontSize': '12px'}}>✔ I recommend this product</p> : null}
+			{review.response ? <div className='review-response'>Response from seller: <div style={{'fontWeight': '100'}}>{review.response}</div></ div> : null}
+			<div className='review-helpful'>Helpful? <button onClick={handleHelpfulness}>Yes</button> <div className='helpfulness'>{`(${review.helpfulness})`}</div></div>
 			<div className='review-bar'></div>
 		</div>
 	)
-}
+};
 
 export default Review;

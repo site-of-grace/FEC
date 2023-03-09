@@ -96,7 +96,7 @@ h1 {
   .review-star {
     width: 15px;
   }
-  .review-date {
+  .review-date-name {
     font-size: 10px;
     float: right;
   }
@@ -133,10 +133,35 @@ h1 {
     left: 50%;
     transform: translateX(-50%);
   }
+  .review-response {
+    background-color: rgb(227, 227, 227);
+    border-radius: 4px;
+    padding: 20px 10px 20px 20px;
+    font-weight: bold;
+  }
   .review-bar {
     height: 1px;
     border-radius: 10px;
     background-color: rgb(68, 68, 68);
     margin-top: 5px;
+  }
+  .review-helpful, .review-helpful button {
+    font-size: 15px;
+    padding: 0px;
+  }
+  .review-helpful button {
+    color: rgb(85, 85, 85);
+    text-decoration: underline;
+    background: none;
+    border: none;
+    margin-left: 5px;
+  }
+  .review-helpful button:hover {
+    color: black;
+  }
+  .helpfulness {
+    color: rgb(122, 122, 122);
+    display: inline;
+    font-size: 12px;
   }
 /*======================= REVIEW CSS END ===========================*/

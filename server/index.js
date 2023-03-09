@@ -30,6 +30,7 @@ app.get('/FEC', (req, res) => {
     });
 });
 
+
 let config = {
   headers: {
     Authorization: `${githubToken}`
@@ -37,7 +38,11 @@ let config = {
 }
 
 
-//--Api request for reviews I know stanley planned on using the one above for everything but don't wanna cause merge conflict
+
+
+//================== Api requests for reviews =================
+//I know stanley planned on using the one above for everything but don't wanna cause merge conflict
+
 app.get('/reviews', (req, res) => {
   var sendError = () => {
     res.statusCode = 404;
@@ -45,11 +50,6 @@ app.get('/reviews', (req, res) => {
   };
 
   //current product ids = 71697, 71698, 71699, 71700, 71701
-  let config = {
-    headers: {
-      Authorization: `${githubToken}`
-    }
-  };
   //Sends 2 reviews at a time
   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71701', config)
   .then((apiData) => {
@@ -59,7 +59,7 @@ app.get('/reviews', (req, res) => {
     }
     if (apiData.data.results) {
       var results = apiData.data.results;
-      console.log('---review data--->', results);
+      //console.log('---review data--->', results);
       res.statusCode = 200;
       res.send(JSON.stringify(results));
     } else {
@@ -72,6 +72,22 @@ app.get('/reviews', (req, res) => {
     sendError();
   })
 })
+
+app.put('/reviews/helpful', (req, res) => {
+  console.log('CONFIG ====> ', config);
+  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/${req.body.reviewId}/helpful`, null, config)
+    .then(() => {
+      res.statusCode = 204;
+      res.end();
+    })
+    .catch((error) => {
+      console.log('---server error--->', error);
+      res.statusCode = 404;
+      res.end();
+    })
+});
+
+
 
 app.listen(port, () => {
   console.log(`listening on port: ${port}`);
