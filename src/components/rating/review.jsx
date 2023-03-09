@@ -28,6 +28,8 @@ const Review = ({review, setSelectedImg}) => {
 			{review.photos.map((curPhoto) => {
 				return <img onClick={() => setSelectedImg(curPhoto.url)} className='review-photo' src={curPhoto.url} key={curPhoto.id}></img>
 			})}
+			{review.recommend ? <p style={{'fontSize': '12px'}}>✔ I recommend this product</p> : null}
+			<div className='review-bar'></div>
 		</div>
 	)
 }

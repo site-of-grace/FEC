@@ -90,8 +90,8 @@ h1 {
 /*======================= REVIEW CSS START ===========================*/
 
   .review, .review h1 {
-    background-color: black;
-    color: white;
+    color: rgb(68, 68, 68);
+    margin-bottom: 50px;
   }
   .review-star {
     width: 15px;
@@ -103,11 +103,15 @@ h1 {
   .review-summary {
     font-weight: bold;
     font-size: 20px;
+    margin: 10px 0px 10px 0px;
   }
   .review-body {
     font-size: 10px;
+    margin-bottom: 10px;
   }
   .review-photo {
+    border-radius: 5px;
+    border: 1px solid black;
     width: 150px;
   }
   .review-photo:hover {
@@ -128,5 +132,11 @@ h1 {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+  }
+  .review-bar {
+    height: 1px;
+    border-radius: 10px;
+    background-color: rgb(68, 68, 68);
+    margin-top: 5px;
   }
 /*======================= REVIEW CSS END ===========================*/
