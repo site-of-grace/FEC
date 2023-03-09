@@ -89,7 +89,22 @@ h1 {
 
 /*======================= REVIEW CSS START ===========================*/
 
-  .review {
+  .review, .review h1 {
     background-color: black;
+    color: white;
+  }
+  .review img {
+    width: 15px;
+  }
+  .review-date {
+    font-size: 10px;
+    float: right;
+  }
+  .review-summary {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .review-body {
+    font-size: 10px;
   }
 /*======================= REVIEW CSS END ===========================*/
