@@ -93,7 +93,7 @@ h1 {
     background-color: black;
     color: white;
   }
-  .review img {
+  .review-star {
     width: 15px;
   }
   .review-date {
@@ -106,5 +106,24 @@ h1 {
   }
   .review-body {
     font-size: 10px;
+  }
+  .review-photo {
+    width: 150px;
+  }
+  .review-photo:hover {
+    border-radius: 10px;
+  }
+  #review-imgModel {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  #review-imgModel img {
+    width: 600px;
+  }
+  #review-imgModel button, #review-imgModel img {
+    position: relative;
+    display: block;
+    margin: auto;
   }
 /*======================= REVIEW CSS END ===========================*/
