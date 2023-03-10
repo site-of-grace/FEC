@@ -4,7 +4,6 @@ import Rating from './components/rating/rating.jsx';
 import Questions from './components/questions/questions.jsx';
 import RelatedItems from './components/relatedItems/relatedItems.jsx';
 
-
 const App = () => {
 
   return (
