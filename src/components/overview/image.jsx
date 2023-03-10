@@ -22,7 +22,7 @@ const ImageGallery = () => {
         </div>
 
       <div id='mainPhoto'>
-        <img src={mainPhotos[0].thumbnail_url}></img>
+        <img id='thePhoto' src={mainPhotos[0].thumbnail_url}></img>
       </div>
     </div>
   ) : '';

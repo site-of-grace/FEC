@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSlice';
 
@@ -7,41 +7,80 @@ const StyleSelector = (props) => {
   const dispatch = useDispatch();
 
 
-const thumbnailUpdate = (data) => {
+
+  const [checkMark, setCheckMark] = useState('');
 
 
 
-
-  document.getElementById('productStyle').innerText = data.name;
-
-  if (data.sale_price) {
-    document.getElementById('productPrice').innerText = data.original_price;
-    document.querySelector('#productPrice').classList.add('strikeThrough');
-    document.getElementById('salePrice').innerText = data.sale_price;
-    document.querySelector('#salePrice').classList.remove('hide');
-  } else {
-    document.getElementById('productPrice').classList.remove('strikeThrough');
-    document.querySelector('#salePrice').classList.add('hide');
-    document.getElementById('productPrice').innerText = data.original_price;
-  }
-
-  dispatch(setMainPhotos(data.photos));
-};
+  //This sets the checkMark Variable automatically at render w/ the first thumbnail on list
+  useEffect(() => {
+    if (styles.results === undefined) {
+      setCheckMark('');
+    } else {
+      setCheckMark(styles.results[0]);
+      document.querySelector(`#checkMark-${styles.results[0].style_id}`).classList.remove('hideCheckMark');
+      document.querySelector(`#checkMark-${styles.results[0].style_id}`).classList.add('showCheckMark');
+    }
+  }, [styles]);
 
 
 
 
 
+  // onClick, perform price changes and assign checkMark variable to the selected thumbnail
+  const thumbnailUpdate = (data) => {
+
+    //If clicking on the already selected thumbnail, do nothing.
+    if (JSON.stringify(data) === JSON.stringify(checkMark)) {
+      return;
+    }
+
+   //Removes the old checkmark from the 'current selected'
+   document.querySelector(`#checkMark-${checkMark.style_id}`).classList.remove('showCheckMark');
+   document.querySelector(`#checkMark-${checkMark.style_id}`).classList.add('hideCheckMark');
 
 
+
+    //Changes the pages displayed style'
+    document.getElementById('productStyle').innerText = data.name;
+
+    //Saves the selected styles state in this component
+    setCheckMark(data);
+
+    //Adds checkmark to the selected element
+    document.querySelector(`#checkMark-${data.style_id}`).classList.remove('hideCheckMark');
+    document.querySelector(`#checkMark-${data.style_id}`).classList.add('showCheckMark');
+
+
+
+    // If on sale, render the price a certain way, if not, render it this way.
+    if (data.sale_price) {
+      document.getElementById('productPrice').innerText = data.original_price;
+      document.querySelector('#productPrice').classList.add('strikeThrough');
+      document.getElementById('salePrice').innerText = data.sale_price;
+      document.querySelector('#salePrice').classList.remove('hide');
+    } else {
+      document.getElementById('productPrice').classList.remove('strikeThrough');
+      document.querySelector('#salePrice').classList.add('hide');
+      document.getElementById('productPrice').innerText = data.original_price;
+    }
+
+    //Change the redux state so that the big display photo displays all the photos from the selected style
+    dispatch(setMainPhotos(data.photos));
+  };
 
   return (Object.keys(styles).length) ? (
     <div>
-       <div id='productStyle'>{styles.results[0].name}</div>
+       <div id='productStyle' onClick={ () => { console.log(checkMark); }} >{styles.results[0].name}</div>
       <div>
         <ul id='styleSelector'>
           {styles.results.map((styles) => {
-            return <li onClick={() => {thumbnailUpdate(styles);}} className='thumbnailStyle' key={styles.styles_id}><img className='styles' src={`${styles.photos[0].thumbnail_url}`}></img></li>
+            return <div className='container' key={`key-${styles.style_id}`}>
+              <li onClick={() => {thumbnailUpdate(styles);}} className='thumbnailStyle'>
+                <img className='styles' src={`${styles.photos[0].thumbnail_url}`}></img>
+                <img id={`checkMark-${styles.style_id}`} className='hideCheckMark' src='./icons/checkmark.jpeg'></img>
+              </li>
+            </div>;
           })}
         </ul>
       </div>
