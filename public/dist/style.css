@@ -84,6 +84,7 @@ h1 {
   position: absolute;
 }
 
+
 #productSlogan {
   display: block;
   border-style: solid;
@@ -178,3 +179,90 @@ h1 {
 
 
 /*======================= OVERVIEW CSS END ===========================*/
+
+
+/*======================= REVIEW CSS START ===========================*/
+
+  .review, .review h1 {
+    color: rgb(68, 68, 68);
+    margin-bottom: 50px;
+  }
+  .review-star {
+    width: 15px;
+  }
+  .review-date-name {
+    font-size: 10px;
+    float: right;
+  }
+  .review-summary {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 10px 0px 10px 0px;
+  }
+  .review-body {
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+  .review-photo {
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 150px;
+  }
+  .review-photo:hover {
+    border-radius: 10px;
+  }
+  #review-imgModel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    top: 10%;
+  }
+  #review-imgModel img {
+    width: 800px;
+    border-radius: 10px;
+    border: 2px solid black;
+  }
+  #review-imgModel button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 15px 5px 15px;
+    box-shadow: 0px 0px 15px 5px rgb(16, 16, 16);
+  }
+  .review-response {
+    background-color: rgb(227, 227, 227);
+    border-radius: 4px;
+    padding: 20px 10px 20px 20px;
+    font-weight: bold;
+  }
+  .review-bar {
+    height: 1px;
+    border-radius: 10px;
+    background-color: rgb(68, 68, 68);
+    margin-top: 5px;
+  }
+  .review-helpful, .review-helpful button {
+    font-size: 15px;
+    padding: 0px;
+  }
+  .review-helpful button {
+    color: rgb(85, 85, 85);
+    text-decoration: underline;
+    background: none;
+    border: none;
+    margin-left: 5px;
+  }
+  .review-helpful button:hover {
+    color: black;
+  }
+  .helpfulness {
+    color: rgb(122, 122, 122);
+    display: inline;
+    font-size: 12px;
+  }
+/*======================= REVIEW CSS END ===========================*/
+
