@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSlice';
+import { setMainProduct, setStyles, setMainPhotos, setSelectedstyle } from '../../store/overviewSlice';
 
 const StyleSelector = (props) => {
-  const { mainProduct, styles, mainPhotos } = useSelector((state) => state.overview); // store.slice
+  const { mainProduct, styles, mainPhotos, selectedStyle } = useSelector((state) => state.overview); // store.slice
   const dispatch = useDispatch();
 
 
@@ -15,9 +15,9 @@ const StyleSelector = (props) => {
   //This sets the checkMark Variable automatically at render w/ the first thumbnail on list
   useEffect(() => {
     if (styles.results === undefined) {
-      setCheckMark('');
+      dispatch(setSelectedstyle(''));
     } else {
-      setCheckMark(styles.results[0]);
+      dispatch(setSelectedstyle(styles.results[0]));
       document.querySelector(`#checkMark-${styles.results[0].style_id}`).classList.remove('hideCheckMark');
       document.querySelector(`#checkMark-${styles.results[0].style_id}`).classList.add('showCheckMark');
     }
@@ -36,8 +36,8 @@ const StyleSelector = (props) => {
     }
 
    //Removes the old checkmark from the 'current selected'
-   document.querySelector(`#checkMark-${checkMark.style_id}`).classList.remove('showCheckMark');
-   document.querySelector(`#checkMark-${checkMark.style_id}`).classList.add('hideCheckMark');
+   document.querySelector(`#checkMark-${selectedStyle.style_id}`).classList.remove('showCheckMark');
+   document.querySelector(`#checkMark-${selectedStyle.style_id}`).classList.add('hideCheckMark');
 
 
 
@@ -45,7 +45,7 @@ const StyleSelector = (props) => {
     document.getElementById('productStyle').innerText = data.name;
 
     //Saves the selected styles state in this component
-    setCheckMark(data);
+    dispatch(setSelectedstyle(data));
 
     //Adds checkmark to the selected element
     document.querySelector(`#checkMark-${data.style_id}`).classList.remove('hideCheckMark');
@@ -71,7 +71,7 @@ const StyleSelector = (props) => {
 
   return (Object.keys(styles).length) ? (
     <div>
-       <div id='productStyle' onClick={ () => { console.log(checkMark); }} >{styles.results[0].name}</div>
+       <div id='productStyle' onClick={ () => { console.log(selectedStyle); }} >{styles.results[0].name}</div>
       <div>
         <ul id='styleSelector'>
           {styles.results.map((styles) => {

@@ -3,21 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   mainProduct: {},
   styles: {},
-  mainPhotos: []
+  mainPhotos: [],
+  selectedStyle: {},
+  myOutfit: []
 };
 
-/*
-store: {
-  // this slice in this file
-  text: {
-    message: 'Hello World',
-    products: []
-  },
-  // another slice, cartSlice.js
-  cart: {
-  }
-}
-*/
+
 
 const overviewSlice = createSlice({
   name: 'overview',
@@ -31,10 +22,16 @@ const overviewSlice = createSlice({
     },
     setMainPhotos: (state, action) => {
       state.mainPhotos = action.payload;
+    },
+    setSelectedstyle: (state, action) => {
+      state.selectedStyle = action.payload;
+    },
+    setMyOutfit: (state, action) => {
+      state.myOutfit.push(action.payload);
     }
   }
 });
 
-export const { setMainProduct, setStyles, setMainPhotos } = overviewSlice.actions;
+export const { setMainProduct, setStyles, setMainPhotos, setMyOutfit, setSelectedstyle } = overviewSlice.actions;
 
 export default overviewSlice.reducer;
