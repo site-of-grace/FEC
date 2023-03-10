@@ -84,6 +84,100 @@ h1 {
   position: absolute;
 }
 
+
+#productSlogan {
+  display: block;
+  border-style: solid;
+  padding: 10px;
+  width: 60%;
+  margin-right: 10px;
+}
+
+#features {
+  width: 40%;
+  border-style: solid;
+  display: inline-block;
+}
+
+#prodDescrip {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 10px;
+  display: flex;
+
+}
+
+.styles {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display:inline-block;
+}
+
+#styleSelector {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.thumbnailStyle {
+  display: inline-block;
+  width: 25%;
+}
+
+.strikeThrough {
+  text-decoration: line-through;
+}
+
+#salePrice {
+  color: red;
+}
+
+.hide {
+  display: none;
+}
+
+#imageGallery {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: transparent;
+}
+
+.imageGalleryItem {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+
+.imageGallery {
+  display: inline-block;
+
+}
+
+#mainPhoto {
+  border-style: solid;
+  width: 79%;
+  display: inline-block;
+  justify-content: center;
+}
+
+#gallery {
+  border-style: solid;
+  width: 19%;
+  display: inline-block;
+} */
+
+/* #test {
+  border-style: solid;
+  width: 100%;
+  display: flexbox;
+  padding: 10px
+}
+
+
 /*======================= OVERVIEW CSS END ===========================*/
 
 
@@ -171,3 +265,4 @@ h1 {
     font-size: 12px;
   }
 /*======================= REVIEW CSS END ===========================*/
+

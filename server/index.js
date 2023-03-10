@@ -9,26 +9,49 @@ var githubToken = process.env.GITHUB_TOKEN;
 app.use(express.static(__dirname + '/../public/dist'));
 app.use(express.json());
 
-app.get('/FEC', (req, res) => {
+
+
+app.get('/productStyles', (req, res) => {
   let config = {
     headers: {
-      // 'Authorization': `${githubToken.stanley}`
+      Authorization: `${githubToken}`
+    }
+  };
+  var productId = req.query.id;
+  axios
+    .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/styles`, config)
+    .then((data) => {
+      if (!data) {
+        throw data;
+      }
+      res.status(200).send(data.data);
+    })
+    .catch((error) => {
+      res.status(404).send(error);
+    });
+});
+
+
+app.get('/initialRender', (req, res) => {
+  let config = {
+    headers: {
       Authorization: `${githubToken}`
     }
   };
 
   axios
-    .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/71698/styles', config)
+    .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/71701', config)
     .then((data) => {
       if (!data) {
         throw data;
       }
-      console.log('----server data--->', data);
+      res.status(200).send(data.data);
     })
     .catch((error) => {
-      console.log('----server error--->', error);
+      res.status(404).send(error);
     });
 });
+
 
 
 let config = {
@@ -87,6 +110,7 @@ app.put('/reviews/helpful', (req, res) => {
     })
 });
 // ===================================================
+
 
 
 app.listen(port, () => {
