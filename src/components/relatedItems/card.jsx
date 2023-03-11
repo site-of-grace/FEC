@@ -23,7 +23,7 @@ export default function Card({ product = {
         <span className={styles.category}>{product.category.toUpperCase()}</span>
         <span className={styles.name}>{product.name}</span>
         <span className={styles.price}>{product.price}</span>
-        <Stars number={product.rating} />
+        <Stars number={product.rating} hide={true}/>
       </span>
     </div>
   );

@@ -1,7 +1,11 @@
 import React from 'react';
 
-export default function Stars({ number = 0 }) {
+export default function Stars({ number = 0, hide = false }) {
   const clampedNumber = Math.min(Math.max(number, 0), 5);
+  
+  if (hide && clampedNumber === 0) {
+    return null;
+  }
 
   const getStarImages = () => {
     const fullStars = Math.floor(clampedNumber);
