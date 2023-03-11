@@ -1,4 +1,5 @@
 import React from 'react';
+import Stars from '../general/Stars.jsx';
 import styles from './styles.module.css';
 
 export default function Card({ product = { 
@@ -22,6 +23,7 @@ export default function Card({ product = {
         <span className={styles.category}>{product.category.toUpperCase()}</span>
         <span className={styles.name}>{product.name}</span>
         <span className={styles.price}>{product.price}</span>
+        <Stars number={product.rating} />
       </span>
     </div>
   );

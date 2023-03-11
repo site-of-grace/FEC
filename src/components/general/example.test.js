@@ -1,4 +1,6 @@
-import { render, screen } from '@testing-library/react';
+/* eslint-disable react/react-in-jsx-scope */
+// import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import RelatedItems from '../relatedItems/relatedItems';
 
 describe('RelatedItems', () => {
