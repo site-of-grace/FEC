@@ -1,10 +1,28 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMainProduct, setStyles, setMainPhotos, setSelectedstyle, setMyOutfit } from '../../store/overviewSlice';
+
 
 const Cart = () => {
+  const { mainProduct, styles, mainPhotos, selectedStyle, myOutfit } = useSelector((state) => state.overview); // store.slice
+  const dispatch = useDispatch();
+
+
+
+  const selectOutfit = () => {
+    var outfit = {
+      product: mainProduct,
+      style: selectedStyle
+    };
+
+    dispatch(setMyOutfit(outfit));
+  };
+
+
 
   return (
     <div>
-      <h1>CART</h1>
+      <h1 onClick={() => { console.log(myOutfit); }}>CART</h1>
 
       <div className='cart'>
         <div id='sizeSelector'>
@@ -24,7 +42,7 @@ const Cart = () => {
           <button name='add' className='dropDown'>+</button>
         </div>
         <div id='favorite'>
-          <button id='favoriteButton'>☆</button>
+          <button onClick={() => {selectOutfit();}} id='favoriteButton'>☆</button>
         </div>
       </div>
     </div>
