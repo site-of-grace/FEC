@@ -65,13 +65,14 @@ const Overview = () => {
       </div>
       <div id='prodDescrip'>
         <div id='productSlogan'>
-          <div>insert slogan here</div>
-          <div>insert description here </div>
+          <div>{mainProduct.slogan}</div>
+          <div>{mainProduct.description}</div>
         </div>
         <div id='features'>
           <ul>
-            <li onClick={() => { console.log(mainPhotos); }}>test1</li>
-            <li>test2</li>
+          {mainProduct.features ? mainProduct.features.map((feature) => {
+            return <li><b>{feature.feature}: </b>{feature.value}</li>
+          }) : null}
           </ul>
         </div>
       </div>

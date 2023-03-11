@@ -39,8 +39,9 @@ app.get('/initialRender', (req, res) => {
     }
   };
 
+  // shoes: 71701
   axios
-    .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/71701', config)
+    .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/71697', config)
     .then((data) => {
       if (!data) {
         throw data;
