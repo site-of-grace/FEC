@@ -2,6 +2,16 @@ h1 {
   color: red;
 }
 
+.small-stars {
+  width: 20px;
+}
+
+.stars-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
 
 /*======================= OVERVIEW CSS START ===========================*/
 .widget {
