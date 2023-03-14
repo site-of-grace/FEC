@@ -227,6 +227,10 @@ h1 {
 
 /*======================= REVIEW CSS START ===========================*/
   /* Single review ====*/
+  #review-list {
+    overflow: scroll;
+    max-height: 500px;
+  }
   .review, .review h1 {
     color: rgb(68, 68, 68);
     margin-bottom: 50px;

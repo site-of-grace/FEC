@@ -3,7 +3,7 @@ import React, { useEffect} from 'react';
 import ReviewList  from './reviewList.jsx';
 import SortOptions from './sortOptions.jsx';
 import axios from 'axios';
-import { useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {setReviews} from '../../store/ratingSlice';
 
 const Rating = () => {
@@ -15,7 +15,7 @@ const Rating = () => {
   };
 
   var fetch = () => {
-    axios.get('/reviews')
+    axios.get('/reviews' , {params: {sortOption: 'relevant'}})
     .then((serverData) => {
       console.log('Reviews from server ==> ', serverData.data);
       update(serverData.data);

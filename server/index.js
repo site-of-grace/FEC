@@ -57,7 +57,7 @@ let config = {
   headers: {
     Authorization: `${githubToken}`
   }
-}
+};
 
 
 
@@ -66,34 +66,41 @@ let config = {
 //I know stanley planned on using the one above for everything but don't wanna cause merge conflict
 
 app.get('/reviews', (req, res) => {
-  var sendError = () => {
-    res.statusCode = 404;
-    res.end();
-  };
+  reviewsHandler(req.query.sortOption, (err, data) => {
+    if (err) {
+      res.statusCode = 404;
+      res.send(JSON.stringify(err));
+    } else {
+      res.statusCode = 200;
+      res.send(JSON.stringify(data));
+    }
+  });
+});
 
   //current product ids = 71697, 71698, 71699, 71700, 71701
   //Sends 2 reviews at a time
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71701', config)
+
+  var reviewsHandler = (sortOption, cb) => {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71700&sort=${sortOption}`, config)
   .then((apiData) => {
     if (!apiData) {
-      sendError();
+      console.log('No data');
+      cb({err: 'Server request recieved no data'}, null);
       throw apiData;
     }
     if (apiData.data.results) {
-      var results = apiData.data.results;
+      cb(null, apiData.data.results);
       //console.log('---review data--->', results);
-      res.statusCode = 200;
-      res.send(JSON.stringify(results));
     } else {
-      sendError();
+      console.log('No review data');
+      cb({err: 'Server request failed no reviews fetched'}, null);
     }
-
   })
   .catch((error) => {
     console.log('---server error--->', error);
-    sendError();
+    cb(error, null);
   });
-});
+};
 
 app.put('/reviews/helpful', (req, res) => {
   console.log('CONFIG ====> ', config);

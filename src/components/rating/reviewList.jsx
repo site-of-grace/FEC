@@ -18,7 +18,7 @@ const ReviewList = () => {
 	};
 
 	return (
-		<div>
+		<div id='review-list'>
 			{selectedImg ? <div id='review-imgModel'>
 				<img className={'review-selectedImg'} src={selectedImg}></img>
 				<button onClick={() => setSelectedImg(false)}>✕</button>
