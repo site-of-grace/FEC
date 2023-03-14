@@ -7,7 +7,7 @@ const Questions = () => {
     <div className='widget'>
       <h1>QUESTIONS</h1>
     </div>
-  )
-}
+  );
+};
 
 export default Questions;

@@ -226,7 +226,7 @@ h1 {
 
 
 /*======================= REVIEW CSS START ===========================*/
-
+  /* Single review ====*/
   .review, .review h1 {
     color: rgb(68, 68, 68);
     margin-bottom: 50px;
@@ -307,6 +307,17 @@ h1 {
     color: rgb(122, 122, 122);
     display: inline;
     font-size: 12px;
+  }
+  /*Sort options ========*/
+  #sort-bar div{
+    display: inline-block;
+    color: rgb(63, 63, 63);
+    margin-right: 5px;
+  }
+  #sort-options {
+    color: rgb(63, 63, 63);
+    border: none;
+    border-bottom: solid;
   }
 /*======================= REVIEW CSS END ===========================*/
 

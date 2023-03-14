@@ -1,11 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 var axios = require('axios');
 var githubToken = process.env.GITHUB_TOKEN;
-
 app.use(express.static(__dirname + '/../public/dist'));
 app.use(express.json());
 
@@ -94,8 +92,8 @@ app.get('/reviews', (req, res) => {
   .catch((error) => {
     console.log('---server error--->', error);
     sendError();
-  })
-})
+  });
+});
 
 app.put('/reviews/helpful', (req, res) => {
   console.log('CONFIG ====> ', config);
@@ -108,7 +106,7 @@ app.put('/reviews/helpful', (req, res) => {
       console.log('---server error--->', error);
       res.statusCode = 404;
       res.end();
-    })
+    });
 });
 // ===================================================
 
