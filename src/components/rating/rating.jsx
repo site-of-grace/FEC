@@ -3,10 +3,12 @@ import React, { useEffect} from 'react';
 import ReviewList  from './reviewList.jsx';
 import SortOptions from './sortOptions.jsx';
 import axios from 'axios';
-import {useDispatch} from 'react-redux';
-import {setRatingMeta, setReviews, setReviewAmount} from '../../store/ratingSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {setRatingMeta, setReviews, setReviewAmount, setReviewPage} from '../../store/ratingSlice';
 
 const Rating = () => {
+  const rating = useSelector((state) => state.rating); // rating stuff
+
   const dispatch = useDispatch();
 
   const onRender = () => {
@@ -28,7 +30,8 @@ const Rating = () => {
 		axios.get('/reviews' , options)
 		.then((serverData) => {
 			console.log('Reviews from server ==> ', serverData.data);
-			dispatch(setReviews(serverData.data));
+      dispatch(setReviewPage(serverData.data.page + 1));
+      dispatch(setReviews(serverData.data.results.concat(rating.reviews)));
 		})
 		.catch((err) => {
 			console.log('Error from server ==> ', err);

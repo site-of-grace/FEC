@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   reviews: [],
   ratingMeta: {},
-  reviewAmount: 0
+  reviewAmount: 0,
+  reviewPage: 0
 };
 
 
@@ -19,10 +20,13 @@ const ratingSlice = createSlice({
     },
     setReviewAmount: (state, action) => {
       state.reviewAmount = action.payload;
+    },
+    setReviewPage: (state, action) => {
+      state.reviewPage = action.payload;
     }
   }
 });
 
-export const {setReviews, setRatingMeta, setReviewAmount} = ratingSlice.actions;
+export const {setReviews, setRatingMeta, setReviewAmount, setReviewPage} = ratingSlice.actions;
 
 export default ratingSlice.reducer;

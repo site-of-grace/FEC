@@ -93,7 +93,6 @@ app.get('/reviews', (req, res) => {
   var options = {};
   options.page = req.query.page ? req.query.page : 1;
   options.sort = req.query.sort ? req.query.sort : 'relevant';
-  console.log(req.query);
   reviewsHandler(options, (err, data) => {
     if (err) {
       res.statusCode = 404;
@@ -107,15 +106,15 @@ app.get('/reviews', (req, res) => {
 
   //current product ids = 71697, 71698, 71699, 71700, 71701
   var reviewsHandler = (options, cb) => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71701&count=4&sort=${options.sort}&page=${options.page}`, config)
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71701&count=2&sort=${options.sort}&page=${options.page}`, config)
   .then((apiData) => {
     if (!apiData) {
       cb({err: 'Server request recieved no data'}, null);
       throw apiData;
     }
     if (apiData.data.results) {
-      cb(null, apiData.data.results);
-      //console.log('---review data--->', results);
+      cb(null, apiData.data);
+      // console.log('---review data--->', apiData.data);
     } else {
       console.log('No review data');
       cb({err: 'Server request failed no reviews fetched'}, null);
