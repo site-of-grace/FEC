@@ -12,8 +12,8 @@ const Rating = () => {
   const dispatch = useDispatch();
 
   const onRender = () => {
-    fetchMetaData();
     fetchReviews();
+    fetchMetaData();
   };
 
   var getReviewsAmount = (ratingMeta) => {
@@ -30,8 +30,8 @@ const Rating = () => {
 		axios.get('/reviews' , options)
 		.then((serverData) => {
 			console.log('Reviews from server ==> ', serverData.data);
-      dispatch(setReviewPage(serverData.data.page + 1));
-      dispatch(setReviews(serverData.data.results.concat(rating.reviews)));
+      dispatch(setReviewPage(rating.reviewPage+1));
+      dispatch(setReviews(rating.reviews.concat(serverData.data.results)));
 		})
 		.catch((err) => {
 			console.log('Error from server ==> ', err);

@@ -7,20 +7,21 @@ const ReviewList = ({fetchReviews}) => {
 	const rating = useSelector((state) => state.rating); // rating stuff
 
 	const [curReviews, setCurReviews] = useState([]);
-	const [curReviewPos, setCurReviewPos] = useState(-2);
+	const [curReviewPos, setCurReviewPos] = useState(0);
 	const [selectedImg, setSelectedImg] = useState(false);
-
-	var handleExpand = () => {
-		console.log(rating.reviewPage);
-		var options = {page: rating.reviewPage + 1};
-		fetchReviews(options);
-		var newPos = curReviewPos+2;
-		setCurReviewPos(newPos);
-		var newReviews = [rating.reviews[newPos], rating.reviews[newPos+1]];
-		setCurReviews(curReviews.concat(newReviews));
+	var onReviews = () => {
+		if (rating.reviews.length === 2) {
+			handleExpand();
+		}
 	};
 
-	useEffect(handleExpand, []); //On start
+	var handleExpand = () => {
+		var options = {params: {page: rating.reviewPage + 1}};
+		fetchReviews(options);
+		setCurReviews(curReviews.concat([rating.reviews[curReviewPos], rating.reviews[curReviewPos+1]]));
+		setCurReviewPos(curReviewPos + 2);
+	};
+	useEffect(onReviews, [rating.reviews]);
 
 	return (
 		<div id='review-list'>
@@ -33,7 +34,7 @@ const ReviewList = ({fetchReviews}) => {
 					return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>;
 				}
 			})}
-			{rating.reviews[curReviewPos + 2] ? <button onClick={handleExpand}>More Reviews</button> : null}
+			{rating.reviews[curReviewPos] ? <button onClick={handleExpand}>More Reviews</button> : null}
 		</div>
 	);
 };
