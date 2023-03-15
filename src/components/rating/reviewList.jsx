@@ -15,7 +15,7 @@ const ReviewList = () => {
 		var newReviews = [reviews[newPos], reviews[newPos+1]];
 		setCurReviews(curReviews.concat(newReviews));
 	};
-
+//
 	return (
 		<div id='review-list'>
 			{selectedImg ? <div id='review-imgModel'>
