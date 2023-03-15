@@ -1,67 +1,52 @@
 require('dotenv').config();
+const axios = require('axios');
 const express = require('express');
+const routes = require('./routes');
 const app = express();
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
-var axios = require('axios');
-var githubToken = process.env.GITHUB_TOKEN;
+const { api, initialProduct, config } = require('./config.js');
 
 app.use(express.static(__dirname + '/../public/dist'));
 app.use(express.json());
 
-
+// Routes
+app.use('/related', routes.related);
 
 app.get('/productStyles', (req, res) => {
-  let config = {
-    headers: {
-      Authorization: `${githubToken}`
-    }
-  };
   var productId = req.query.id;
   axios
-    .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/styles`, config)
+    .get(`${api}/products/${productId}/styles`, config)
     .then((data) => {
       if (!data) {
         throw data;
       }
+
+      console.log('style call', data.data);
       res.status(200).send(data.data);
     })
     .catch((error) => {
       res.status(404).send(error);
     });
-});
-
-
-app.get('/initialRender', (req, res) => {
-  let config = {
-    headers: {
-      Authorization: `${githubToken}`
-    }
-  };
-
+  });
+  
+  
+  app.get('/initialRender', (req, res) => {
+    
   // shoes: 71701
   axios
-    .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/71697', config)
+    .get(`${api}/products/${initialProduct}`, config)
     .then((data) => {
       if (!data) {
         throw data;
       }
+      console.log('initial render', data.data);
       res.status(200).send(data.data);
     })
     .catch((error) => {
       res.status(404).send(error);
     });
 });
-
-
-
-let config = {
-  headers: {
-    Authorization: `${githubToken}`
-  }
-}
-
-
 
 
 //================== Api requests for reviews =================
