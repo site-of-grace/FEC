@@ -15,7 +15,7 @@ const Rating = () => {
   };
 
   var fetch = () => {
-    axios.get('/reviews' , {params: {sortOption: 'relevant'}})
+    axios.get('/reviews')
     .then((serverData) => {
       console.log('Reviews from server ==> ', serverData.data);
       update(serverData.data);

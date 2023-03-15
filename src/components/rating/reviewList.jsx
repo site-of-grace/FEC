@@ -9,7 +9,6 @@ const ReviewList = () => {
 	const [curReviewPos, setCurReviewPos] = useState(0);
 	const [selectedImg, setSelectedImg] = useState(false);
 	useEffect(() => {setCurReviews([reviews[0], reviews[1]]); setCurReviewPos(0);}, [reviews]); //On reviews change
-	console.log(curReviews);
 	var handleExpand = () => {
 		var newPos = curReviewPos+2;
 		setCurReviewPos(newPos);

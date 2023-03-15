@@ -67,8 +67,11 @@ let config = {
 
 
 app.get('/reviews', (req, res) => {
-  console.log(req.query.sortOption);
-  reviewsHandler(req.query.sortOption, (err, data) => {
+  var options = {};
+  options.page = req.query.page ? req.query.page : 1;
+  options.sort = req.query.sort ? req.query.sort : 'relevant';
+  console.log(req.query);
+  reviewsHandler(options, (err, data) => {
     if (err) {
       res.statusCode = 404;
       res.send(JSON.stringify(err));
@@ -80,8 +83,8 @@ app.get('/reviews', (req, res) => {
 });
 
   //current product ids = 71697, 71698, 71699, 71700, 71701
-  var reviewsHandler = (sortOption, cb) => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71701&sort=${sortOption}`, config)
+  var reviewsHandler = (options, cb) => {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71701&count=4&sort=${options.sort}&page=${options.page}`, config)
   .then((apiData) => {
     if (!apiData) {
       cb({err: 'Server request recieved no data'}, null);

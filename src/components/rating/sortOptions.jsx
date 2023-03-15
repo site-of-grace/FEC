@@ -10,7 +10,7 @@ var SortOptions = function() {
 	const dispatch = useDispatch();
 
 	const handleSort = (e) => {
-		axios.get('/reviews' , {params: {sortOption: e.target.value}})
+		axios.get('/reviews' , {params: {sort: e.target.value}})
 		.then((serverData) => {
 			console.log('Reviews from server ==> ', serverData.data);
 			dispatch(setReviews(serverData.data));
