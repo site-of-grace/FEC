@@ -65,19 +65,6 @@ let config = {
 //================== Api requests for reviews =================
 //I know stanley planned on using the one above for everything but don't wanna cause merge conflict
 
-app.get('/reviewsMeta', (req, res) => {
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=71701', config)
-  .then((apiData) => {
-    if (!apiData) {
-      res.statusCode = 404;
-      res.end();
-      throw apiData;
-    }
-    if (apiData.data.results) {
-      console.log(apiData.data.results);
-    }
-  });
-});
 
 app.get('/reviews', (req, res) => {
   console.log(req.query.sortOption);
