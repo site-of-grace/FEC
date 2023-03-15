@@ -65,7 +65,22 @@ let config = {
 //================== Api requests for reviews =================
 //I know stanley planned on using the one above for everything but don't wanna cause merge conflict
 
+app.get('/reviewsMeta', (req, res) => {
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=71701', config)
+  .then((apiData) => {
+    if (!apiData) {
+      res.statusCode = 404;
+      res.end();
+      throw apiData;
+    }
+    if (apiData.data.results) {
+      console.log(apiData.data.results);
+    }
+  });
+});
+
 app.get('/reviews', (req, res) => {
+  console.log(req.query.sortOption);
   reviewsHandler(req.query.sortOption, (err, data) => {
     if (err) {
       res.statusCode = 404;
@@ -78,13 +93,10 @@ app.get('/reviews', (req, res) => {
 });
 
   //current product ids = 71697, 71698, 71699, 71700, 71701
-  //Sends 2 reviews at a time
-
   var reviewsHandler = (sortOption, cb) => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71700&sort=${sortOption}`, config)
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71701&sort=${sortOption}`, config)
   .then((apiData) => {
     if (!apiData) {
-      console.log('No data');
       cb({err: 'Server request recieved no data'}, null);
       throw apiData;
     }
@@ -103,7 +115,7 @@ app.get('/reviews', (req, res) => {
 };
 
 app.put('/reviews/helpful', (req, res) => {
-  console.log('CONFIG ====> ', config);
+  //console.log('CONFIG ====> ', config);
   axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/${req.body.reviewId}/helpful`, null, config)
     .then(() => {
       res.statusCode = 204;

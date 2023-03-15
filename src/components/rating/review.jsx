@@ -47,7 +47,7 @@ const Review = ({review, setSelectedImg}) => {
 			})}
 			{review.recommend ? <p style={{'fontSize': '12px'}}>✔ I recommend this product</p> : null}
 			{review.response ? <div className='review-response'>Response from seller: <div style={{'fontWeight': '100'}}>{review.response}</div></ div> : null}
-			<div className='review-helpful'>Helpful? <button onClick={handleHelpfulness}>Yes</button> <div className='helpfulness'>{`(${helpfulness})`}</div></div>
+			<div className='review-helpful'>Helpful? <button style={voted ? {'color': 'red'} : {}}  onClick={handleHelpfulness}>Yes</button> <div className='helpfulness'>{`(${helpfulness})`}</div></div>
 			<div className='review-bar'></div>
 		</div>
 	);
