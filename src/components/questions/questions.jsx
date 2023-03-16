@@ -12,7 +12,7 @@ const Questions = () => {
   
   // const state = useSelector(state => state);
   // console.log('state===> ', state.overview.mainProduct.id);
-  console.log('mainProduct.id===> ', mainProduct.id);
+  console.log('mainProduct.id=========> ', mainProduct.id);
   
   
   
@@ -22,7 +22,7 @@ const Questions = () => {
       console.log("mainProduct.id==============> ",mainProduct.id)
       axios.get(`/QA/${mainProduct.id}`)
       .then((productInfo) => {
-        console.log('productInfo===> ', productInfo);
+        console.log('productInfo from axios request=========> ', productInfo);
       })
       .catch((err) => {
         res.send(err);
@@ -37,7 +37,7 @@ const Questions = () => {
   return (
     <div className="widget">
       <h1>QUESTIONS & ANSWERS</h1>
-      {/* <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." /> */}
+      <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
 
     </div>
   );

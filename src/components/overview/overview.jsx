@@ -20,7 +20,7 @@ const Overview = () => {
           if (!productInfo) {
             throw productInfo;
           }
-          console.log('----successful productinfo -->', productInfo.data);
+          // console.log('----successful productinfo -->', productInfo.data);
           dispatch(setMainProduct(productInfo.data));
           return productInfo.data.id;
         })
@@ -34,7 +34,7 @@ const Overview = () => {
                 if (!productStyles) {
                   throw productStyles;
                 }
-                console.log('------ product styles --->', productStyles.data);
+                // console.log('------ product styles --->', productStyles.data);
                 dispatch(setStyles(productStyles.data));
                 dispatch(setMainPhotos(productStyles.data.results[0].photos));
               })

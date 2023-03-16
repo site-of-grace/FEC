@@ -83,6 +83,8 @@ app.get('/productStyles', (req, res) => {
 //I'm also scared of merge conflicts and just working on functionality at the moment
 //we can make things clean and efficient afterwards
 
+
+
 app.get('/QA/:id', (req, res) => {
   let id = req.params.id;
   let config = {
