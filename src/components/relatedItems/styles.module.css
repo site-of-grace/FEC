@@ -5,3 +5,56 @@ h1.title {
   font-weight: bold;
   margin-bottom: 0.5em;
 }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0 -0.4em;
+}
+
+.card {
+  display: flex;
+  background-color: #fff;
+  margin-left: 1.5em;
+  border-style: solid;
+  border-color: gray;
+  border-width: 1px;
+  box-shadow: 0 7px 9px rgba(0, 0, 0, 0.1);
+  height: 22em;
+  width: 16em;
+  flex-direction: column;
+  /* padding: 20px; */
+}
+
+.imageContainer {
+  height: 67%;
+  width: 100%;
+  background-color: rgb(233, 233, 233);
+  overflow: hidden;
+  /* position: relative; */
+}
+
+.card h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.card p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.details {
+  padding: 1em 0 1em 0.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
