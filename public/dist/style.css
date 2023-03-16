@@ -38,6 +38,7 @@ h1 {
 .cart {
   display: flex;
   margin: 10px;
+
 }
 
 
@@ -47,11 +48,24 @@ h1 {
   padding: 10px;
   width: 66%;
   margin-right: 10px;
+  height: 20px;
+  position: relative
 }
 
 .dropDown {
+  position: absolute;
+  border-style: none;
+  z-index: 9;
+  right: 10px
+}
+
+
+
+.open {
   border-style: none;
   float: right;
+  transform: perspective(1000px) rotateX(0deg);
+  display: block;
 }
 
 #quantitySelector {
@@ -59,6 +73,7 @@ h1 {
   display: inline-block;
   padding: 10px;
   width: 33%;
+  position: relative;
 }
 
 #addToBag {
@@ -67,6 +82,7 @@ h1 {
   padding: 10px;
   width: 80%;
   margin-right: 10px;
+  position: relative;
 }
 
 
@@ -148,6 +164,7 @@ h1 {
   background-color: transparent;
 
 }
+
 
 .imageGalleryItem {
   width: 50px;

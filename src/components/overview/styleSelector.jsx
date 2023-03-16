@@ -15,7 +15,7 @@ const StyleSelector = (props) => {
   //This sets the checkMark Variable automatically at render w/ the first thumbnail on list
   useEffect(() => {
     if (styles.results === undefined) {
-      dispatch(setSelectedstyle(''));
+      dispatch(setSelectedstyle({}));
     } else {
       dispatch(setSelectedstyle(styles.results[0]));
       document.querySelector(`#checkMark-${styles.results[0].style_id}`).classList.remove('hideCheckMark');

@@ -24,7 +24,7 @@ app.get('/productStyles', (req, res) => {
       if (!data) {
         throw data;
       }
-      res.status(200).send(data.data);
+      res.status(200).send(data.data); // [stanleysdata, danielsdata]
     })
     .catch((error) => {
       res.status(404).send(error);
