@@ -14,6 +14,8 @@ const Rating = () => {
 
   const dispatch = useDispatch();
 
+  const product_id = '71701'; //Fix later when Danny provided info
+
   var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
     var helpfulnessWeight = 4; //Make helpfulness a bit more important
     for (var i = 1; i <= reviews.length; i++) {
@@ -26,23 +28,22 @@ const Rating = () => {
     dispatch(setReviews(relevantReviews));
   };
 
-  var calculateAverage = (reviews) => { //Doesn't use metaData for now because it is innacurate
+  var calculateAverage = (metaData) => {
     var total = 0;
-    reviews.forEach((curReview) => {
-        total += curReview.rating;
-    });
-    var longAverage = (total/reviews.length);
+    var reviewAmount = 0;
+    for (var i = 1; i <= 5; i++) {
+      total += metaData.rating[i] * i;
+      reviewAmount += metaData.rating[i];
+    }
+
+    var longAverage = (total/reviewAmount);
   //Rounds to nearest .25
     dispatch(setAverage((Math.round(longAverage * 4) / 4)));
   };
 
-  const onRender = () => { //When component loads fetch data
-    fetchReviews();
-    fetchMetaData();
-  };
 
-
-  var fetchReviews = (options) => {
+  var fetchReviews = (metaData) => {
+    var options = {params: {product_id, metaData}};
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
       //Reviews are sorted by recent to improve efficiency
@@ -50,7 +51,6 @@ const Rating = () => {
 
       sortRelevant(serverData.data.results);
 
-      calculateAverage(serverData.data.results);
       //Reviews are sorted by relevant so fill that in store
       dispatch(setReviewsRecent(serverData.data.results));
       //Sorts for recent
@@ -65,7 +65,10 @@ const Rating = () => {
     //Can't be trusted
     axios.get('/rating/meta')
     .then((serverData) => {
-      //console.log('Review data from server ==> ', serverData.data);
+      fetchReviews(serverData.data); //Give fetch reviews metaData
+
+      calculateAverage(serverData.data);
+
       dispatch(setRatingMeta(serverData.data));
     })
     .catch((err) => {
@@ -73,7 +76,7 @@ const Rating = () => {
     });
   };
 
-  useEffect(onRender, []);
+  useEffect(fetchMetaData, []);
 
   return (
     <div className='widget'>
