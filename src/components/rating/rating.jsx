@@ -8,12 +8,22 @@ import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful, setAverage} from '../../store/ratingSlice';
 
+import _ from 'lodash';
+
 const Rating = () => {
 
   const dispatch = useDispatch();
 
   var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
-
+    var helpfulnessWeight = 4; //Make helpfulness a bit more important
+    for (var i = 1; i <= reviews.length; i++) {
+      var dateScore = reviews.length - i;
+      var helpfulScore = Math.floor(reviews[i-1].helpfulness*helpfulnessWeight);
+      reviews[i-1].score = dateScore + helpfulScore;
+    }
+    var relevantReviews = _.orderBy(reviews, 'score', 'desc');
+    dispatch(setReviewsRelevant(relevantReviews));
+    dispatch(setReviews(relevantReviews));
   };
 
   var calculateAverage = (reviews) => { //Doesn't use metaData for now because it is innacurate
@@ -37,7 +47,9 @@ const Rating = () => {
 		.then((serverData) => {
       //Reviews are sorted by recent to improve efficiency
 			console.log('Reviews from server ==> ', serverData.data);
-      dispatch(setReviews(serverData.data.results));
+
+      sortRelevant(serverData.data.results);
+
       calculateAverage(serverData.data.results);
       //Reviews are sorted by relevant so fill that in store
       dispatch(setReviewsRecent(serverData.data.results));
