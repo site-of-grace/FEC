@@ -1,11 +1,14 @@
 import React from 'react';
 import {useSelector } from 'react-redux';
+
+var _ = require('lodash');
 var SortOptions = function() {
 	const reviews = useSelector((state) => state.rating.reviews); // review.slice
 	console.log(reviews);
 
 	const handleSort = (e) => {
 		var sortOption =  e.target.value;
+		console.log(_.orderBy(reviews, 'helpfulness', 'desc'));
 	};
 
 	return(

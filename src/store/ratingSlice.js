@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-var _ = require('lodash');
-
 const initialState = {
   reviews: [],
   ratingMeta: {},
-  reviewPage: 0
+  reviewPage: 0,
+  reviewsHelpful: [],
+  reviewsRecent: []
 };
 
 
@@ -21,10 +21,16 @@ const ratingSlice = createSlice({
     },
     setReviewPage: (state, action) => {
       state.reviewPage = action.payload;
+    },
+    setReviewsHelpful: (state, action) => {
+      state.reviewsHelpful = action.payload;
+    },
+    setReviewsRecent: (state, action) => {
+      state.reviewsRecent = action.payload;
     }
   }
 });
 
-export const {setReviews, setRatingMeta, setReviewPage} = ratingSlice.actions;
+export const {setReviews, setRatingMeta, setReviewPage, setReviewsHelpful, setReviewsRecent} = ratingSlice.actions;
 
 export default ratingSlice.reducer;
