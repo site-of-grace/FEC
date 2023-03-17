@@ -5,44 +5,18 @@ const { api, config } = require('../config.js');
 
 //current product ids = 71697, 71698, 71699, 71700, 71701
 
-
 router.get('/reviews', async (req, res) => {
-	var options = {};
-	options.page = req.query.page ? req.query.page : 1;
-	options.sort = req.query.sort ? req.query.sort : 'relavant';
-	reviewsHandler(options, (err, data) => {
-		if (err) {
-			res.statusCode = 404;
-			res.send(JSON.stringify(err));
-		} else {
-			res.statusCode = 200;
-			res.send(JSON.stringify(data));
-		}
-	});
+	var productId = '71701';
+  const metaData = await axios.get(`${api}/reviews/meta/?product_id=${productId}`, config);
+	var reviewCount = 0;
+	for (let i = 1; i <= 5; i++) {
+		reviewCount += Number(metaData.data.ratings[i]);
+	}
+	console.log(reviewCount);
+	const reviewData = await axios.get(`${api}/reviews/?product_id=${productId}&count=${44}&sort=relevant&page=2`, config);
+	console.log(reviewData.data.results.length);
 });
 
-//Handles api request to reviews
-var reviewsHandler = (options, cb) => {
-	axios.get(`${api}/reviews/?product_id=71701&count=2&sort=newest&page=${options.page}`, config)
-.then((apiData) => {
-	if (!apiData) {
-		cb({err: 'Server request recieved no data'}, null);
-		throw apiData;
-	}
-	if (apiData.data.results) {
-		cb(null, apiData.data);
-		// console.log('---review data--->', apiData.data);
-	} else {
-		console.log('No review data');
-		cb({err: 'Server request failed no reviews fetched'}, null);
-	}
-})
-.catch((error) => {
-	console.log('---server error--->', error);
-	cb(error, null);
-});
-};
-//
 //Increments helpful for review
 router.put('/helpful', (req, res) => {
   axios.put(`${api}/reviews/${req.body.reviewId}/helpful`, null, config)
@@ -83,3 +57,55 @@ router.get('/meta', (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Old stuff
+// router.get('/reviews', async (req, res) => {
+// 	var options = {};
+// 	options.page = req.query.page ? req.query.page : 1;
+// 	options.sort = req.query.sort ? req.query.sort : 'relavant';
+// 	reviewsHandler(options, (err, data) => {
+// 		if (err) {
+// 			res.statusCode = 404;
+// 			res.send(JSON.stringify(err));
+// 		} else {
+// 			res.statusCode = 200;
+// 			res.send(JSON.stringify(data));
+// 		}
+// 	});
+// });
+
+// //Handles api request to reviews
+// var reviewsHandler = (options, cb) => {
+// 	axios.get(`${api}/reviews/?product_id=71701&count=2&sort=newest&page=${options.page}`, config)
+// .then((apiData) => {
+// 	if (!apiData) {
+// 		cb({err: 'Server request recieved no data'}, null);
+// 		throw apiData;
+// 	}
+// 	if (apiData.data.results) {
+// 		cb(null, apiData.data);
+// 		// console.log('---review data--->', apiData.data);
+// 	} else {
+// 		console.log('No review data');
+// 		cb({err: 'Server request failed no reviews fetched'}, null);
+// 	}
+// })
+// .catch((error) => {
+// 	console.log('---server error--->', error);
+// 	cb(error, null);
+// });
+// };
+//
