@@ -55,6 +55,7 @@ const Overview = () => {
 
   return (
     <div>
+      <h1>OVERVIEW</h1>
       <div id='overviewWidget'>
         <div id='overview2-3'>
           <ImageGallery />
