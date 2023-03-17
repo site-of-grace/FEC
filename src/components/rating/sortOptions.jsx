@@ -5,7 +5,7 @@ var SortOptions = function() {
 	console.log(reviews);
 
 	const handleSort = (e) => {
-		options = {params: {sort: e.target.value}};
+		var sortOption =  e.target.value;
 	};
 
 	return(

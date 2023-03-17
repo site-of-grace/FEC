@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+var _ = require('lodash');
+
 const initialState = {
   reviews: [],
   ratingMeta: {},
