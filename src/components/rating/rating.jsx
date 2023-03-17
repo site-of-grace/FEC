@@ -6,11 +6,21 @@ import ReviewList  from './reviewList.jsx';
 import SortOptions from './sortOptions.jsx';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
-import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful} from '../../store/ratingSlice';
+import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful, setAverage} from '../../store/ratingSlice';
 
 const Rating = () => {
 
   const dispatch = useDispatch();
+
+  var calculateAverage = (reviews) => { //Doesn't use metaData for now because it is innacurate
+    var total = 0;
+    reviews.forEach((curReview) => {
+        total += curReview.rating;
+    });
+    var longAverage = (total/reviews.length);
+  //Rounds to nearest .25
+    dispatch(setAverage((Math.round(longAverage * 4) / 4)));
+  };
 
   const onRender = () => { //When component loads fetch data
     fetchReviews();
@@ -23,6 +33,7 @@ const Rating = () => {
 		.then((serverData) => {
 			console.log('Reviews from server ==> ', serverData.data);
       dispatch(setReviews(serverData.data.results));
+      calculateAverage(serverData.data.results);
       //Reviews are sorted by relevant so fill that in store
       dispatch(setReviewsRelevant(serverData.data.results));
       //Resets other sort option data stores
@@ -35,11 +46,11 @@ const Rating = () => {
 	};
 
   var fetchMetaData = () => {
+    //Can't be trusted
     axios.get('/rating/meta')
     .then((serverData) => {
       //console.log('Review data from server ==> ', serverData.data);
       dispatch(setRatingMeta(serverData.data));
-
     })
     .catch((err) => {
       console.log('Error from server ==> ', err);

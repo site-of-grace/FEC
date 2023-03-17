@@ -5,7 +5,8 @@ const initialState = {
   ratingMeta: {},
   reviewsRelevant: [],
   reviewsHelpful: [],
-  reviewsRecent: []
+  reviewsRecent: [],
+  average: []
 };
 
 
@@ -27,10 +28,14 @@ const ratingSlice = createSlice({
     },
     setReviewsRelevant: (state, action) => {
       state.reviewsRelevant = action.payload;
+    },
+    setAverage: (state, action) => {
+      state.average = action.payload;
+      console.log(state.average);
     }
   }
 });
 
-export const {setReviews, setRatingMeta, setReviewsHelpful, setReviewsRecent, setReviewsRelevant} = ratingSlice.actions;
+export const {setReviews, setRatingMeta, setReviewsHelpful, setReviewsRecent, setReviewsRelevant, setAverage} = ratingSlice.actions;
 
 export default ratingSlice.reducer;
