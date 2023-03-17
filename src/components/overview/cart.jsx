@@ -129,11 +129,11 @@ const Cart = () => {
   };
 
   var testing = {
-    2580526: {quantity: 3, size: 'XS'},
+    2580526: {quantity: 0, size: 'XS'},
     2580527: {quantity: 0, size: 'S'},
     2580528: {quantity: 0, size: 'M'},
     2580529: {quantity: 0, size: 'L'},
-    2580530: {quantity: 5, size: 'XL'},
+    2580530: {quantity: 0, size: 'XL'},
     2580531: {quantity: 0, size: 'XXL'}
   };
 
