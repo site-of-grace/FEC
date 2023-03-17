@@ -12,9 +12,10 @@ router.get('/reviews', async (req, res) => {
     req.statusCode = 404;
     res.end();
   }
+  //Gets the total review count for api request count
 	var reviewCount = Number(metaData.data.recommended.false) + Number(metaData.data.recommended.true);
-	console.log(reviewCount);
 	const reviewData = await axios.get(`${api}/reviews/?product_id=${productId}&count=${reviewCount}&sort=relevant`, config);
+
   if (!reviewData.data || !reviewData.data.results) {
     req.statusCode = 404;
     res.end();
@@ -39,7 +40,6 @@ router.put('/helpful', (req, res) => {
 
 //Sends metadata
 router.get('/meta', (req, res) => {
-	console.log('occured');
   axios.get(`${api}/reviews/meta/?product_id=71701`, config)
   .then((apiData) => {
     if (!apiData) {

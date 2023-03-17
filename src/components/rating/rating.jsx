@@ -6,7 +6,7 @@ import ReviewList  from './reviewList.jsx';
 import SortOptions from './sortOptions.jsx';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
-import {setRatingMeta, setReviews, setReviewsRelevant} from '../../store/ratingSlice';
+import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful} from '../../store/ratingSlice';
 
 const Rating = () => {
 
@@ -25,6 +25,9 @@ const Rating = () => {
       dispatch(setReviews(serverData.data.results));
       //Reviews are sorted by relevant so fill that in store
       dispatch(setReviewsRelevant(serverData.data.results));
+      //Resets other sort option data stores
+      dispatch(setReviewsRecent([]));
+      dispatch(setReviewsHelpful([]));
 		})
 		.catch((err) => {
 			console.log('Error from server ==> ', err);

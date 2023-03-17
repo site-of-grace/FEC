@@ -4,7 +4,7 @@ import {useSelector } from 'react-redux';
 import Review from './review.jsx';
 //Only displays 2 at a time
 const ReviewList = () => {
-	const rating = useSelector((state) => state.rating); // rating stuff
+	const reviews = useSelector((state) => state.rating.reviews);
 
 	const [curReviews, setCurReviews] = useState([]);
 	const [curReviewPos, setCurReviewPos] = useState(0);
@@ -14,11 +14,11 @@ const ReviewList = () => {
 	var handleExpand = () => {
 		var newPos = curReviewPos+2;
 		setCurReviewPos(newPos);
-		var newReviews = [rating.reviews[newPos], rating.reviews[newPos+1]];
+		var newReviews = [reviews[newPos], reviews[newPos+1]];
 		setCurReviews(curReviews.concat(newReviews));
 	};
 
-	useEffect(() => setCurReviews([rating.reviews[0], rating.reviews[1]]),[rating.reviews]);
+	useEffect(() => {setCurReviews([reviews[0], reviews[1]]); setCurReviewPos(0);}, [reviews]); //On reviews change reset curReviews stuff
 
 	return (
 		<div id='review-list'>
@@ -32,7 +32,7 @@ const ReviewList = () => {
 				}
 			})}
 			{/*If more reviews left show expand button*/}
-			{rating.reviews[curReviewPos + 2] ? <button onClick={handleExpand}>More Reviews</button> : null}
+			{reviews[curReviewPos + 2] ? <button onClick={handleExpand}>More Reviews</button> : null}
 		</div>
 	);
 };

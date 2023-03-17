@@ -26,7 +26,7 @@ const ratingSlice = createSlice({
       state.reviewsRecent = action.payload;
     },
     setReviewsRelevant: (state, action) => {
-      state.reviewsRecent = action.payload;
+      state.reviewsRelevant = action.payload;
     }
   }
 });
