@@ -7,37 +7,54 @@ const axios = require('axios');
 
 
 const Questions = () => {
-  const { mainProduct, mainPhotos } = useSelector((state) => state.overview); // store.slice
+  const { mainProduct } = useSelector((state) => state.overview); // store.slice
   const dispatch = useDispatch();
   
   // const state = useSelector(state => state);
   // console.log('state===> ', state.overview.mainProduct.id);
-  console.log('mainProduct.id=========> ', mainProduct.id);
+  // console.log('mainProduct.id=========> ', mainProduct.id);
   
+  let questionArr = [];
   
   
   
   useEffect(() => {
     if(mainProduct.id) {
-      console.log("mainProduct.id==============> ",mainProduct.id)
-      axios.get(`/QA/${mainProduct.id}`)
+      console.log('mainProduct.id==============> ', mainProduct.id);
+      // axios.get(`/QA/question?product_id=${mainProduct.id}`)
+      // .get(`/productStyles?id=${id}`)
+
+      // const params = {product_id: mainProduct.id};
+      // .get(`/productStyles?id=${id}`)
+
+      axios.get('/questions', { 
+        params: {
+          product_id: mainProduct.id
+        }
+      })
       .then((productInfo) => {
         console.log('productInfo from axios request=========> ', productInfo);
+        questionArr = productInfo.results;
+        
       })
       .catch((err) => {
-        res.send(err);
+        console.log('err: ', err); 
       });
+      
     }
+    console.log('questionArr.question_body ', questionArr.question_body);
   }, [mainProduct.id]);
   
   
-  
+  // console.log('mainProduct=====> ', mainProduct);  
   
   
   return (
     <div className="widget">
       <h1>QUESTIONS & ANSWERS</h1>
       <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
+      <div>Q: {questionArr.question_body}</div>
+
 
     </div>
   );

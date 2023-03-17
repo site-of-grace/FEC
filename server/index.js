@@ -84,31 +84,49 @@ app.get('/productStyles', (req, res) => {
 //we can make things clean and efficient afterwards
 
 
+// var productId = req.query.id;
+// axios
+//   .get(`${api}/products/${productId}/styles`, config)
 
-app.get('/QA/:id', (req, res) => {
-  let id = req.params.id;
-  let config = {
-    headers: {
-      Authorization: `${githubToken}`
-    }
-  };
 
+
+// app.get('/questions', (req, res) => {
+app.get('/questions', (req, res) => {
+
+  var product_id = req.query.product_id;
+  // console.log('productId in /QA/questions==========> ', product_id);
   axios
-    .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions?product_id=${id}`, config)
+    .get(`${api}/qa/questions/?product_id=${product_id}`, config)
     .then((data) => {
-      res.status(200).send(data.data);
+      if (!data) {
+        throw data;
+      }      
+      console.log('ok request on questions route ', data.data);
+      res.send(data);
     })
     .catch((error) => {
-      res.status(404).send(error);
+      // console.log('error on questions route ', error);
+      res.send(error);
     });
-});
-
-
-
-
-
-
-
+  });
+  
+  // app.get('/productStyles', (req, res) => {
+  //   var productId = req.query.id;
+  //   axios
+  //     .get(`${api}/products/${productId}/styles`, config)
+  //     .then((data) => {
+  //       if (!data) {
+  //         throw data;
+  //       }
+  
+  //       console.log('style call', data.data);
+  //       res.status(200).send(data.data);
+  //     })
+  //     .catch((error) => {
+  //       res.status(404).send(error);
+  //     });
+  //   });
+    
 
 
 // ===================================================
