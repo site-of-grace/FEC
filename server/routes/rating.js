@@ -14,8 +14,7 @@ router.get('/reviews', async (req, res) => {
   }
   //Gets the total review count for api request count
 	var reviewCount = Number(metaData.data.recommended.false) + Number(metaData.data.recommended.true);
-	const reviewData = await axios.get(`${api}/reviews/?product_id=${productId}&count=${reviewCount}&sort=relevant`, config);
-
+	const reviewData = await axios.get(`${api}/reviews/?product_id=${productId}&count=${reviewCount}&sort=newest`, config);
   if (!reviewData.data || !reviewData.data.results) {
     req.statusCode = 404;
     res.end();

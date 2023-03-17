@@ -12,6 +12,10 @@ const Rating = () => {
 
   const dispatch = useDispatch();
 
+  var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
+
+  };
+
   var calculateAverage = (reviews) => { //Doesn't use metaData for now because it is innacurate
     var total = 0;
     reviews.forEach((curReview) => {
@@ -31,13 +35,13 @@ const Rating = () => {
   var fetchReviews = (options) => {
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
+      //Reviews are sorted by recent to improve efficiency
 			console.log('Reviews from server ==> ', serverData.data);
       dispatch(setReviews(serverData.data.results));
       calculateAverage(serverData.data.results);
       //Reviews are sorted by relevant so fill that in store
-      dispatch(setReviewsRelevant(serverData.data.results));
-      //Resets other sort option data stores
-      dispatch(setReviewsRecent([]));
+      dispatch(setReviewsRecent(serverData.data.results));
+      //Sorts for recent
       dispatch(setReviewsHelpful([]));
 		})
 		.catch((err) => {
