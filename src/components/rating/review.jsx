@@ -10,7 +10,7 @@ const Review = ({review, setSelectedImg}) => {
 		setVoted(true);
 		if (!voted) {
 			const body = {reviewId: review['review_id']};
-			axios.put('/reviews/helpful', body)
+			axios.put('/rating/helpful', body)
 			.then(() => {
 				setHelpfulness(review.helpfulness + 1);
 			})

@@ -1,45 +1,69 @@
 require('dotenv').config();
+const axios = require('axios');
 const express = require('express');
+const routes = require('./routes');
 const app = express();
 const port = process.env.PORT || 3000;
-var axios = require('axios');
-var githubToken = process.env.GITHUB_TOKEN;
+const { api, initialProduct, config } = require('./config.js');
 app.use(express.static(__dirname + '/../public/dist'));
 app.use(express.json());
 
-
+// Routes
+app.use('/related', routes.related);
+app.use('/rating', routes.rating);
 
 app.get('/productStyles', (req, res) => {
-  let config = {
-    headers: {
-      Authorization: `${githubToken}`
-    }
-  };
   var productId = req.query.id;
   axios
-    .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/styles`, config)
+    .get(`${api}/products/${productId}/styles`, config)
     .then((data) => {
       if (!data) {
         throw data;
       }
-      res.status(200).send(data.data);
+      res.status(200).send(data.data); // [stanleysdata, danielsdata]
     })
     .catch((error) => {
       res.status(404).send(error);
     });
-});
+  });
 
 
-app.get('/initialRender', (req, res) => {
-  let config = {
-    headers: {
-      Authorization: `${githubToken}`
-    }
-  };
 
+  app.post('/cart', (req, res) => {
+    console.log(req.body);
+
+    axios
+      .post(`${api}/cart`, req.body, config)
+      .then((data) => {
+        if (!data) {
+          throw data;
+        }
+
+          axios.get(`${api}/cart`, config)
+            .then((data) => {
+              if (!data) {
+                throw data;
+              }
+              console.log('CART DATA', data.data);
+            })
+            .catch((error) => {
+              console.log('ERROR in get', error);
+            });
+
+
+      })
+      .catch((error) => {
+        console.log('ERRORRRR', error);
+      });
+
+  });
+
+
+
+  app.get('/initialRender', (req, res) => {
   // shoes: 71701
   axios
-    .get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/71697', config)
+    .get(`${api}/products/${initialProduct}`, config)
     .then((data) => {
       if (!data) {
         throw data;
@@ -52,95 +76,6 @@ app.get('/initialRender', (req, res) => {
 });
 
 
-
-let config = {
-  headers: {
-    Authorization: `${githubToken}`
-  }
-};
-
-
-
-
-//================== Api requests for reviews =================
-//I know stanley planned on using the one above for everything but don't wanna cause merge conflict
-
-app.get('/ratingMeta', (req, res) => {
-  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=71701', config)
-  .then((apiData) => {
-    if (!apiData) {
-      res.statusCode = 404;
-      res.end();
-      throw apiData;
-    }
-    if(apiData.data) {
-      res.statusCode = 200;
-      res.send(JSON.stringify(apiData.data));
-    } else {
-      res.statusCode = 404;
-      res.end();
-    }
-  })
-  .catch((err) => {
-    console.log('Server err --->', err);
-    res.statusCode = 404;
-    res.send(JSON.stringify(err));
-  });
-});
-
-
-app.get('/reviews', (req, res) => {
-  var options = {};
-  options.page = req.query.page ? req.query.page : 1;
-  options.sort = req.query.sort ? req.query.sort : 'newest';
-  console.log(req.query);
-  reviewsHandler(options, (err, data) => {
-    if (err) {
-      res.statusCode = 404;
-      res.send(JSON.stringify(err));
-    } else {
-      res.statusCode = 200;
-      res.send(JSON.stringify(data));
-    }
-  });
-});
-
-  //current product ids = 71697, 71698, 71699, 71700, 71701
-  var reviewsHandler = (options, cb) => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/?product_id=71701&count=2&sort=newest&page=${options.page}`, config)
-  .then((apiData) => {
-    if (!apiData) {
-      cb({err: 'Server request recieved no data'}, null);
-      throw apiData;
-    }
-    if (apiData.data.results) {
-      cb(null, apiData.data);
-      // console.log('---review data--->', apiData.data);
-    } else {
-      console.log('No review data');
-      cb({err: 'Server request failed no reviews fetched'}, null);
-    }
-  })
-  .catch((error) => {
-    console.log('---server error--->', error);
-    cb(error, null);
-  });
-};
-
-app.put('/reviews/helpful', (req, res) => {
-  //console.log('CONFIG ====> ', config);
-  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/${req.body.reviewId}/helpful`, null, config)
-    .then(() => {
-      res.statusCode = 204;
-      res.end();
-    })
-    .catch((error) => {
-      console.log('---server error--->', error);
-      res.statusCode = 404;
-      res.end();
-    });
-});
-// ===================================================
 
 
 

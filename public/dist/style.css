@@ -48,6 +48,7 @@ h1 {
 .cart {
   display: flex;
   margin: 10px;
+
 }
 
 
@@ -57,11 +58,24 @@ h1 {
   padding: 10px;
   width: 66%;
   margin-right: 10px;
+  height: 20px;
+  position: relative
 }
 
 .dropDown {
+  position: absolute;
+  border-style: none;
+  z-index: 9;
+  right: 10px
+}
+
+
+
+.open {
   border-style: none;
   float: right;
+  transform: perspective(1000px) rotateX(0deg);
+  display: block;
 }
 
 #quantitySelector {
@@ -69,6 +83,7 @@ h1 {
   display: inline-block;
   padding: 10px;
   width: 33%;
+  position: relative;
 }
 
 #addToBag {
@@ -77,6 +92,7 @@ h1 {
   padding: 10px;
   width: 80%;
   margin-right: 10px;
+  position: relative;
 }
 
 
@@ -122,7 +138,7 @@ h1 {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  display:inline-block;
+  display: inline-block;
 }
 
 #styleSelector {
@@ -151,6 +167,7 @@ h1 {
   display: none;
 }
 
+
 #imageGallery {
   margin: 0;
   padding: 0;
@@ -158,6 +175,7 @@ h1 {
   background-color: transparent;
 
 }
+
 
 .imageGalleryItem {
   width: 50px;
@@ -221,6 +239,17 @@ h1 {
   width: 65%;
   height: 20%;
 }
+
+.hideWarning {
+  color: red;
+  display: none;
+}
+
+.showWarning {
+  color: red;
+  display: block;
+}
+
 
 /*======================= OVERVIEW CSS END ===========================*/
 
