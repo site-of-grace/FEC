@@ -4,7 +4,7 @@ import ReviewList  from './reviewList.jsx';
 import SortOptions from './sortOptions.jsx';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
-import {setRatingMeta, setReviews, setReviewAmount, setReviewPage} from '../../store/ratingSlice';
+import {setRatingMeta, setReviews, setReviewPage} from '../../store/ratingSlice';
 
 const Rating = () => {
   const rating = useSelector((state) => state.rating); // rating stuff
@@ -45,9 +45,9 @@ const Rating = () => {
 
   return (
     <div className='widget'>
-      <SortOptions fetchReviews={fetchReviews}/>
+      <SortOptions />
       <h1 className='title'>RATING</h1>
-      <ReviewList fetchReviews={fetchReviews}/>
+      <ReviewList />
     </div>
   );
 };

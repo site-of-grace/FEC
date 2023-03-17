@@ -3,25 +3,20 @@ import {useSelector } from 'react-redux';
 
 import Review from './review.jsx';
 //Only displays 2 at a time
-const ReviewList = ({fetchReviews}) => {
+const ReviewList = () => {
 	const rating = useSelector((state) => state.rating); // rating stuff
 
 	const [curReviews, setCurReviews] = useState([]);
 	const [curReviewPos, setCurReviewPos] = useState(0);
 	const [selectedImg, setSelectedImg] = useState(false);
-	var onReviews = () => {
-		if (rating.reviews.length === 2) {
-			handleExpand();
-		}
+	var handleExpand = () => {
+		var newPos = curReviewPos+2;
+		setCurReviewPos(newPos);
+		var newReviews = [rating.reviews[newPos], rating.reviews[newPos+1]];
+		setCurReviews(curReviews.concat(newReviews));
 	};
 
-	var handleExpand = () => {
-		var options = {params: {page: rating.reviewPage + 1}};
-		fetchReviews(options);
-		setCurReviews(curReviews.concat([rating.reviews[curReviewPos], rating.reviews[curReviewPos+1]]));
-		setCurReviewPos(curReviewPos + 2);
-	};
-	useEffect(onReviews, [rating.reviews]);
+	useEffect(() => setCurReviews([rating.reviews[0], rating.reviews[1]]),[rating.reviews]);
 
 	return (
 		<div id='review-list'>
@@ -34,7 +29,7 @@ const ReviewList = ({fetchReviews}) => {
 					return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>;
 				}
 			})}
-			{rating.reviews[curReviewPos] ? <button onClick={handleExpand}>More Reviews</button> : null}
+			{rating.reviews[curReviewPos + 2] ? <button onClick={handleExpand}>More Reviews</button> : null}
 		</div>
 	);
 };
