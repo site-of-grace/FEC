@@ -29,13 +29,13 @@ const Rating = () => {
   };
 
   var calculateAverage = (metaData) => {
+    console.log(metaData);
     var total = 0;
     var reviewAmount = 0;
     for (var i = 1; i <= 5; i++) {
-      total += metaData.rating[i] * i;
-      reviewAmount += metaData.rating[i];
+      total += Number(metaData.ratings[i]) * i;
+      reviewAmount += Number(metaData.ratings[i]);
     }
-
     var longAverage = (total/reviewAmount);
   //Rounds to nearest .25
     dispatch(setAverage((Math.round(longAverage * 4) / 4)));
@@ -62,8 +62,9 @@ const Rating = () => {
 	};
 
   var fetchMetaData = () => {
+    var options = {params: {product_id}};
     //Can't be trusted
-    axios.get('/rating/meta')
+    axios.get('/rating/meta', options)
     .then((serverData) => {
       fetchReviews(serverData.data); //Give fetch reviews metaData
 

@@ -5,22 +5,24 @@ const { api, config } = require('../config.js');
 
 //current product ids = 71697, 71698, 71699, 71700, 71701
 
-router.get('/reviews', async (req, res) => {
-	var productId = '71701';
-  const metaData = await axios.get(`${api}/reviews/meta/?product_id=${productId}`, config);
-  if (!metaData.data || !metaData.data.recommended) {
-    req.statusCode = 404;
-    res.end();
-  }
+router.get('/reviews', (req, res) => {
   //Gets the total review count for api request count
-	var reviewCount = Number(metaData.data.recommended.false) + Number(metaData.data.recommended.true);
-	const reviewData = await axios.get(`${api}/reviews/?product_id=${productId}&count=${reviewCount}&sort=newest`, config);
-  if (!reviewData.data || !reviewData.data.results) {
-    req.statusCode = 404;
+  var metaData = req.query.metaData;
+	var reviewCount = Number(metaData.recommended.false) + Number(metaData.recommended.true);
+	axios.get(`${api}/reviews/?product_id=${req.query.product_id}&count=${reviewCount}&sort=newest`, config)
+  .then((reviewData) => {
+    if (!reviewData.data || !reviewData.data.results) {
+      req.statusCode = 404;
+      res.end();
+    }
+    req.statusCode = 200;
+    res.send(JSON.stringify(reviewData.data));
+  })
+  .catch((error) => {
+    console.log('---server error--->', error);
+    res.statusCode = 404;
     res.end();
-  }
-  req.statusCode = 200;
-  res.send(JSON.stringify(reviewData.data));
+  });
 });
 
 //Increments helpful for review
@@ -39,7 +41,7 @@ router.put('/helpful', (req, res) => {
 
 //Sends metadata
 router.get('/meta', (req, res) => {
-  axios.get(`${api}/reviews/meta/?product_id=71701`, config)
+  axios.get(`${api}/reviews/meta/?product_id=${req.query.product_id}`, config)
   .then((apiData) => {
     if (!apiData) {
       res.statusCode = 404;
