@@ -1,3 +1,4 @@
 const related = require('./related');
+const rating = require('./rating');
 
-module.exports = { related };
+module.exports = { related, rating };

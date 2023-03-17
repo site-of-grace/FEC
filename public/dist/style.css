@@ -255,7 +255,11 @@ h1 {
 
 
 /*======================= REVIEW CSS START ===========================*/
-
+  /* Single review ====*/
+  #review-list {
+    overflow: scroll;
+    max-height: 500px;
+  }
   .review, .review h1 {
     color: rgb(68, 68, 68);
     margin-bottom: 50px;
@@ -336,6 +340,21 @@ h1 {
     color: rgb(122, 122, 122);
     display: inline;
     font-size: 12px;
+  }
+  /*Sort options ========*/
+  #sort-bar {
+    font-weight: bold;
+    color: rgb(68, 68, 68);
+  }
+  #sort-bar div{
+    display: inline-block;
+    margin-right: 5px;
+  }
+  #sort-options {
+    color: rgb(121, 121, 121);
+    border: none;
+    border-bottom: solid;
+    font-weight: bold;
   }
 /*======================= REVIEW CSS END ===========================*/
 
