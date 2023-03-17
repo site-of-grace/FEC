@@ -138,7 +138,7 @@ h1 {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  display:inline-block;
+  display: inline-block;
 }
 
 #styleSelector {
@@ -166,6 +166,7 @@ h1 {
 .hide {
   display: none;
 }
+
 
 #imageGallery {
   margin: 0;
@@ -238,6 +239,17 @@ h1 {
   width: 65%;
   height: 20%;
 }
+
+.hideWarning {
+  color: red;
+  display: none;
+}
+
+.showWarning {
+  color: red;
+  display: block;
+}
+
 
 /*======================= OVERVIEW CSS END ===========================*/
 

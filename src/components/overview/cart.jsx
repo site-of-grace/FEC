@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos, setSelectedstyle, setMyOutfit } from '../../store/overviewSlice';
-
+var axios = require('axios');
 
 const Cart = () => {
   const { mainProduct, styles, mainPhotos, selectedStyle, myOutfit } = useSelector((state) => state.overview); // store.slice
   const dispatch = useDispatch();
 
 
-
+  const [sizeList, setSizeList] = useState(1);
   const [quantityList, setQuantityList] = useState(0);
   const [size, setSize] = useState('');
   const [quantity, setQuantity] = useState(1);
-
-
-
-
-
 
 
   useEffect(() => {
@@ -38,14 +33,39 @@ const Cart = () => {
 
   var sizeDropDown = (skuObject) => {
     var skus = Object.keys(skuObject);
-    if (skus.length === 0) {
-      document.getElementById('skuSelect').setAttribute('disabled', '');
-      return <option value="none" selected disabled hidden>OUT OF STOCK</option>
-    } else {
-      return skus.map((sku) => {
-        return <option value={skuObject[sku].quantity}>{skuObject[sku].size}</option>
+
+
+      var skuDropDown = skus.map((sku) => {
+
+        console.log(skuObject[sku].size);
+        if (skuObject[sku].quantity !== 0) {
+          return <option value={`${sku}-${skuObject[sku].quantity}`}>{skuObject[sku].size}</option>
+        }
       });
-    }
+
+      console.log(skuDropDown, '<----');
+
+
+      var resultArray = [];
+
+      for (var i = 0; i < skuDropDown.length; i++) {
+        if (skuDropDown[i] !== undefined) {
+          resultArray.push(skuDropDown[i]);
+        }
+      }
+
+      console.log(resultArray, '<---- resultarray')
+
+
+      if (resultArray.length === 0) {
+        document.getElementById('tester').innerText = 'OUT OF STOCK';
+        document.getElementById('skuSelect').setAttribute('disabled', '');
+        document.getElementById('hideButton').classList.add('hide');
+      } else {
+        return resultArray;
+      }
+
+
   };
 
 
@@ -76,35 +96,59 @@ const Cart = () => {
 
   var selectedSize = () => {
     var sizeTag = document.getElementById('skuSelect');
-    setQuantityList(sizeTag.value);
-    setSize(sizeTag.options[sizeTag.selectedIndex].text);
+    var skuNumber = sizeTag.value.split('-')[0];
+    var skuSize = sizeTag.value.split('-')[1];
+
+    setQuantityList(skuSize);
+    setSize(skuNumber);
+
     sizeTag.blur();
+    document.getElementById('selectSizeWarning').classList.remove('showWarning');
+    document.getElementById('selectSizeWarning').classList.add('hideWarning');
   };
 
   var checkOut = () => {
     if (document.getElementById('skuSelect').value === 'none') {
-      //open drop down
-      //message should appear above drop down stating please select size
-      // document.querySelector('#skuSelect').classList.remove('dropDown');
-      // console.log('hi');
-
       document.getElementById('skuSelect').focus();
-      document.getElementById()
+      document.getElementById('selectSizeWarning').classList.remove('hideWarning');
+      document.getElementById('selectSizeWarning').classList.add('showWarning');
+    } else {
+      console.log('SKUNUMBER', size, 'QUANTITY', quantity);
+      axios.post('/cart', {sku_id: Number(size), count: quantity.toString()})
+        .then((data) => {
+         if (!data) {
+          throw data;
+         }
+         console.log('SUCCESSFUL POST REQUEST TO CART');
+        })
+        .catch((error) => {
+          console.log('SUCCESSFUL POST REQUEST TO CART', error);
+        });
     }
 
   };
 
+  var testing = {
+    2580526: {quantity: 3, size: 'XS'},
+    2580527: {quantity: 0, size: 'S'},
+    2580528: {quantity: 0, size: 'M'},
+    2580529: {quantity: 0, size: 'L'},
+    2580530: {quantity: 5, size: 'XL'},
+    2580531: {quantity: 0, size: 'XXL'}
+  };
+
+  //testing to see if empty stock works
+  // dispatch(setSelectedstyle({skus: testing}))
 
   return (
     <div>
-      <h1 onClick={() => {console.log(Object.keys(selectedStyle.skus).length)}}>CART</h1>
+      <h1 onClick={() => { dispatch(setSelectedstyle({skus: testing})) }}>CART</h1>
 
-      <div>PLEASE SELECT SIZE</div>
+      <div id='selectSizeWarning' className='hideWarning' >PLEASE SELECT SIZE</div>
       <div className='cart'>
         <div id='sizeSelector'>
-              <select id='skuSelect'name='size' onFocus={(e)=>{ Object.keys(selectedStyle.skus).length ? e.target.size=Object.keys(selectedStyle.skus).length : null}}  onBlur={(e)=>{e.target.size='0'}} className='dropDown' onChange={() => {selectedSize()}}>
-                {!quantityList ? <option value="none" selected disabled hidden>SELECT SIZE</option> : null}
-
+              <select id='skuSelect'name='size' onFocus={(e)=>{ Object.keys(selectedStyle.skus).length ? e.target.size=document.getElementById("skuSelect").options.length - 1 : null}}  onBlur={(e)=>{e.target.size='0'}} className='dropDown' onChange={() => { selectedSize(); }}>
+                { !quantityList ? <option id='tester' value="none" selected disabled hidden>SELECT SIZE</option> : null}
                 {selectedStyle.skus ? sizeDropDown(selectedStyle.skus) : null}
               </select>
           </div>
@@ -119,8 +163,10 @@ const Cart = () => {
 
       <div className='cart'>
         <div id='addToBag'>
-          <label htmlFor='skuSelect'>ADD TO BAG</label>
-          <button name='add' className='dropDown' onClick={() => {checkOut()}}>+</button>
+          <div id='hideButton'>
+            <label htmlFor='skuSelect'>ADD TO BAG</label>
+            <button id='checkOutButton' name='add' onClick={() => { checkOut(); }}>+</button>
+          </div>
         </div>
 
         <div id='favorite'>

@@ -29,8 +29,39 @@ app.get('/productStyles', (req, res) => {
   });
 
 
-  app.get('/initialRender', (req, res) => {
 
+  app.post('/cart', (req, res) => {
+    console.log(req.body);
+
+    axios
+      .post(`${api}/cart`, req.body, config)
+      .then((data) => {
+        if (!data) {
+          throw data;
+        }
+
+          axios.get(`${api}/cart`, config)
+            .then((data) => {
+              if (!data) {
+                throw data;
+              }
+              console.log('CART DATA', data.data);
+            })
+            .catch((error) => {
+              console.log('ERROR in get', error);
+            })
+
+
+      })
+      .catch((error) => {
+        console.log('ERRORRRR');
+      });
+
+  });
+
+
+
+  app.get('/initialRender', (req, res) => {
   // shoes: 71701
   axios
     .get(`${api}/products/${initialProduct}`, config)
@@ -38,7 +69,6 @@ app.get('/productStyles', (req, res) => {
       if (!data) {
         throw data;
       }
-      console.log('initial render', data.data);
       res.status(200).send(data.data);
     })
     .catch((error) => {

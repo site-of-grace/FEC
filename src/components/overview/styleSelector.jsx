@@ -30,6 +30,7 @@ const StyleSelector = (props) => {
   // onClick, perform price changes and assign checkMark variable to the selected thumbnail
   const thumbnailUpdate = (data) => {
 
+    console.log('thumbnail update', data);
     //If clicking on the already selected thumbnail, do nothing.
     if (JSON.stringify(data) === JSON.stringify(checkMark)) {
       return;
