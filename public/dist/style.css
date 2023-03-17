@@ -196,6 +196,15 @@ h1 {
 
 }
 
+.removeBorder {
+  border-style: none;
+}
+
+#plusSign {
+  float: right;
+  margin-right: 10px;
+}
+
 #gallery {
   border-style: solid;
   width: 19%;
@@ -212,6 +221,10 @@ h1 {
  max-width: 100%;
  max-height: 100%;
  display: block;
+}
+
+#checkOutButton {
+  float: right;
 }
 
 .showCheckMark {

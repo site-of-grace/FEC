@@ -8,12 +8,21 @@ const Cart = () => {
   const dispatch = useDispatch();
 
 
-  const [sizeList, setSizeList] = useState(1);
+  //quantity list is one number but our function takes it and loops it.
   const [quantityList, setQuantityList] = useState(0);
+
+  //Size and Quantity are for users to save data to add to cart
   const [size, setSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
 
+  /*
+    Everytime a new style gets selected, we are going to..
+    1. set the quantityList to 0 (This disables a few elements on the page)
+    2. disable the quality drop down (until a size is selected)
+    3. setSize to '' - this is whats going to get sent to the api cart
+    4. setQuantity to 1 normally (anything that is 0 will not show)
+  */
   useEffect(() => {
     setQuantityList(0);
     document.getElementById('quantitySelect').setAttribute('disabled', '');
@@ -22,6 +31,9 @@ const Cart = () => {
   }, [selectedStyle]);
 
 
+  /*
+  Function for danny for carousol
+  */
   const selectOutfit = () => {
     var outfit = {
       product: mainProduct,
@@ -31,44 +43,49 @@ const Cart = () => {
   };
 
 
+
+  //This is going to loop through the selectedStyles 'sku' property and create the drop down for Select Size
+  //Ignores sizes that have quantity of 0
+  //If all sizes have 0 quantity, return out of stock tag
   var sizeDropDown = (skuObject) => {
-    var skus = Object.keys(skuObject);
-
-
-      var skuDropDown = skus.map((sku) => {
-
-        console.log(skuObject[sku].size);
+    var resultArray = [];
+      for (var sku in skuObject) {
         if (skuObject[sku].quantity !== 0) {
-          return <option value={`${sku}-${skuObject[sku].quantity}`}>{skuObject[sku].size}</option>
-        }
-      });
-
-      console.log(skuDropDown, '<----');
-
-
-      var resultArray = [];
-
-      for (var i = 0; i < skuDropDown.length; i++) {
-        if (skuDropDown[i] !== undefined) {
-          resultArray.push(skuDropDown[i]);
+          resultArray.push(<option value={`${sku}-${skuObject[sku].quantity}`}>{skuObject[sku].size}</option>);
         }
       }
-
-      console.log(resultArray, '<---- resultarray')
-
-
       if (resultArray.length === 0) {
-        document.getElementById('tester').innerText = 'OUT OF STOCK';
+        document.getElementById('defaultSelect').innerText = 'OUT OF STOCK';
         document.getElementById('skuSelect').setAttribute('disabled', '');
         document.getElementById('hideButton').classList.add('hide');
       } else {
         return resultArray;
       }
+  };
 
+  //Once someone selects a size..
+    //get the sku number, the size
+    //close the size drop down
+    //remove any warnings if they have some.
+  var selectedSize = () => {
+    var sizeTag = document.getElementById('skuSelect');
 
+    var skuNumber = sizeTag.value.split('-')[0]; //EX: 71628
+    var skuSize = sizeTag.value.split('-')[1]; //EX: XS
+
+    setQuantityList(skuSize);
+    setSize(skuNumber);
+    sizeTag.blur();
+
+    document.getElementById('selectSizeWarning').classList.remove('showWarning');
+    document.getElementById('selectSizeWarning').classList.add('hideWarning');
   };
 
 
+
+
+  //Once quantityList is loaded from selectedSize (once someone selects a size)
+  //Remove the disabled part of the quantity drop down and generate some options for it.
   var quantityDropDown = () => {
     document.getElementById('quantitySelect').removeAttribute('disabled');
 
@@ -92,21 +109,13 @@ const Cart = () => {
     }
   };
 
-
-
-  var selectedSize = () => {
-    var sizeTag = document.getElementById('skuSelect');
-    var skuNumber = sizeTag.value.split('-')[0];
-    var skuSize = sizeTag.value.split('-')[1];
-
-    setQuantityList(skuSize);
-    setSize(skuNumber);
-
-    sizeTag.blur();
-    document.getElementById('selectSizeWarning').classList.remove('showWarning');
-    document.getElementById('selectSizeWarning').classList.add('hideWarning');
+  //Once a quantity has been selected, set it to a state, and close the quantity drop down.
+  var selectedQuantity = () => {
+    setQuantity(document.getElementById('quantitySelect').value);
+    document.getElementById('quantitySelect').blur();
   };
 
+  //When checkout buttons is clicked.
   var checkOut = () => {
     if (document.getElementById('skuSelect').value === 'none') {
       document.getElementById('skuSelect').focus();
@@ -125,15 +134,14 @@ const Cart = () => {
           console.log('SUCCESSFUL POST REQUEST TO CART', error);
         });
     }
-
   };
 
   var testing = {
-    2580526: {quantity: 3, size: 'XS'},
+    2580526: {quantity: 0, size: 'XS'},
     2580527: {quantity: 0, size: 'S'},
     2580528: {quantity: 0, size: 'M'},
     2580529: {quantity: 0, size: 'L'},
-    2580530: {quantity: 5, size: 'XL'},
+    2580530: {quantity: 0, size: 'XL'},
     2580531: {quantity: 0, size: 'XXL'}
   };
 
@@ -147,15 +155,14 @@ const Cart = () => {
       <div id='selectSizeWarning' className='hideWarning' >PLEASE SELECT SIZE</div>
       <div className='cart'>
         <div id='sizeSelector'>
-              <select id='skuSelect'name='size' onFocus={(e)=>{ Object.keys(selectedStyle.skus).length ? e.target.size=document.getElementById("skuSelect").options.length - 1 : null}}  onBlur={(e)=>{e.target.size='0'}} className='dropDown' onChange={() => { selectedSize(); }}>
-                { !quantityList ? <option id='tester' value="none" selected disabled hidden>SELECT SIZE</option> : null}
+              <select id='skuSelect' name='size' onFocus={(e)=>{ Object.keys(selectedStyle.skus).length ? e.target.size=document.getElementById("skuSelect").options.length - 1 : null}}  onBlur={(e)=>{e.target.size='0'}} className='dropDown' onChange={() => { selectedSize(); }}>
+                { !quantityList ? <option id='defaultSelect' value="none" selected disabled hidden>SELECT SIZE</option> : null}
                 {selectedStyle.skus ? sizeDropDown(selectedStyle.skus) : null}
               </select>
           </div>
 
           <div id='quantitySelector'>
-            <select id='quantitySelect' name='quantitytest' onFocus={(e) => { quantityList ? e.target.size=quantityList : null}} onBlur={(e)=>{e.target.size='0'}} className='dropDown' disabled='disabled'
-            onChange={() => {setQuantity(document.getElementById('quantitySelect').value), document.getElementById('quantitySelect').blur()}}>
+            <select id='quantitySelect' name='quantitytest' onFocus={(e) => { quantityList ? e.target.size=quantityList : null}} onBlur={(e)=>{e.target.size='0'}} className='dropDown' disabled='disabled' onChange={() => { selectedQuantity(); }}>
               {quantityList ? quantityDropDown() :  <option value="none" selected disabled hidden>-</option>}
             </select>
           </div>
@@ -163,9 +170,11 @@ const Cart = () => {
 
       <div className='cart'>
         <div id='addToBag'>
-          <div id='hideButton'>
-            <label htmlFor='skuSelect'>ADD TO BAG</label>
-            <button id='checkOutButton' name='add' onClick={() => { checkOut(); }}>+</button>
+          <div id='hideButton' onClick={() => { checkOut(); }}>
+            <label htmlFor='skuSelect'>
+              <span>ADD TO BAG</span>
+              <span id='plusSign'>+</span>
+            </label>
           </div>
         </div>
 
