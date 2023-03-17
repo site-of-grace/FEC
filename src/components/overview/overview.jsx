@@ -51,7 +51,7 @@ const Overview = () => {
   // const clickHandler = () => {
   //   dispatch(setMessage('Hello FEC!'))
   // }
-
+console.log('mainProduct', mainProduct);
 
   return (
     <div>

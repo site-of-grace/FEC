@@ -1,26 +1,25 @@
 import React, { useEffect } from 'react';
 import manualSWR from '../../utils/fetchers';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMainProduct, setProducts } from '../../store/overviewSlice';
+// import { setMainProduct, } from '../../store/overviewSlice';
+import { setProducts } from '../../store/productSlice';
 import styles from './styles.module.css';
 import Card from './card.jsx';
 
 const RelatedItems = () => {
-  // const fakeData = {
-  //   category: 'Jackets',
-  //   name: 'Camo Jacket',
-  //   price: '140.00',
-  //   rating: '4.5',
-  //   image:
-  //     'https://images.unsplash.com/photo-1613419489076-15da367b38df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80'
-  // };
+
 
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
-  const { trigger } = manualSWR('/related', 'get');
+  const onSuccess = (res) => {
+    console.log('res', res);
+    dispatch(setProducts(res.data));
+  };
+
+  const { trigger } = manualSWR({ path: '/related', type: 'get', onSuccess });
 
   useEffect(() => {
-    trigger({ products: ['hello'] });
+    trigger();
   }, []);
 
   return (
@@ -28,7 +27,9 @@ const RelatedItems = () => {
       <h1 className={styles.title}>RELATED ITEMS</h1>
       <div className={styles.row}>
         {/* <Card product={fakeData} /> */}
-        <Card />
+        {products.map((product) => (
+          <Card product={product} key={product.id}/>
+        ))}
       </div>
     </>
   );

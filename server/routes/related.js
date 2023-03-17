@@ -2,16 +2,21 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { api, config } = require('../config.js');
+const { initialProduct, api, config } = require('../config.js');
 
 router.get('/', async (req, res) => {
   try {
-    const currentId = req.query.id;
-    console.log(req.query);
-
+    // console.log(req.query);
+    let { arg, id } = req.query;
+    let cache;
+    let currentId = id || (arg && arg.id);
     if (!currentId) {
-      res.status(400).send({ error: 'Missing id in /related' });
-      return;
+      currentId = initialProduct;
+      // return;
+    }
+
+    if (arg && arg.cache) {
+      cache = new Set(arg.cache);
     }
 
     const { data } = await axios.get(`${api}/products/${currentId}/related`, config);
@@ -19,6 +24,9 @@ router.get('/', async (req, res) => {
     const related = [];
     const products = [];
     data.forEach(productId => {
+      if (cache && cache.has(productId)) {
+        return;
+      }
       related.push(axios.get(`${api}/products/${productId}/related`, config));
       products.push(axios.get(`${api}/products/${productId}`, config));
     });
@@ -33,7 +41,7 @@ router.get('/', async (req, res) => {
 
     res.status(200).send(result);
   } catch (err) {
-    // console.error(err);
+    console.error(err);
     res.status(500).send({ error: 'Internal server error in /related' });
   }
 });

@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  products: new Map()
+  cache: {},
+  products: [],
 };
 
 const currentSlice = createSlice({
@@ -10,7 +11,8 @@ const currentSlice = createSlice({
   reducers: {
     setProducts: (state, action) => {
       for (let i = 0; i < action.payload.length; i++) {
-        state.products.set(action.payload[i].id, action.payload[i]);
+        state.cache[action.payload[i].id] = action.payload[i];
+        state.products.push(action.payload[i]);
       }
     }
   }
