@@ -8,7 +8,7 @@ const App = () => {
 
 
   return (
-    <div>
+    <div id='FEC'>
       <h1>Hello FEC</h1>
       <Overview />
       <Rating />
