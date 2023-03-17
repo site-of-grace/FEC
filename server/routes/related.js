@@ -7,6 +7,13 @@ const { api, config } = require('../config.js');
 router.get('/', async (req, res) => {
   try {
     const currentId = req.query.id;
+    console.log(req.query);
+
+    if (!currentId) {
+      res.status(400).send({ error: 'Missing id in /related' });
+      return;
+    }
+
     const { data } = await axios.get(`${api}/products/${currentId}/related`, config);
 
     const related = [];
@@ -26,7 +33,7 @@ router.get('/', async (req, res) => {
 
     res.status(200).send(result);
   } catch (err) {
-    console.error(err);
+    // console.error(err);
     res.status(500).send({ error: 'Internal server error in /related' });
   }
 });

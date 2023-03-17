@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import manualSWR from '../../utils/fetchers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setProducts } from '../../store/overviewSlice';
 import styles from './styles.module.css';
@@ -16,6 +17,11 @@ const RelatedItems = () => {
 
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
+  const { trigger } = manualSWR('/related', 'get');
+
+  useEffect(() => {
+    trigger({ products: ['hello'] });
+  }, []);
 
   return (
     <>

@@ -22,7 +22,7 @@ app.get('/productStyles', (req, res) => {
         throw data;
       }
 
-      console.log('style call', data.data);
+      // console.log('style call', data.data);
       res.status(200).send(data.data);
     })
     .catch((error) => {
@@ -40,7 +40,7 @@ app.get('/productStyles', (req, res) => {
       if (!data) {
         throw data;
       }
-      console.log('initial render', data.data);
+      // console.log('initial render', data.data);
       res.status(200).send(data.data);
     })
     .catch((error) => {
