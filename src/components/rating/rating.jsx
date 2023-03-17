@@ -16,15 +16,6 @@ const Rating = () => {
     fetchMetaData();
   };
 
-  var getReviewsAmount = (ratingMeta) => {
-		var amount = 0;
-		for (var key in ratingMeta.ratings) {
-			var curRatings = ratingMeta.ratings[key];
-			amount += Number(curRatings);
-		}
-		dispatch(setReviewAmount(amount));
-	};
-
 
   var fetchReviews = (options) => {
 		axios.get('/rating/reviews' , options)
@@ -42,7 +33,6 @@ const Rating = () => {
     axios.get('/rating/meta')
     .then((serverData) => {
       console.log('Review data from server ==> ', serverData.data);
-      getReviewsAmount(serverData.data);
       dispatch(setRatingMeta(serverData.data));
 
     })

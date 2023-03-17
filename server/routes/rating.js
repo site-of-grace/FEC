@@ -8,13 +8,19 @@ const { api, config } = require('../config.js');
 router.get('/reviews', async (req, res) => {
 	var productId = '71701';
   const metaData = await axios.get(`${api}/reviews/meta/?product_id=${productId}`, config);
-	var reviewCount = 0;
-	for (let i = 1; i <= 5; i++) {
-		reviewCount += Number(metaData.data.ratings[i]);
-	}
+  if (!metaData.data || !metaData.data.recommended) {
+    req.statusCode = 404;
+    res.end();
+  }
+	var reviewCount = Number(metaData.data.recommended.false) + Number(metaData.data.recommended.true);
 	console.log(reviewCount);
-	const reviewData = await axios.get(`${api}/reviews/?product_id=${productId}&count=${44}&sort=relevant&page=2`, config);
-	console.log(reviewData.data.results.length);
+	const reviewData = await axios.get(`${api}/reviews/?product_id=${productId}&count=${reviewCount}&sort=relevant`, config);
+  if (!reviewData.data || !reviewData.data.results) {
+    req.statusCode = 404;
+    res.end();
+  }
+  req.statusCode = 200;
+  res.send(JSON.stringify(reviewData.data));
 });
 
 //Increments helpful for review
