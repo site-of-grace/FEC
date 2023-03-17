@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   reviews: [],
   ratingMeta: {},
-  reviewPage: 0,
+  reviewsRelevant: [],
   reviewsHelpful: [],
   reviewsRecent: []
 };
@@ -19,18 +19,18 @@ const ratingSlice = createSlice({
     setRatingMeta: (state, action) => {
       state.ratingMeta = action.payload;
     },
-    setReviewPage: (state, action) => {
-      state.reviewPage = action.payload;
-    },
     setReviewsHelpful: (state, action) => {
       state.reviewsHelpful = action.payload;
     },
     setReviewsRecent: (state, action) => {
       state.reviewsRecent = action.payload;
+    },
+    setReviewsRelevant: (state, action) => {
+      state.reviewsRecent = action.payload;
     }
   }
 });
 
-export const {setReviews, setRatingMeta, setReviewPage, setReviewsHelpful, setReviewsRecent} = ratingSlice.actions;
+export const {setReviews, setRatingMeta, setReviewsHelpful, setReviewsRecent, setReviewsRelevant} = ratingSlice.actions;
 
 export default ratingSlice.reducer;

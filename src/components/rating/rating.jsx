@@ -1,17 +1,18 @@
+//Remove console.logs!
+
 import React, { useEffect} from 'react';
 
 import ReviewList  from './reviewList.jsx';
 import SortOptions from './sortOptions.jsx';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
-import {setRatingMeta, setReviews, setReviewPage} from '../../store/ratingSlice';
+import {setRatingMeta, setReviews, setReviewsRelevant} from '../../store/ratingSlice';
 
 const Rating = () => {
-  const rating = useSelector((state) => state.rating); // rating stuff
 
   const dispatch = useDispatch();
 
-  const onRender = () => {
+  const onRender = () => { //When component loads fetch data
     fetchReviews();
     fetchMetaData();
   };
@@ -21,8 +22,9 @@ const Rating = () => {
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
 			console.log('Reviews from server ==> ', serverData.data);
-      dispatch(setReviewPage(rating.reviewPage+1));
-      dispatch(setReviews(rating.reviews.concat(serverData.data.results)));
+      dispatch(setReviews(serverData.data.results));
+      //Reviews are sorted by relevant so fill that in store
+      dispatch(setReviewsRelevant(serverData.data.results));
 		})
 		.catch((err) => {
 			console.log('Error from server ==> ', err);
@@ -32,7 +34,7 @@ const Rating = () => {
   var fetchMetaData = () => {
     axios.get('/rating/meta')
     .then((serverData) => {
-      console.log('Review data from server ==> ', serverData.data);
+      //console.log('Review data from server ==> ', serverData.data);
       dispatch(setRatingMeta(serverData.data));
 
     })
