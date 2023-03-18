@@ -81,7 +81,7 @@ const Rating = () => {
   useEffect(fetchMetaData, []);
 
   return (
-    <div className='widget'>
+    <div className='widget' id='rating'>
       <h1 className='title'>RATING</h1>
       <Breakdown />
       <ReviewList />

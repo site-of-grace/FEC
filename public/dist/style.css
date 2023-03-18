@@ -268,9 +268,14 @@ h1 {
 
 
 /*======================= REVIEW CSS START ===========================*/
+  #rating {
+    min-height: 700px;
+  }
+
+  /* Review list === */
   #review-list {
     overflow: scroll;
-    max-height: 450px;
+    max-height: 550px;
     width: 800px;
     overflow-x: hidden;
   }
@@ -279,6 +284,7 @@ h1 {
     position: absolute;
     display: inline-block;
   }
+  /* -- */
 
     /* Single review ====*/
   .review, .review h1 {
@@ -393,13 +399,12 @@ h1 {
 
   /*  Breakdown */
   #rating-breakdown {
+    transform: translateY(-30px);
     display: inline-block;
     min-width: 300px;
     min-height: 500px;
     vertical-align: top;
     margin-left: 200px;
-    margin-right: 50px;
-    border: 2px solid black;
   }
 
   #rating-average {
