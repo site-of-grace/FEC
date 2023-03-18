@@ -268,11 +268,12 @@ h1 {
 
 
 /*======================= REVIEW CSS START ===========================*/
-  /* Single review ====*/
   #review-list {
     overflow: scroll;
     max-height: 500px;
   }
+
+    /* Single review ====*/
   .review, .review h1 {
     color: rgb(68, 68, 68);
     margin-bottom: 50px;
@@ -301,28 +302,6 @@ h1 {
   .review-photo:hover {
     border-radius: 10px;
   }
-  #review-imgModel {
-    position: fixed;
-    left: 0;
-    right: 0;
-    max-width: 800px;
-    margin: 0 auto;
-    top: 10%;
-  }
-  #review-imgModel img {
-    width: 800px;
-    border-radius: 10px;
-    border: 2px solid black;
-  }
-  #review-imgModel button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 5px 15px 5px 15px;
-    box-shadow: 0px 0px 15px 5px rgb(16, 16, 16);
-  }
   .review-response {
     background-color: rgb(227, 227, 227);
     border-radius: 4px;
@@ -335,6 +314,8 @@ h1 {
     background-color: rgb(68, 68, 68);
     margin-top: 5px;
   }
+
+  /* Helpful */
   .review-helpful, .review-helpful button {
     font-size: 15px;
     padding: 0px;
@@ -354,7 +335,37 @@ h1 {
     display: inline;
     font-size: 12px;
   }
-  /*Sort options ========*/
+  /* - */
+
+  /* -- */
+
+  /* Popup image model */
+  #review-imgModel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    top: 10%;
+    z-index: 9;
+  }
+  #review-imgModel img {
+    width: 800px;
+    border-radius: 10px;
+    border: 2px solid black;
+  }
+  #review-imgModel button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 15px 5px 15px;
+    box-shadow: 0px 0px 15px 5px rgb(16, 16, 16);
+  }
+  /* -- */
+
+  /*Sort options*/
   #sort-bar {
     font-weight: bold;
     color: rgb(68, 68, 68);
@@ -369,5 +380,13 @@ h1 {
     border-bottom: solid;
     font-weight: bold;
   }
+  /* -- */
+
+  /*  Breakdown */
+  #rating-breakdown {
+    float: left;
+    color: red;
+  }
+  /* -- */
 /*======================= REVIEW CSS END ===========================*/
 
