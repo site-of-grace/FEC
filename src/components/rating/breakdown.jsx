@@ -7,36 +7,37 @@ import Stars from '../general/Stars.jsx';
 const Breakdown = () => {
 	const averageRating = useSelector((state) => state.rating.average);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
+	const metaDataTotal = useSelector((state) => state.rating.ratingMetaTotal);
 	console.log(metaData);
 
 	const starsDiv = Stars({number: averageRating});
-	var percentRecommended;
 
+	var percentRecommended;
+	//Percent Recommended
 	if (metaData.recommended) {
 		var recommended = metaData.recommended;
 		percentRecommended = Math.round((Number(recommended.true)/(Number(recommended.true) + Number(recommended.false)))*100);
 	}
 
+	//Creates a progress bar filled by rating percent
 	var progressBars = [];
 	if (metaData.ratings) {
 		var width = 210;
-		var height = 7;
 		for (var i = 5; i >= 1; i--) {
-			var ratingPercent = metaData.ratings[i];
-			//var filledWidth = width;
+			var ratingPercent = metaData.ratings[i]/metaDataTotal;
+			var filledWidth = Math.round(width*ratingPercent);
 			progressBars.push(
 				<div className='rating-progressBarSection'>
 					<div className='rating-progressBar-rating'>{i} stars</div>
 					<div className='rating-progressBar'>
-						<div style={{'width': `${width}px`, 'height': `${height}px`}} className='rating-progressBarEmpty'></div>
-						<div className='rating-progressBarFill'></div>
+						<div style={{'width': `${filledWidth}px`}} className='rating-progressBarFill'></div>
+						<div style={{'width': `${width}px`}} className='rating-progressBarEmpty'></div>
 					</div>
 					<div></div>
 				</div>
 			);
 		}
 	}
-	console.log(progressBars);
 
 	return (
 		<div id='rating-breakdown'>

@@ -436,10 +436,13 @@ h1 {
     margin-left: 5px;
   }
   .rating-progressBarEmpty {
+    height: 7px;
     background-color: rgb(164, 164, 164);
   }
-  .rating-progressBarFilled {
+  .rating-progressBarFill {
+    height: 7px;
     background-color: green;
+    transform: translateY(7px);
   }
   /* -- */
 /*======================= REVIEW CSS END ===========================*/
