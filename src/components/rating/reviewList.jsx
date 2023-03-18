@@ -30,16 +30,22 @@ const ReviewList = () => {
 				<img className={'review-selectedImg'} src={selectedImg}></img>
 				<button onClick={() => setSelectedImg(false)}>✕</button>
 			</div> : null}
-			{curReviews.map((curReview) => {
+
+			{!filterRating ? curReviews.map((curReview) => {
 				if (curReview) { {/*Only displays if curReview is not undefined*/}
-					if (filterRating !== false && filterRating[curReview.rating] === undefined) {
-						return;
-					}
 					return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>;
 				}
-			})}
+			}) : null}
+
+			{filterRating ? reviews.map((curReview) => { {/*Show all filtered reviews if filter by Rating is true*/}
+				if (!filterRating[curReview.rating]) {
+					return;
+				}
+				return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>;
+			}) : null}
+
 			{/*If more reviews left show expand button*/}
-			{reviews[curReviewPos + 2] ? <button onClick={handleExpand}>More Reviews</button> : null}
+			{reviews[curReviewPos + 2] && !filterRating ? <button onClick={handleExpand}>More Reviews</button> : null}
 		</div>
 		</div>
 	);

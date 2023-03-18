@@ -14,8 +14,12 @@ const Breakdown = () => {
 	const metaDataTotal = useSelector((state) => state.rating.ratingMetaTotal);
 	const filterRating = useSelector((state) => state.rating.filterRating);
 	const handleRatingSelection = (rating) => {
+		if (isNaN(Number(rating))) {
+			dispatch(setFilterRating(false));
+			return;
+		}
 		var filterRatingObj = {};
-		if (filterRating !== false) {
+		if (filterRating) {
 			Object.assign(filterRatingObj, filterRating);
 			filterRatingObj[rating] = true;
 			//Check if we need to remove a filter
@@ -69,6 +73,7 @@ const Breakdown = () => {
 			<div id='rating-starsAverage'>{starsDiv}</div>
 			<div id='rating-recommended'>{percentRecommended}% of reviews recommended this product</div>
 			{progressBars}
+			{filterRating ? <div style={{'color': 'red'}}>Filters Applied <div id='rating-removeFilters' onClick={handleRatingSelection}>Remove All Filters</div></div> : null}
 		</div>
 	);
 };

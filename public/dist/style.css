@@ -456,6 +456,14 @@ h1 {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.224);
   }
+  #rating-removeFilters{
+    text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+  }
+  #rating-removeFilters:hover {
+    color: green;
+  }
   /* -- */
 /*======================= REVIEW CSS END ===========================*/
 
