@@ -3,7 +3,6 @@
 import React, { useEffect} from 'react';
 
 import ReviewList  from './reviewList.jsx';
-import SortOptions from './sortOptions.jsx';
 import Breakdown from './breakdown.jsx';
 
 import axios from 'axios';
@@ -83,7 +82,6 @@ const Rating = () => {
 
   return (
     <div className='widget'>
-      <SortOptions />
       <h1 className='title'>RATING</h1>
       <Breakdown />
       <ReviewList />
