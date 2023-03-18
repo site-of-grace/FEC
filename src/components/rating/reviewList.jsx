@@ -32,8 +32,7 @@ const ReviewList = () => {
 			</div> : null}
 			{curReviews.map((curReview) => {
 				if (curReview) { {/*Only displays if curReview is not undefined*/}
-				console.log(curReview.rating, filterRating);
-					if (filterRating !== false && curReview.rating !== Number(filterRating)) {
+					if (filterRating !== false && filterRating[curReview.rating] === undefined) {
 						return;
 					}
 					return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>;

@@ -12,9 +12,24 @@ const Breakdown = () => {
 	const averageRating = useSelector((state) => state.rating.average);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
 	const metaDataTotal = useSelector((state) => state.rating.ratingMetaTotal);
-
+	const filterRating = useSelector((state) => state.rating.filterRating);
 	const handleRatingSelection = (rating) => {
-		dispatch(setFilterRating(rating));
+		var filterRatingObj = {};
+		if (filterRating !== false) {
+			Object.assign(filterRatingObj, filterRating);
+			filterRatingObj[rating] = true;
+			//Check if we need to remove a filter
+			if (filterRating[rating]) {
+				delete filterRatingObj[rating];
+			}
+			if (Object.keys(filterRatingObj).length === 0) {
+				filterRatingObj = false;
+			}
+			dispatch(setFilterRating(filterRatingObj));
+		} else {
+			filterRatingObj[rating] = true;
+			dispatch(setFilterRating(filterRatingObj));
+		}
 	};
 
 	const starsDiv = Stars({number: averageRating});
