@@ -22,7 +22,7 @@ const Breakdown = () => {
 	//Creates a progress bar filled by rating percent
 	var progressBars = [];
 	if (metaData.ratings) {
-		var width = 210;
+		var width = 200;
 		for (var i = 5; i >= 1; i--) {
 			var ratingPercent = metaData.ratings[i]/metaDataTotal;
 			var filledWidth = Math.round(width*ratingPercent);

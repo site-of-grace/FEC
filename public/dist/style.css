@@ -426,10 +426,10 @@ h1 {
   }
   .rating-progressBarSection {
     margin-bottom: 6px;
-    text-decoration: underline;
   }
   .rating-progressBar-rating {
     display: inline-block;
+    text-decoration: underline;
   }
   .rating-progressBar {
     display: inline-block;
