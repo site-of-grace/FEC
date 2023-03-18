@@ -15,7 +15,7 @@ const Rating = () => {
 
   const dispatch = useDispatch();
 
-  const product_id = '71699'; //Fix later when Danny provided info
+  const product_id = '71701'; //Fix later when Danny provided info
 
   var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
     var helpfulnessWeight = 4; //Make helpfulness a bit more important
