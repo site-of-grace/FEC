@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import textReducer from './productSlice';
 import overviewReducer from './overviewSlice';
 import ratingReducer from './ratingSlice';
+import questionReducer from './questionsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     text: textReducer,
     overview: overviewReducer,
     rating: ratingReducer,
+    question: questionReducer,
   },
   devTools: true,
 });

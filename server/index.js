@@ -79,6 +79,45 @@ app.get('/productStyles', (req, res) => {
 
 
 
+// ============API requests for Q&A=======================================
+//I'm also scared of merge conflicts and just working on functionality at the moment
+//we can make things clean and efficient afterwards
+
+
+// var productId = req.query.id;
+// axios
+//   .get(`${api}/products/${productId}/styles`, config)
+
+
+
+// app.get('/questions', (req, res) => {
+app.get('/questions', (req, res) => {
+
+  var product_id = req.query.product_id;
+  console.log('req.query====> ',req.query);
+  // console.log('productId in /QA/questions==========> ', product_id);
+  axios
+    .get(`${api}/qa/questions/?product_id=${product_id}`, config)
+    .then((data) => {
+      if (!data) {
+        throw data;
+      }      
+      console.log('OK request on questions route, data.data: ', data.data);
+      res.send(data.data);
+    })
+    .catch((error) => {
+      // console.log('error on questions route ', error);
+      res.send(error);
+    });
+  });
+  
+
+    
+
+
+// ===================================================
+
+
 app.listen(port, () => {
   console.log(`listening on port: ${port}`);
 });
