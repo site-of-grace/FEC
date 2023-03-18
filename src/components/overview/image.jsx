@@ -5,12 +5,12 @@ import { setMainProduct, setStyles } from '../../store/overviewSlice';
 const ImageGallery = () => {
   const { mainProduct, styles, mainPhotos } = useSelector((state) => state.overview); // store.slice
 
-
-
   useEffect(() => {
     if (mainPhotos[0] !== undefined) {
       setMain(mainPhotos[0].thumbnail_url);
     }
+
+
   }, [mainPhotos]);
 
 
@@ -52,7 +52,8 @@ const ImageGallery = () => {
       }
 
       if (url === main) {
-        setMain(previousUrl);
+
+        thumbnailSelect(previousUrl);
         return;
       }
 
@@ -78,7 +79,7 @@ const ImageGallery = () => {
       var nextUrl = items[i + 1].getElementsByTagName('img')[0].currentSrc;
 
       if (url === main) {
-        setMain(nextUrl);
+       thumbnailSelect(nextUrl);
         return;
       }
 

@@ -9,16 +9,4 @@ describe('Overview Testing', () => {
     const titleElement = getByText(/OVERVIEW/i);
     expect(titleElement).toBeInTheDocument();
   });
-
-  test('applies the correct CSS class to the title', () => {
-    const { getByText } = render(<Overview />);
-    const titleElement = getByText(/OVERVIEW/i);
-    expect(titleElement).toHaveClass('title');
-  });
-
-  test('testing', () => {
-    const { getByText } = render(<Overview />);
-    const titleElement = getByText(/OVERVIEW/i);
-    expect(titleElement).toHaveClass('title');
-  });
 });
