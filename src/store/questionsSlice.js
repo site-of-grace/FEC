@@ -7,13 +7,17 @@ const initialState = {
   asker_name: '',
   question_helpfulness: 0,
   reported: false,
-  answers: {}
+  answers: {},
+  questionArr: []
 };
 
 const questionsSlice = createSlice({
   name: 'questions',
   initialState,
   reducers: {
+    setQuestionArr: (state, action) => {
+      state.questionArr = action.payload;
+    },
     setQuestionId: (state, action) => {
       state.question_id = action.payload;
     },
@@ -38,6 +42,6 @@ const questionsSlice = createSlice({
   }
 });
 
-export const { setQuestionId, setQuestionBody, setQuestionDate, setAskerName, setQuestionHelpfulness, setReported, setAnswers } = questionsSlice.actions;
+export const { setQuestionId, setQuestionBody, setQuestionDate, setAskerName, setQuestionHelpfulness, setReported, setAnswers, setQuestionArr } = questionsSlice.actions;
 
 export default questionsSlice.reducer;

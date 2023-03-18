@@ -94,6 +94,7 @@ app.get('/productStyles', (req, res) => {
 app.get('/questions', (req, res) => {
 
   var product_id = req.query.product_id;
+  console.log('req.query====> ',req.query);
   // console.log('productId in /QA/questions==========> ', product_id);
   axios
     .get(`${api}/qa/questions/?product_id=${product_id}`, config)
@@ -101,8 +102,8 @@ app.get('/questions', (req, res) => {
       if (!data) {
         throw data;
       }      
-      console.log('ok request on questions route ', data.data);
-      res.send(data);
+      console.log('OK request on questions route, data.data: ', data.data);
+      res.send(data.data);
     })
     .catch((error) => {
       // console.log('error on questions route ', error);
@@ -110,22 +111,7 @@ app.get('/questions', (req, res) => {
     });
   });
   
-  // app.get('/productStyles', (req, res) => {
-  //   var productId = req.query.id;
-  //   axios
-  //     .get(`${api}/products/${productId}/styles`, config)
-  //     .then((data) => {
-  //       if (!data) {
-  //         throw data;
-  //       }
-  
-  //       console.log('style call', data.data);
-  //       res.status(200).send(data.data);
-  //     })
-  //     .catch((error) => {
-  //       res.status(404).send(error);
-  //     });
-  //   });
+
     
 
 
