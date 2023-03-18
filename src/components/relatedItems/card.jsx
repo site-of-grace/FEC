@@ -21,7 +21,7 @@ export default function Card({ product = {
       <span className={styles.imageContainer}>
         <img
           className={styles.image}
-          src={product.image || ''}
+          src={product.styles[0].photos[0].thumbnail_url}
           alt="product"
         />
       </span>
@@ -29,7 +29,7 @@ export default function Card({ product = {
         <span className={styles.category}>{product.category.toUpperCase()}</span>
         <span className={styles.name}>{product.name}</span>
         <span className={styles.price}>{product.default_price}</span>
-        <Stars number={product?.rating || 3.5} hide={true}/>
+        <Stars number={product.rating} hide={true}/>
       </span>
     </div>
   );
