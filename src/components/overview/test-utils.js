@@ -8,9 +8,9 @@ import { Provider } from 'react-redux';
 const render = ( ui, {...renderOptions} = {}) => {
   const Wrapper = ({ children }) => {
   return <Provider store={store}>{children}</Provider>
-  }
+  };
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions })
-  }
+  };
 
 
   // re-export everything

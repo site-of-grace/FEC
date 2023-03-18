@@ -27,6 +27,7 @@ h1 {
   display: inline-block;
   margin-right: 10px;
   padding: 10px;
+
 }
 
 #overview1-3 {
@@ -41,7 +42,6 @@ h1 {
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
-  height: 700px;
 }
 
 
@@ -167,25 +167,27 @@ h1 {
   display: none;
 }
 
+.show {
+  display: block;
+}
 
 #imageGallery {
   margin: 0;
   padding: 0;
   list-style: none;
   background-color: transparent;
-
+  height: 740px;
+  overflow: scroll;
 }
-
 
 .imageGalleryItem {
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
+  width: 80px;
+  height: 80px;
 }
 
-.imageGallery {
-  display: inline-block;
 
+.selectorSpace {
+  height: 20px;
 }
 
 #mainPhoto {
@@ -193,8 +195,24 @@ h1 {
   width: 79%;
   display: flex;
   justify-content: center;
-
+  align-items: center;
 }
+
+
+
+
+#thePhoto {
+  border-style: solid;
+  display: inline-block;
+  justify-content: center;
+
+  height: 90%;
+  width: 65%;
+}
+
+
+
+
 
 .removeBorder {
   border-style: none;
