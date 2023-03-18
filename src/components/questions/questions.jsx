@@ -21,28 +21,20 @@ const Questions = () => {
   useEffect(() => {
     if(mainProduct.id) {
       console.log('mainProduct.id==============> ', mainProduct.id);
-      // axios.get(`/QA/question?product_id=${mainProduct.id}`)
-      // .get(`/productStyles?id=${id}`)
-
-      // const params = {product_id: mainProduct.id};
-      // .get(`/productStyles?id=${id}`)
-
       axios.get('/questions', { 
         params: {
           product_id: mainProduct.id
         }
       })
       .then((productInfo) => {
-        console.log('productInfo from axios request=========> ', productInfo);
-        questionArr = productInfo.results;
-        
+        console.log('productInfo.data from axios request=========> ', productInfo.data);
+        // questionArr = productInfo;
       })
       .catch((err) => {
         console.log('err: ', err); 
       });
-      
     }
-    console.log('questionArr.question_body ', questionArr.question_body);
+    console.log('questionArr ', questionArr);
   }, [mainProduct.id]);
   
   
