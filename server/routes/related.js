@@ -2,16 +2,31 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { api, config } = require('../config.js');
+const { initialProduct, api, config } = require('../config.js');
 
 router.get('/', async (req, res) => {
   try {
-    const currentId = req.query.id;
+    // console.log(req.query);
+    let { arg, id } = req.query;
+    let cache;
+    let currentId = id || (arg && arg.id);
+    if (!currentId) {
+      currentId = initialProduct;
+      // return;
+    }
+
+    if (arg && arg.cache) {
+      cache = new Set(arg.cache);
+    }
+
     const { data } = await axios.get(`${api}/products/${currentId}/related`, config);
 
     const related = [];
     const products = [];
     data.forEach(productId => {
+      if (cache && cache.has(productId)) {
+        return;
+      }
       related.push(axios.get(`${api}/products/${productId}/related`, config));
       products.push(axios.get(`${api}/products/${productId}`, config));
     });
