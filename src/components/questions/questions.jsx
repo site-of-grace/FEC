@@ -11,9 +11,52 @@ const Questions = () => {
   const questions  = useSelector((state) => state.question); // store.slice
 
   
-  // const state = useSelector(state => state);
-  // console.log('state===> ', state.overview.mainProduct.id);
-  // console.log('mainProduct.id=========> ', mainProduct.id);
+  //fake data for skeleton
+  const fakeData = {
+    product_id: '71706',
+    results: [
+      {
+        question_id: 631421,
+        question_body: 'Where is this product made?',
+        question_date: '2018-02-28T00:00:00.000Z',
+        asker_name: 'funnygirl',
+        question_helpfulness: 15,
+        reported: false,
+        answers: {
+          5892754: {
+            answerer_name: "sillyguy",
+            body: "China",
+            date: "2018-03-28T00:00:00.000Z",
+            helpfulness: 11,
+            id: 5897275,
+            photos: []
+          }
+        }
+      },
+      {
+        question_id: 631422,
+        question_body: 'What fabric is the top made of?',
+        question_date: '2019-09-12T00:00:00.000Z',
+        asker_name: 'l33tgamer',
+        question_helpfulness: 6,
+        reported: false,
+        answers: {
+          5999754: {
+            answerer_name: "secondguy",
+            body: "Mexico",
+            date: "2099-03-28T00:00:00.000Z",
+            helpfulness: 5,
+            id: 5897275,
+            photos: []
+          }
+        }
+      }
+    ]
+  };
+    
+  
+  
+  
   
   const [loading, setLoading] = useState(true);
   
@@ -26,7 +69,7 @@ const Questions = () => {
       })
       .then((response) => {
         const questions = response.data.results;
-        // console.log('questions=====>', questions);
+        console.log('questions=====>', questions);
         dispatch(setQuestionArr(questions));
         setLoading(false);
       })
@@ -63,7 +106,7 @@ const Questions = () => {
           // console.log('question=====>', question);
           return <div key={question.question_id}>
             Q: {question.question_body}
-            {/* A: {question.answers} */}
+            <p>A: {fakeData.results[0].answers['5892754'].body}</p>
           </div>;
         })}
       </div>
