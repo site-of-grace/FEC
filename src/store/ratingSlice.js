@@ -7,7 +7,8 @@ const initialState = {
   reviewsHelpful: [],
   reviewsRecent: [],
   average: [],
-  ratingMetaTotal: [] //A lot of these ratings are hidden from the user.
+  ratingMetaTotal: [], //A lot of these ratings are hidden from the user.
+  filterRating: false
 };
 
 
@@ -35,10 +36,13 @@ const ratingSlice = createSlice({
     },
     setRatingMetaTotal: (state, action) => {
       state.ratingMetaTotal = action.payload;
+    },
+    setFilterRating: (state, action) => {
+      state.filterRating = action.payload;
     }
   }
 });
 
-export const {setReviews, setRatingMeta, setReviewsHelpful, setReviewsRecent, setReviewsRelevant, setAverage, setRatingMetaTotal} = ratingSlice.actions;
+export const {setReviews, setRatingMeta, setReviewsHelpful, setReviewsRecent, setReviewsRelevant, setAverage, setRatingMetaTotal, setFilterRating} = ratingSlice.actions;
 
 export default ratingSlice.reducer;

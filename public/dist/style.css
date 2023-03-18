@@ -430,6 +430,11 @@ h1 {
   .rating-progressBar-rating {
     display: inline-block;
     text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+  }
+  .rating-progressBar-rating:hover {
+    color:green;
   }
   .rating-progressBar {
     display: inline-block;
@@ -443,6 +448,13 @@ h1 {
     height: 7px;
     background-color: green;
     transform: translateY(7px);
+  }
+  .rating-progressBar-ratingAmmount{
+    float: right;
+    transform: translateX(-40px);
+    font-size: 10px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.224);
   }
   /* -- */
 /*======================= REVIEW CSS END ===========================*/

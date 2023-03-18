@@ -7,7 +7,7 @@ import Review from './review.jsx';
 //Only displays 2 at a time
 const ReviewList = () => {
 	const reviews = useSelector((state) => state.rating.reviews);
-
+	const filterRating = useSelector((state) => state.rating.filterRating);
 	const [curReviews, setCurReviews] = useState([]);
 	const [curReviewPos, setCurReviewPos] = useState(0);
 	const [selectedImg, setSelectedImg] = useState(false);
@@ -32,6 +32,10 @@ const ReviewList = () => {
 			</div> : null}
 			{curReviews.map((curReview) => {
 				if (curReview) { {/*Only displays if curReview is not undefined*/}
+				console.log(curReview.rating, filterRating);
+					if (filterRating !== false && curReview.rating !== Number(filterRating)) {
+						return;
+					}
 					return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>;
 				}
 			})}

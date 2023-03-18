@@ -1,14 +1,21 @@
 import React from 'react';
 
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+
+import {setFilterRating} from '../../store/ratingSlice';
 
 import Stars from '../general/Stars.jsx';
 
 const Breakdown = () => {
+	const dispatch = useDispatch();
+
 	const averageRating = useSelector((state) => state.rating.average);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
 	const metaDataTotal = useSelector((state) => state.rating.ratingMetaTotal);
-	console.log(metaData);
+
+	const handleRatingSelection = (rating) => {
+		dispatch(setFilterRating(rating));
+	};
 
 	const starsDiv = Stars({number: averageRating});
 
@@ -28,11 +35,12 @@ const Breakdown = () => {
 			var filledWidth = Math.round(width*ratingPercent);
 			progressBars.push(
 				<div className='rating-progressBarSection'>
-					<div className='rating-progressBar-rating'>{i} stars</div>
+					<div onClick={(e) => handleRatingSelection(e.target.innerHTML[0])} className='rating-progressBar-rating'>{i} stars</div>
 					<div className='rating-progressBar'>
 						<div style={{'width': `${filledWidth}px`}} className='rating-progressBarFill'></div>
 						<div style={{'width': `${width}px`}} className='rating-progressBarEmpty'></div>
 					</div>
+					<div className='rating-progressBar-ratingAmmount'>{metaData.ratings[i]}</div>
 					<div></div>
 				</div>
 			);

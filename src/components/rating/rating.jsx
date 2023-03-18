@@ -14,7 +14,7 @@ import _ from 'lodash';
 const Rating = () => {
 
   const dispatch = useDispatch();
-
+  //current product ids = 71697, 71698, 71699, 71700, 71701
   const product_id = '71701'; //Fix later when Danny provided info
 
   var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
