@@ -3,7 +3,7 @@ h1 {
 }
 
 .small-stars {
-  width: 20px;
+  width: 15px;
 }
 
 .stars-container {
@@ -286,7 +286,7 @@ h1 {
     margin-bottom: 50px;
   }
   .review-star {
-    width: 18px;
+    width: 15px;
   }
   .review-date-name {
     font-size: 13px;
@@ -401,6 +401,19 @@ h1 {
     margin-right: 50px;
     border: 2px solid black;
   }
+
+  #rating-average {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    font-weight: 900;
+    color: rgb(85, 85, 85);
+    float: left;
+  }
+  #rating-starsAverage {
+    transform: translateY(20px);
+    margin-left: 90px;
+  }
+
   /* -- */
 /*======================= REVIEW CSS END ===========================*/
 
