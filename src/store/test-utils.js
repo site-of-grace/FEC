@@ -1,6 +1,6 @@
 import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
-import { store } from '../../store/index.js';
+import { store } from './index.js';
 import { Provider } from 'react-redux';
 
 

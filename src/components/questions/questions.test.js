@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen} from '../../store/test-utils';
 import Questions from '../questions/questions';
 
 
