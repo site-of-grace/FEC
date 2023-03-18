@@ -79,6 +79,39 @@ app.get('/productStyles', (req, res) => {
 
 
 
+// ============API requests for Q&A=======================================
+//I'm also scared of merge conflicts and just working on functionality at the moment
+//we can make things clean and efficient afterwards
+
+app.get('/QA/:id', (req, res) => {
+  let id = req.params.id;
+  let config = {
+    headers: {
+      Authorization: `${githubToken}`
+    }
+  };
+
+  axios
+    .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions?product_id=${id}`, config)
+    .then((data) => {
+      res.status(200).send(data.data);
+    })
+    .catch((error) => {
+      res.status(404).send(error);
+    });
+});
+
+
+
+
+
+
+
+
+
+// ===================================================
+
+
 app.listen(port, () => {
   console.log(`listening on port: ${port}`);
 });

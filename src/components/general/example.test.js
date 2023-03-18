@@ -2,6 +2,8 @@
 // import { render, screen } from '@testing-library/react';
 import { render } from '@testing-library/react';
 import RelatedItems from '../relatedItems/relatedItems';
+import Questions from '../questions/questions';
+
 
 describe('RelatedItems', () => {
   test('renders the title', () => {
@@ -15,4 +17,15 @@ describe('RelatedItems', () => {
     const titleElement = getByText(/RELATED ITEMS/i);
     expect(titleElement).toHaveClass('title');
   });
+});
+
+
+describe('QuestionsAnswers', () => {
+  test('renders the title', () => {
+    const { getByText } = render(<Questions />);
+    const titleElement = getByText(/QUESTIONS/i);
+    expect(titleElement).toBeInTheDocument();
+  });
+
+
 });
