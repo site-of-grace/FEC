@@ -7,14 +7,14 @@ import Breakdown from './breakdown.jsx';
 
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
-import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful, setAverage} from '../../store/ratingSlice';
+import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful, setAverage, setRatingMetaTotal} from '../../store/ratingSlice';
 
 import _ from 'lodash';
 
 const Rating = () => {
 
   const dispatch = useDispatch();
-
+  //current product ids = 71697, 71698, 71699, 71700, 71701
   const product_id = '71701'; //Fix later when Danny provided info
 
   var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
@@ -30,13 +30,13 @@ const Rating = () => {
   };
 
   var calculateAverage = (metaData) => {
-    console.log(metaData);
     var total = 0;
     var reviewAmount = 0;
     for (var i = 1; i <= 5; i++) {
       total += Number(metaData.ratings[i]) * i;
       reviewAmount += Number(metaData.ratings[i]);
     }
+    dispatch(setRatingMetaTotal(reviewAmount)); //Needed for rating breakdown
     var longAverage = (total/reviewAmount);
   //Rounds to nearest .25
     dispatch(setAverage((Math.round(longAverage * 4) / 4)));
