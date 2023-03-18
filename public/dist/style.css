@@ -403,7 +403,6 @@ h1 {
     display: inline-block;
     min-width: 300px;
     min-height: 500px;
-    vertical-align: top;
     margin-left: 200px;
   }
 
@@ -412,16 +411,36 @@ h1 {
     font-size: 50px;
     font-weight: 900;
     color: rgb(85, 85, 85);
-    float: left;
+    display: inline-block;
   }
   #rating-starsAverage {
-    transform: translateY(20px);
-    margin-left: 90px;
+    transform: translateY(-20px);
+    display: inline-block;
   }
   #rating-recommended {
-    margin-top: 50px;
+    display: block;
+    font-size: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: rgb(147, 147, 147);
   }
-
+  .rating-progressBarSection {
+    margin-bottom: 6px;
+    text-decoration: underline;
+  }
+  .rating-progressBar-rating {
+    display: inline-block;
+  }
+  .rating-progressBar {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  .rating-progressBarEmpty {
+    background-color: rgb(164, 164, 164);
+  }
+  .rating-progressBarFilled {
+    background-color: green;
+  }
   /* -- */
 /*======================= REVIEW CSS END ===========================*/
 
