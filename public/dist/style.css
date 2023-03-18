@@ -268,11 +268,25 @@ h1 {
 
 
 /*======================= REVIEW CSS START ===========================*/
-  /* Single review ====*/
+  #rating {
+    min-height: 700px;
+  }
+
+  /* Review list === */
   #review-list {
     overflow: scroll;
-    max-height: 500px;
+    max-height: 550px;
+    width: 800px;
+    overflow-x: hidden;
   }
+
+  #review-list-section {
+    position: absolute;
+    display: inline-block;
+  }
+  /* -- */
+
+    /* Single review ====*/
   .review, .review h1 {
     color: rgb(68, 68, 68);
     margin-bottom: 50px;
@@ -281,16 +295,16 @@ h1 {
     width: 15px;
   }
   .review-date-name {
-    font-size: 10px;
+    font-size: 13px;
     float: right;
   }
   .review-summary {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
     margin: 10px 0px 10px 0px;
   }
   .review-body {
-    font-size: 10px;
+    font-size: 15px;
     margin-bottom: 10px;
   }
   .review-photo {
@@ -300,28 +314,6 @@ h1 {
   }
   .review-photo:hover {
     border-radius: 10px;
-  }
-  #review-imgModel {
-    position: fixed;
-    left: 0;
-    right: 0;
-    max-width: 800px;
-    margin: 0 auto;
-    top: 10%;
-  }
-  #review-imgModel img {
-    width: 800px;
-    border-radius: 10px;
-    border: 2px solid black;
-  }
-  #review-imgModel button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 5px 15px 5px 15px;
-    box-shadow: 0px 0px 15px 5px rgb(16, 16, 16);
   }
   .review-response {
     background-color: rgb(227, 227, 227);
@@ -335,6 +327,8 @@ h1 {
     background-color: rgb(68, 68, 68);
     margin-top: 5px;
   }
+
+  /* Helpful */
   .review-helpful, .review-helpful button {
     font-size: 15px;
     padding: 0px;
@@ -354,10 +348,42 @@ h1 {
     display: inline;
     font-size: 12px;
   }
-  /*Sort options ========*/
+  /* - */
+
+  /* -- */
+
+  /* Popup image model */
+  #review-imgModel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    top: 10%;
+    z-index: 9;
+  }
+  #review-imgModel img {
+    width: 800px;
+    border-radius: 10px;
+    border: 2px solid black;
+  }
+  #review-imgModel button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 15px 5px 15px;
+    box-shadow: 0px 0px 15px 5px rgb(16, 16, 16);
+  }
+  /* -- */
+
+  /*Sort options*/
   #sort-bar {
+    font-size: 20px;
     font-weight: bold;
     color: rgb(68, 68, 68);
+    margin-bottom: 40px;
   }
   #sort-bar div{
     display: inline-block;
@@ -369,5 +395,30 @@ h1 {
     border-bottom: solid;
     font-weight: bold;
   }
+  /* -- */
+
+  /*  Breakdown */
+  #rating-breakdown {
+    transform: translateY(-30px);
+    display: inline-block;
+    min-width: 300px;
+    min-height: 500px;
+    vertical-align: top;
+    margin-left: 200px;
+  }
+
+  #rating-average {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    font-weight: 900;
+    color: rgb(85, 85, 85);
+    float: left;
+  }
+  #rating-starsAverage {
+    transform: translateY(20px);
+    margin-left: 90px;
+  }
+
+  /* -- */
 /*======================= REVIEW CSS END ===========================*/
 

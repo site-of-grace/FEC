@@ -3,7 +3,8 @@
 import React, { useEffect} from 'react';
 
 import ReviewList  from './reviewList.jsx';
-import SortOptions from './sortOptions.jsx';
+import Breakdown from './breakdown.jsx';
+
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful, setAverage} from '../../store/ratingSlice';
@@ -80,9 +81,9 @@ const Rating = () => {
   useEffect(fetchMetaData, []);
 
   return (
-    <div className='widget'>
-      <SortOptions />
+    <div className='widget' id='rating'>
       <h1 className='title'>RATING</h1>
+      <Breakdown />
       <ReviewList />
     </div>
   );
