@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { setMainProduct, } from '../../store/overviewSlice';
 import { setProducts } from '../../store/productSlice';
 import styles from './styles.module.css';
-import Card from './card.jsx';
+import Card from './Card.jsx';
 
 const RelatedItems = () => {
   const dispatch = useDispatch();

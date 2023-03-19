@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { calculateAverage } = require('../utils.js');
+const { calculateAverage, getThumbnailMap } = require('../utils.js');
 const { initialProduct, api, config } = require('../config.js');
 
 router.get('/', async (req, res) => {
@@ -45,6 +45,7 @@ router.get('/', async (req, res) => {
       ...product.data,
       rating: calculateAverage(reviewData[i].data),
       styles: styleData[i].data.results,
+      validPhotos: getThumbnailMap(styleData[i].data.results),
       related: relatedData[i].data,
     }));
 
