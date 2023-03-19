@@ -42,6 +42,9 @@ h1 {
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 
@@ -172,17 +175,21 @@ h1 {
 }
 
 #imageGallery {
-  margin: 0;
-  padding: 0;
+  margin: 10px;
   list-style: none;
   background-color: transparent;
-  height: 740px;
-  overflow: scroll;
+  height: 728px;
+  overflow-y: scroll;
+  scrollbar-color: red;
 }
 
 .imageGalleryItem {
   width: 80px;
   height: 80px;
+}
+
+ul::-webkit-scrollbar {
+  display: none;
 }
 
 
@@ -205,8 +212,8 @@ h1 {
   border-style: solid;
   display: inline-block;
   justify-content: center;
-
-  height: 90%;
+  margin-left: 10px;
+  margin-right: 10px;
   width: 65%;
 }
 

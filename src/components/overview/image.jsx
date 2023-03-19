@@ -9,22 +9,33 @@ const ImageGallery = () => {
     if (mainPhotos[0] !== undefined) {
       setMain(mainPhotos[0].thumbnail_url);
     }
-
-
   }, [mainPhotos]);
+
+
+
 
 
 
   const [main, setMain] = useState('');
 
+  useEffect(() => {
+    if (main.length !== 0) {
+      var mainSelectShow = document.getElementById(main).getElementsByTagName('div')[1];
+      mainSelectShow.classList.remove('hide');
+      mainSelectShow.classList.add('show');
+    }
+  }, [main]);
 
 
   var thumbnailSelect = (url) => {
+
+    var selectedPic = document.getElementById(url).getElementsByTagName('div')[1];
+    var previousPic = document.getElementById(main).getElementsByTagName('div')[1];
+    previousPic.classList.remove('show');
+    previousPic.classList.add('hide');
     setMain(url);
-    document.getElementById(main).classList.remove('show');
-    document.getElementById(main).classList.add('hide');
-    document.getElementById(url).classList.remove('hide');
-    document.getElementById(url).classList.add('show');
+    selectedPic.classList.remove('hide');
+    selectedPic.classList.add('show');
   };
 
 
@@ -37,28 +48,18 @@ const ImageGallery = () => {
       return;
     }
 
-
-
-
-
     for (var i = 0; i < items.length; i++) {
       var url = items[i].getElementsByTagName('img')[0].currentSrc;
       var previousUrl = '';
 
-
-
       if (i !== 0) {
         previousUrl = items[i - 1].getElementsByTagName('img')[0].currentSrc;
       }
-
       if (url === main) {
-
         thumbnailSelect(previousUrl);
+        document.getElementById(previousUrl).scrollIntoView({behavior: 'smooth', block: 'end'});
         return;
       }
-
-
-
     }
   };
 
@@ -73,19 +74,16 @@ const ImageGallery = () => {
     if (main === lastUrl) {
       return;
     }
-
     for (var i = 0; i < items.length; i++) {
       var url = items[i].getElementsByTagName('img')[0].currentSrc;
       var nextUrl = items[i + 1].getElementsByTagName('img')[0].currentSrc;
-
       if (url === main) {
        thumbnailSelect(nextUrl);
+       document.getElementById(nextUrl).scrollIntoView({behavior: 'smooth', block: 'end'});
         return;
       }
-
     }
   };
-
 
 
   return (mainPhotos.length !== 0) ? (
@@ -94,26 +92,14 @@ const ImageGallery = () => {
           <ul id='imageGallery'>
             {mainPhotos.map((photo) => {
 
-              return <li onClick={() => { thumbnailSelect(photo.thumbnail_url); }} key={photo.thumbnail_url} value='test'>
+              return <li id={photo.thumbnail_url} onClick={() => { thumbnailSelect(photo.thumbnail_url); }} key={photo.thumbnail_url} value='test'>
                 <img className='imageGalleryItem' src={photo.thumbnail_url}></img>
                 <div className='selectorSpace'>
-                  <div id={photo.thumbnail_url} className='hide'>selected</div>
+                  <div className='hide'>selected</div>
                 </div>
                 </li>;
             })}
-            {/* <li>
-                <img className='imageGalleryItem' src={main}></img>
-                <div className='selectorSpace'>
-                  <div >selected</div>
-                </div>
-                </li>
 
-                <li onClick={() => { }}>
-                <img className='imageGalleryItem' src={main}></img>
-                <div className='selectorSpace'>
-                  <div >selected</div>
-                </div>
-                </li> */}
           </ul>
         </div>
       <div id='mainPhoto'>

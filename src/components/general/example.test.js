@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 // import { render, screen } from '@testing-library/react';
-import { render } from '@testing-library/react';
+import { render } from '../../../test-utils.js';
+
 import RelatedItems from '../relatedItems/relatedItems';
 import Questions from '../questions/questions';
 

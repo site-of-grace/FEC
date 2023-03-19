@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
-import Questions from '../questions/questions';
+import { render, screen} from '../../../test-utils.js';
+import Questions from './questions.jsx';
 
 
 describe('QuestionsAnswers', () => {
