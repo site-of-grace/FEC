@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 // import './styles.css';
 
 
-const CardCarousel = ({ show, cardItems, changePhoto }) => {
+const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave }) => {
   const [isHovered, setIsHovered] = useState(false);
   
   const [indexes, setIndexes] = useState({
@@ -33,13 +33,21 @@ const CardCarousel = ({ show, cardItems, changePhoto }) => {
   const handleCardTransition = useCallback(() => {
     // If we've reached the end, start again from the first card,
     // but carry previous value over
-    if (indexes.nextIndex >= cardItems.length - 1) {
+    if (indexes.nextIndex === cardItems.length - 1) {
       setIndexes({
-        lastIndex: cardItems.length - 2,
-        previousIndex: cardItems.length - 1,
-        currentIndex: 0,
-        nextIndex: 1
+        lastIndex: (cardItems.length - 3) % cardItems.length,
+        previousIndex: (cardItems.length - 2) % cardItems.length,
+        currentIndex: (cardItems.length - 1) % cardItems.length,
+        nextIndex: 0,
       });
+    } else if (indexes.nextIndex === 0) {
+      setIndexes({
+      lastIndex: (cardItems.length - 2) % cardItems.length,
+      previousIndex: cardItems.length - 1,
+      currentIndex: 0,
+      nextIndex: 1
+      });
+
     } else {
       setIndexes((prevState) => {
 
@@ -80,8 +88,8 @@ const CardCarousel = ({ show, cardItems, changePhoto }) => {
       // opacity: show || isHovered ? 1 : 0,
       opacity: 1,
     }}
-    onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)}
+    onMouseEnter={() => { setIsHovered(true); onMouseEnter(); }}
+    onMouseLeave={() => { setIsHovered(false); onMouseLeave(); }}
     >
       {cardItems.map((card, index) => (
         <li

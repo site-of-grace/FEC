@@ -53,6 +53,8 @@ const Card = React.memo(({ product }) => {
           show={isHovered}
           cardItems={photoStyles}
           changePhoto={changePhoto}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         />
         <img
           className={`${styles.image} image-container`}

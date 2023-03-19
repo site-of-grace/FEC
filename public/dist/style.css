@@ -65,7 +65,7 @@ body {
   transition: all 0.75s ease;
   position: absolute;
   transform: scale(1) translateX(40px);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 li.carousel-card > img {
@@ -85,8 +85,29 @@ li.carousel-card > img {
   margin: 0;
 }
 
+.carousel-card.last:hover {
+  transform: scale(.75) translateX(-120px) translateY(-40px);
+  opacity: 1;
+}
+
+.carousel-card.prev:hover {
+  transform: scale(.75) translateX(-80px) translateY(-40px);
+  opacity: 1;
+}
+
+.carousel-card.active:hover {
+  transform: scale(.85) translateX(0) translateY(-40px);
+  opacity: 1;
+}
+
+.carousel-card.next:hover {
+  transform: scale(1) translateX(40px) translateY(-20px);
+  opacity: 1;
+}
+
 .carousel-card.active {
   opacity: .7;
+  /* top: 20px; */
   transform: scale(.85) translateX(0);
   box-shadow: 0 30px 20px rgba(0, 0, 0, 0.1);
   z-index: 2;
