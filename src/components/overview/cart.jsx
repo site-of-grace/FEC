@@ -73,7 +73,14 @@ const Cart = () => {
     var skuNumber = sizeTag.value.split('-')[0]; //EX: 71628
     var skuSize = sizeTag.value.split('-')[1]; //EX: XS
 
-    setQuantityList(skuSize);
+
+
+    if (Number(skuSize) > 15) {
+      setQuantityList(15);
+    } else {
+      setQuantityList(Number(skuSize));
+    }
+
     setSize(skuNumber);
     sizeTag.blur();
 
@@ -91,23 +98,14 @@ const Cart = () => {
 
     var resultArray = [];
 
-    if (quantityList >= 15) {
-      // do this loop to 15
-      for (var i = 1; i <= 15; i++) {
-        resultArray.push(i);
-      }
-      return resultArray.map((quantity) => {
-        return <option>{quantity}</option>
-      });
-    } else {
+
       for (var j = 1; j <= quantityList; j++) {
         resultArray.push(j);
       }
       return resultArray.map((quantity) => {
         return <option>{quantity}</option>
       });
-    }
-  };
+    };
 
   //Once a quantity has been selected, set it to a state, and close the quantity drop down.
   var selectedQuantity = () => {
@@ -150,7 +148,7 @@ const Cart = () => {
 
   return (
     <div>
-      <h1 onClick={() => { dispatch(setSelectedstyle({skus: testing})) }}>CART</h1>
+      <h1 onClick={() => { document.getElementById('count-2').scrollIntoView(true);}}>CART</h1>
 
       <div id='selectSizeWarning' className='hideWarning' >PLEASE SELECT SIZE</div>
       <div className='cart'>
@@ -171,10 +169,10 @@ const Cart = () => {
       <div className='cart'>
         <div id='addToBag'>
           <div id='hideButton' onClick={() => { checkOut(); }}>
-            <label htmlFor='skuSelect'>
+
               <span>ADD TO BAG</span>
               <span id='plusSign'>+</span>
-            </label>
+
           </div>
         </div>
 

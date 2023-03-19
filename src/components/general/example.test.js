@@ -1,6 +1,4 @@
 /* eslint-disable react/react-in-jsx-scope */
-// import { render, screen } from '@testing-library/react';
-// import { render } from '@testing-library/react';
 import { render, screen} from '../../store/test-utils.js';
 import RelatedItems from '../relatedItems/relatedItems';
 
