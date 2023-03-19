@@ -1,5 +1,6 @@
-import { render, screen} from '../../../test-utils.js';
-import Questions from './questions.jsx';
+import { render, screen} from '../../store/test-utils';
+import Questions from '../questions/questions';
+
 
 
 describe('QuestionsAnswers', () => {
