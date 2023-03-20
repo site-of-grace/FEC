@@ -27,6 +27,7 @@ h1 {
   display: inline-block;
   margin-right: 10px;
   padding: 10px;
+
 }
 
 #overview1-3 {
@@ -41,7 +42,9 @@ h1 {
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
-  height: 700px;
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 
@@ -167,25 +170,31 @@ h1 {
   display: none;
 }
 
+.show {
+  display: block;
+}
 
 #imageGallery {
-  margin: 0;
-  padding: 0;
+  margin: 10px;
   list-style: none;
   background-color: transparent;
-
+  height: 728px;
+  overflow-y: scroll;
+  scrollbar-color: red;
 }
-
 
 .imageGalleryItem {
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
+  width: 80px;
+  height: 80px;
 }
 
-.imageGallery {
-  display: inline-block;
+ul::-webkit-scrollbar {
+  display: none;
+}
 
+
+.selectorSpace {
+  height: 20px;
 }
 
 #mainPhoto {
@@ -193,8 +202,24 @@ h1 {
   width: 79%;
   display: flex;
   justify-content: center;
-
+  align-items: center;
 }
+
+
+
+
+#thePhoto {
+  border-style: solid;
+  display: inline-block;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 65%;
+}
+
+
+
+
 
 .removeBorder {
   border-style: none;
@@ -403,7 +428,6 @@ h1 {
     display: inline-block;
     min-width: 300px;
     min-height: 500px;
-    vertical-align: top;
     margin-left: 200px;
   }
 
@@ -412,13 +436,59 @@ h1 {
     font-size: 50px;
     font-weight: 900;
     color: rgb(85, 85, 85);
-    float: left;
+    display: inline-block;
   }
   #rating-starsAverage {
-    transform: translateY(20px);
-    margin-left: 90px;
+    transform: translateY(-20px);
+    display: inline-block;
   }
-
+  #rating-recommended {
+    display: block;
+    font-size: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: rgb(147, 147, 147);
+  }
+  .rating-progressBarSection {
+    margin-bottom: 6px;
+  }
+  .rating-progressBar-rating {
+    display: inline-block;
+    text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+  }
+  .rating-progressBar-rating:hover {
+    color:green;
+  }
+  .rating-progressBar {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  .rating-progressBarEmpty {
+    height: 7px;
+    background-color: rgb(164, 164, 164);
+  }
+  .rating-progressBarFill {
+    height: 7px;
+    background-color: green;
+    transform: translateY(7px);
+  }
+  .rating-progressBar-ratingAmmount{
+    float: right;
+    transform: translateX(-40px);
+    font-size: 10px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.224);
+  }
+  #rating-removeFilters{
+    text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+  }
+  #rating-removeFilters:hover {
+    color: green;
+  }
   /* -- */
 /*======================= REVIEW CSS END ===========================*/
 

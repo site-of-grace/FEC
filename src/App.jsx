@@ -11,9 +11,9 @@ const App = () => {
     <div id='FEC'>
       <h1>Hello FEC</h1>
       <Overview />
-      <Rating />
-      <Questions />
       <RelatedItems />
+      <Questions />
+      <Rating />
     </div>
     );
 };

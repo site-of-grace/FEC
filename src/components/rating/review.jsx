@@ -28,7 +28,7 @@ const Review = ({review, setSelectedImg}) => {
 	date = date.toLocaleDateString('en-us', { weekday:'long', year:'numeric', month:'short', day:'numeric'});
 
 	//Sets star element depending on rating
-	for (var i = 0; i < 5; i++) {
+	for (var i = 1; i <= 5; i++) {
 		if (i <= review.rating) {
 			stars.push(<img className='review-star' key={i} src='./icons/fullStar.png'></img>);
 		} else {
