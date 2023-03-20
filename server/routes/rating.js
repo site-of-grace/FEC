@@ -3,8 +3,6 @@ const router = express.Router();
 const axios = require('axios');
 const { api, config } = require('../config.js');
 
-//current product ids = 71697, 71698, 71699, 71700, 71701
-
 router.get('/reviews', (req, res) => {
   //Gets the total review count for api request count
   var metaData = req.query.metaData;
