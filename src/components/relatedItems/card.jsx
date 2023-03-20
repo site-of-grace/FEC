@@ -46,7 +46,6 @@ const Card = React.memo(({ product }) => {
   return (
     <div
       className={styles.card}
-      onClick={onClick}
     >
       <span className={styles.imageContainer}>
         <CardCarousel
@@ -66,9 +65,10 @@ const Card = React.memo(({ product }) => {
           alt="product"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onClick={onClick}
         />
       </span>
-      <span className={styles.details}>
+      <span className={styles.details} onClick={onClick}>
         <span className={styles.category}>{product.category.toUpperCase()}</span>
         <span className={styles.name}>{product.name}</span>
         <span className={styles.price}>{product.default_price}</span>

@@ -33,7 +33,6 @@ const RelatedItems = () => {
     <>
       <h1 className={styles.title}>RELATED ITEMS</h1>
       <div className={styles.row}>
-        {/* <Card product={fakeData} /> */}
         {products.map((product) => (
           <Card
             product={product}
