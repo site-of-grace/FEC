@@ -1,13 +1,10 @@
 import React, { useCallback, useState } from 'react';
 // import './styles.css';
 
-
 const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave }) => {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const [indexes, setIndexes] = useState({
-    // lastIndex: cardItems.length - 1,
-    // previousIndex: 0,
     lastIndex: (cardItems.length - 2) % cardItems.length,
     previousIndex: cardItems.length - 1,
     currentIndex: 0,
@@ -29,8 +26,9 @@ const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave
     return 'inactive';
   }
 
-
-  const handleCardTransition = useCallback(() => {
+  const cycleCards = useCallback((index) => {
+      console.log('index', index, 'carditems', cardItems);
+      changePhoto(cardItems[indexes.nextIndex].url);
     // If we've reached the end, start again from the first card,
     // but carry previous value over
     if (indexes.nextIndex === cardItems.length - 1) {
@@ -38,70 +36,79 @@ const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave
         lastIndex: (cardItems.length - 3) % cardItems.length,
         previousIndex: (cardItems.length - 2) % cardItems.length,
         currentIndex: (cardItems.length - 1) % cardItems.length,
-        nextIndex: 0,
+        nextIndex: 0
       });
     } else if (indexes.nextIndex === 0) {
       setIndexes({
-      lastIndex: (cardItems.length - 2) % cardItems.length,
-      previousIndex: cardItems.length - 1,
-      currentIndex: 0,
-      nextIndex: 1
+        lastIndex: (cardItems.length - 2) % cardItems.length,
+        previousIndex: cardItems.length - 1,
+        currentIndex: 0,
+        nextIndex: 1
       });
-
     } else {
       setIndexes((prevState) => {
-
         const obj = {
-        lastIndex: prevState.currentIndex - 1 === -1 ? cardItems.length - 1 : prevState.currentIndex - 1,
-        previousIndex: prevState.currentIndex,
-        currentIndex: prevState.currentIndex + 1,
-        nextIndex:
-          prevState.currentIndex + 2 === cardItems.length ? 0 : prevState.currentIndex + 2
-      };
-      
-      console.log('obj', obj);
-      return obj;
-    }
-      );
+          lastIndex:
+            prevState.currentIndex - 1 === -1
+              ? cardItems.length - 1
+              : prevState.currentIndex - 1,
+          previousIndex: prevState.currentIndex,
+          currentIndex: prevState.currentIndex + 1,
+          nextIndex:
+            prevState.currentIndex + 2 === cardItems.length ? 0 : prevState.currentIndex + 2
+        };
+
+        console.log('obj', obj);
+        return obj;
+      });
     }
   }, [indexes.currentIndex]);
 
-  const cycleCards = (index) => {
-    console.log('index', index, 'carditems', cardItems);
-    handleCardTransition();
-    changePhoto(cardItems[indexes.nextIndex].url);
-  };
+  const cycleCardsBackward = useCallback((index) => {
+    changePhoto(cardItems[index].url);
+    setIndexes((prevState) => {
+      const obj = {
+        lastIndex: ((prevState.lastIndex - 1) % cardItems.length) < 0 ? cardItems.length - 1 : (prevState.lastIndex - 1) % cardItems.length,
+        previousIndex: prevState.lastIndex,
+        currentIndex: prevState.previousIndex,
+        nextIndex: prevState.currentIndex,
+      };
 
-  // useEffect(() => {
-  //   const transitionInterval = setInterval(() => {
-  //     handleCardTransition();
-  //   }, 4000);
-
-  //   return () => clearInterval(transitionInterval);
-  // }, [handleCardTransition, indexes]);
-
+      console.log('obj', obj);
+      return obj;
+    });
+  }, [indexes.currentIndex]);
 
   return (
-    // <div className="carousel-container">
-    <ul className="card-carousel"
-    style={{
-      // opacity: show || isHovered ? 1 : 0,
-      opacity: 1,
-    }}
-    onMouseEnter={() => { setIsHovered(true); onMouseEnter(); }}
-    onMouseLeave={() => { setIsHovered(false); onMouseLeave(); }}
+    <ul
+      className="card-carousel"
+      style={{
+        opacity: show || isHovered ? 1 : 0,
+        // for testing:
+        // opacity: 1
+      }}
+      onMouseEnter={() => {
+        setIsHovered(true);
+        onMouseEnter();
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        onMouseLeave();
+      }}
     >
       {cardItems.map((card, index) => (
         <li
           key={card.id}
           className={`carousel-card ${determineClasses(indexes, index)}`}
-          onClick={indexes.nextIndex === index ? cycleCards.bind(null, index) : null}
+          onClick={indexes.nextIndex === index ? cycleCards.bind(null, index) : cycleCardsBackward.bind(null, index)}
         >
-          <img src={card.url} alt={card.id} />
+          <img
+            src={card.url}
+            alt={card.id}
+          />
         </li>
       ))}
     </ul>
-    // </div>
   );
 };
 
