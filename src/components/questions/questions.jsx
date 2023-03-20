@@ -102,19 +102,29 @@ const Questions = () => {
       
       
       <div>
-        {/* {console.log('questions=====>', questions)} */}
-        
         {questions.questionArr.map((question) => {
           // console.log('question=====>', question);
           return <div key={question.question_id}>
-            Q: {question.question_body}
-            <p>A: {fakeData.results[0].answers['5892754'].body}</p>
-            by {fakeData.results[0].answers['5892754'].answerer_name}, 
+            {console.log('question=====>', question)}
+            
+            <p>Q: {question.question_body}</p>
+            
+            A: {
+            Object.values(question.answers).sort((a, b) => 
+              b.helpfulnness - a.helpfulness).splice(0, 2).map((answer) => {
+              return <div key={answer.id}>
+                {answer.body}
+              </div>;
+            })
+            }
+            
+            {/* <p>FAKE A: {fakeData.results[0].answers['5892754'].body}</p>
+            FAKE by {fakeData.results[0].answers['5892754'].answerer_name}, 
             {Date(fakeData.results[0].answers['5892754'].date)} 
-            | Helpful? Yes ({fakeData.results[0].question_helpfulness}) 
-            | Report
-            <p>Yes, as you can see in these photos</p>
-            <p>{fakeData.results[0].answers['5892754'].photos[0]}</p>
+            | FAKE Helpful? Yes ({fakeData.results[0].question_helpfulness}) 
+            | FAKE Report
+            <p>FAKE Yes, as you can see in these photos</p>
+            <p>FAKE {fakeData.results[0].answers['5892754'].photos[0]}</p> */}
           </div>;
         })}
       </div>
