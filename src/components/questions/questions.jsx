@@ -29,7 +29,9 @@ const Questions = () => {
             date: "2018-03-28T00:00:00.000Z",
             helpfulness: 11,
             id: 5897275,
-            photos: []
+            photos: [
+              "IM A PHOTO!"
+            ]
           }
         }
       },
@@ -107,6 +109,12 @@ const Questions = () => {
           return <div key={question.question_id}>
             Q: {question.question_body}
             <p>A: {fakeData.results[0].answers['5892754'].body}</p>
+            by {fakeData.results[0].answers['5892754'].answerer_name}, 
+            {Date(fakeData.results[0].answers['5892754'].date)} 
+            | Helpful? Yes ({fakeData.results[0].question_helpfulness}) 
+            | Report
+            <p>Yes, as you can see in these photos</p>
+            <p>{fakeData.results[0].answers['5892754'].photos[0]}</p>
           </div>;
         })}
       </div>
