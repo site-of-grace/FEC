@@ -7,7 +7,8 @@
     "test": "jest",
     "live": "webpack-dev-server --open",
     "react-dev": "webpack --mode development --watch",
-    "server-dev": "npx nodemon server/index.js"
+    "server-dev": "npx nodemon server/index.js",
+    "test-related": "npx jest --testPathPattern=relatedItems"
   },
   "repository": {
     "type": "git",
