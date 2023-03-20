@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles } from '../../store/overviewSlice';
+import ExpandedView from './expandedView.jsx';
 
 const ImageGallery = () => {
   const { mainProduct, styles, mainPhotos } = useSelector((state) => state.overview); // store.slice
@@ -15,7 +16,7 @@ const ImageGallery = () => {
 
 
 
-
+  const [expandedView, setExpandedView] = useState(false);
   const [main, setMain] = useState('');
 
   useEffect(() => {
@@ -23,12 +24,33 @@ const ImageGallery = () => {
       var mainSelectShow = document.getElementById(main).getElementsByTagName('div')[1];
       mainSelectShow.classList.remove('hide');
       mainSelectShow.classList.add('show');
+
+
+      var list = document.getElementById('imageGallery');
+      var items = list.getElementsByTagName('li');
+      var firstUrl = items[0].getElementsByTagName('img')[0].currentSrc;
+      var lastUrl = items[items.length - 1].getElementsByTagName('img')[0].currentSrc;
+
+      if (main === firstUrl) {
+        document.getElementById('backButton').classList.remove('show');
+        document.getElementById('backButton').classList.add('hide');
+      } else {
+        document.getElementById('backButton').classList.remove('hide');
+        document.getElementById('backButton').classList.add('show');
+      }
+
+      if (main === lastUrl) {
+        document.getElementById('forwardButton').classList.remove('show');
+        document.getElementById('forwardButton').classList.add('hide');
+      } else {
+        document.getElementById('forwardButton').classList.add('hide');
+        document.getElementById('forwardButton').classList.add('show');
+      }
     }
   }, [main]);
 
 
   var thumbnailSelect = (url) => {
-
     var selectedPic = document.getElementById(url).getElementsByTagName('div')[1];
     var previousPic = document.getElementById(main).getElementsByTagName('div')[1];
     previousPic.classList.remove('show');
@@ -43,11 +65,9 @@ const ImageGallery = () => {
     var list = document.getElementById('imageGallery');
     var items = list.getElementsByTagName('li');
     var firstUrl = items[0].getElementsByTagName('img')[0].currentSrc;
-
-    if (main === firstUrl) {
+    if (main === firstUrl) { // if
       return;
     }
-
     for (var i = 0; i < items.length; i++) {
       var url = items[i].getElementsByTagName('img')[0].currentSrc;
       var previousUrl = '';
@@ -74,6 +94,10 @@ const ImageGallery = () => {
     if (main === lastUrl) {
       return;
     }
+
+
+
+
     for (var i = 0; i < items.length; i++) {
       var url = items[i].getElementsByTagName('img')[0].currentSrc;
       var nextUrl = items[i + 1].getElementsByTagName('img')[0].currentSrc;
@@ -85,6 +109,12 @@ const ImageGallery = () => {
     }
   };
 
+
+
+  var showExpanded = () => {
+    setExpandedView(true);
+    document.getElementById('skuSelect').classList.remove('dropDown');
+  };
 
   return (mainPhotos.length !== 0) ? (
     <div id='test'>
@@ -102,11 +132,20 @@ const ImageGallery = () => {
 
           </ul>
         </div>
+
       <div id='mainPhoto'>
-        <button onClick={backButton}>backward</button>
-        <img id='thePhoto' src={main}></img>
-        <button onClick={fowardButton}>forward</button>
+
+        <div id='backward-button'>
+          <button id='backButton' onClick={backButton}>backward</button>
+        </div>
+
+        <img id='thePhoto' src={main} onClick={() => {showExpanded();}}></img>
+
+        <div id='forward-button'>
+          <button id='forwardButton' onClick={fowardButton}>forward</button>
+        </div>
       </div>
+      <ExpandedView render={expandedView}/>
     </div>
   ) : '';
 };
