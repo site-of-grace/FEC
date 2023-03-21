@@ -71,7 +71,7 @@ const StyleSelector = (props) => {
   };
 
   return (Object.keys(styles).length) ? (
-    <div>
+    <div id='styleContainer'>
        <div id='productStyle' onClick={ () => { console.log(selectedStyle); }} >{styles.results[0].name}</div>
       <div>
         <ul id='styleSelector'>
