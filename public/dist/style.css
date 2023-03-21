@@ -494,17 +494,23 @@ ul::-webkit-scrollbar {
     flex: 1 100%;
     justify-content: center;
   }
+  /* Review list === */
   #review-list-section {
     min-width: 400px;
     flex: 3;
   }
-
-  /* Review list === */
   #review-list {
     overflow-y: scroll;
     max-height: 550px;
     width: 80%;
     margin: auto auto;
+  }
+  #rating-expand {
+    color: rgb(41, 41, 41);
+    background-color: white;
+    border: 1px solid black;
+    padding: 14px;
+    font-weight: bold;
   }
 
   /* -- */
@@ -517,10 +523,14 @@ ul::-webkit-scrollbar {
   .review-star {
     width: 15px;
   }
+  #review-stars {
+    display: inline-block;
+  }
   .review-date-name {
     font-size: 13px;
-    display: inline-block;
-    margin-left: 75%;
+    float: right;
+    width: 60%;
+    max-width: fit-content;
   }
   .review-summary {
     font-weight: bold;
