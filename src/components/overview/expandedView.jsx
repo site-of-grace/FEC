@@ -18,6 +18,7 @@ const ExpandedView = (props) => {
 
 
 
+
   return (props.render ? (
     <div id='popup'>
       <div id='popUpBox'>
