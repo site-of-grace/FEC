@@ -45,7 +45,7 @@ const ReviewList = () => {
 			}) : null}
 
 			{/*If more reviews left show expand button*/}
-			{reviews[curReviewPos + 2] && !filterRating ? <button onClick={handleExpand}>More Reviews</button> : null}
+			{reviews[curReviewPos + 2] && !filterRating ? <button id='rating-expand' onClick={handleExpand}>More Reviews</button> : null}
 		</div>
 		</div>
 	);
