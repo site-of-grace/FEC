@@ -512,6 +512,11 @@ ul::-webkit-scrollbar {
     padding: 14px;
     font-weight: bold;
   }
+  #rating-expand:hover {
+    color: white;
+    background-color: blue;
+    border-radius: 2px;
+  }
 
   /* -- */
 

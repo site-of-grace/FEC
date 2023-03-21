@@ -14,9 +14,9 @@ import _ from 'lodash';
 const Rating = () => {
 
   const dispatch = useDispatch();
-  //current product ids = 71697, 71698, 71699, 71700, 71701
-  const product_id = '71701'; //Fix later when Danny provided info
+  const mainProduct  = useSelector((state) => state.overview.mainProduct);
 
+  //current product ids = 71697, 71698, 71699, 71700, 71701
   var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
     var helpfulnessWeight = 4; //Make helpfulness a bit more important
     for (var i = 1; i <= reviews.length; i++) {
@@ -43,7 +43,7 @@ const Rating = () => {
   };
 
 
-  var fetchReviews = (metaData) => {
+  var fetchReviews = (metaData, product_id) => {
     var options = {params: {product_id, metaData}};
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
@@ -62,12 +62,12 @@ const Rating = () => {
 		});
 	};
 
-  var fetchMetaData = () => {
+  var fetchMetaData = (product_id) => {
     var options = {params: {product_id}};
     //Can't be trusted
     axios.get('/rating/meta', options)
     .then((serverData) => {
-      fetchReviews(serverData.data); //Give fetch reviews metaData
+      fetchReviews(serverData.data, product_id); //Give fetch reviews metaData
 
       calculateAverage(serverData.data);
 
@@ -78,7 +78,7 @@ const Rating = () => {
     });
   };
 
-  useEffect(fetchMetaData, []);
+  useEffect(() => { if (mainProduct.id) { fetchMetaData(mainProduct.id);} }, [mainProduct]);
 
   return (
     <div className='widget' id='rating'>
