@@ -6,7 +6,7 @@ import ImageGallery from './image.jsx';
 var axios = require('axios');
 
 const Overview = () => {
-  const { mainProduct, styles, mainPhotos } = useSelector((state) => state.overview); // store.slice
+  const { mainProduct, styles, mainPhotos, products } = useSelector((state) => state.overview); // store.slice
   const dispatch = useDispatch();
 
 
@@ -24,38 +24,48 @@ const Overview = () => {
           dispatch(setMainProduct(productInfo.data));
           return productInfo.data.id;
         })
-        .then((id) => {
-          if (!id) {
-            throw id;
-          }
-          axios
-            .get(`/productStyles?id=${id}`)
-              .then((productStyles) => {
-                if (!productStyles) {
-                  throw productStyles;
-                }
-                // console.log('------ product styles --->', productStyles.data);
-                dispatch(setStyles(productStyles.data));
-                dispatch(setMainPhotos(productStyles.data.results[0].photos));
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-
-        })
         .catch((error) => {
-          console.log(error);
+          console.log('error in setting initial product data', error);
         });
+
   }, []);
 
-  // const clickHandler = () => {
-  //   dispatch(setMessage('Hello FEC!'))
-  // }
+
+
+useEffect(() => {
+
+  if (Object.keys(mainProduct).length !== -1) {
+
+
+    axios
+    .get(`/productStyles?id=${mainProduct.id}`)
+      .then((productStyles) => {
+        if (!productStyles) {
+          throw productStyles;
+        }
+        console.log('------ product styles --->', productStyles.data);
+
+        console.log('------ product styles --->', productStyles.data.results[0].photos);
+
+
+
+        dispatch(setStyles(productStyles.data));
+        dispatch(setMainPhotos(productStyles.data.results[0].photos));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}, [mainProduct]);
+
+
+
+
+
 console.log('mainProduct', mainProduct);
 
   return (
     <div>
-      <h1>OVERVIEW</h1>
       <div id='overviewWidget'>
         <div id='overview2-3'>
           <ImageGallery />
