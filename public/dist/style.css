@@ -489,19 +489,25 @@ ul::-webkit-scrollbar {
   #rating {
     min-height: 700px;
   }
+  #rating-main {
+    display: flex;
+    flex-flow: row wrap;
+    flex: 1 100%;
+    justify-content: center;
+  }
+  #review-list-section {
+    min-width: 400px;
+    flex: 3;
+  }
 
   /* Review list === */
   #review-list {
-    overflow: scroll;
+    overflow-y: scroll;
     max-height: 550px;
-    width: 800px;
-    overflow-x: hidden;
+    width: 80%;
+    margin: auto auto;
   }
 
-  #review-list-section {
-    position: absolute;
-    display: inline-block;
-  }
   /* -- */
 
     /* Single review ====*/
@@ -514,7 +520,8 @@ ul::-webkit-scrollbar {
   }
   .review-date-name {
     font-size: 13px;
-    float: right;
+    display: inline-block;
+    margin-left: 75%;
   }
   .review-summary {
     font-weight: bold;
@@ -575,13 +582,13 @@ ul::-webkit-scrollbar {
     position: fixed;
     left: 0;
     right: 0;
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
     top: 10%;
     z-index: 9;
   }
   #review-imgModel img {
-    width: 800px;
+    width: 600px;
     border-radius: 10px;
     border: 2px solid black;
   }
@@ -602,6 +609,7 @@ ul::-webkit-scrollbar {
     font-weight: bold;
     color: rgb(68, 68, 68);
     margin-bottom: 40px;
+    margin-left: 10%;
   }
   #sort-bar div{
     display: inline-block;
@@ -618,10 +626,7 @@ ul::-webkit-scrollbar {
   /*  Breakdown */
   #rating-breakdown {
     transform: translateY(-30px);
-    display: inline-block;
-    min-width: 300px;
-    min-height: 500px;
-    margin-left: 200px;
+    margin-left: 15%;
   }
 
   #rating-average {
@@ -643,7 +648,7 @@ ul::-webkit-scrollbar {
     color: rgb(147, 147, 147);
   }
   .rating-progressBarSection {
-    margin-bottom: 6px;
+    margin-bottom: 15px;
   }
   .rating-progressBar-rating {
     display: inline-block;
@@ -669,7 +674,6 @@ ul::-webkit-scrollbar {
   }
   .rating-progressBar-ratingAmmount{
     float: right;
-    transform: translateX(-40px);
     font-size: 10px;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.224);
