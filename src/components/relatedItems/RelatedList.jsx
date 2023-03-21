@@ -31,9 +31,11 @@ const RelatedList = ({ products }) => {
         />
         {i === products.length - 1 && (
           <>
-          <span className={styles.slider} />
-          <span className={styles['chevron-hover']} />
-          <ChevronRight className={styles['chevron-right']}/>
+          <span className={`${styles.slider} ${styles['chevron-group']}`} />
+          <span className={`${styles['chevron-hover']} ${styles['chevron-group']}`}>
+          <ChevronRight className={`${styles['chevron-right']} `}/>
+
+          </span>
           </>
         )}
         </>
