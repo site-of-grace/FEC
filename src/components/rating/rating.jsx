@@ -33,11 +33,14 @@ const Rating = () => {
     var total = 0;
     var reviewAmount = 0;
     for (var i = 1; i <= 5; i++) {
-      total += Number(metaData.ratings[i]) * i;
-      reviewAmount += Number(metaData.ratings[i]);
+      if (metaData.ratings[i]) {
+        total += Number(metaData.ratings[i]) * i;
+        reviewAmount += Number(metaData.ratings[i]);
+      }
     }
     dispatch(setRatingMetaTotal(reviewAmount)); //Needed for rating breakdown
     var longAverage = (total/reviewAmount);
+    console.log(metaData, 'hjwiefjiweujfiewujf');
   //Rounds to nearest .25
     dispatch(setAverage((Math.round(longAverage * 4) / 4)));
   };
