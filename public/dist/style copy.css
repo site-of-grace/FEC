@@ -51,33 +51,29 @@ body {
   z-index: 1;
 }
 
-.card-carousel:hover .carousel-card {
-  opacity: 0.2;
-}
-
 .carousel-card {
-  /* left: -30px;
-  top: 125px; */
+  /* left: -30px; */
+  /* top: 2px; */
   /* background: #ffffff; */
-  /* margin-bottom: -20px; */
+  margin-bottom: -10px;
   background: transparent;
   border-radius: 8px;
   /* border: 1px solid #eeeeee; */
   box-shadow: 0 10px 5px rgba(0, 0, 0, 0.1);
   width: 65px;
-  height: 65px;
-  opacity: 0;
+  height: 100px;
+  /* opacity: 0; */
   transition: all 0.75s ease;
   position: absolute;
-  transform: scale(1) translateX(40px);
-  /* overflow: hidden; */
+  transform: scale(1) translateX(40px) translateY(50px);
+  overflow: hidden;
 }
 
 li.carousel-card > img {
-  /* margin: -10px; */
+  margin-bottom: -10px;
   border-radius: 10px;
-  width:120px;
-  height:120px;
+  width:100px;
+  height:100px;
   object-fit: cover;
   display: block;
   margin: auto;
@@ -91,49 +87,52 @@ li.carousel-card > img {
 }
 
 .carousel-card.last:hover {
-  transform: scale(.75) translateX(-120px) translateY(-40px);
+  transform: scale(.75) translateX(-190px) translateY(20px);
   opacity: 1;
 }
+
 .carousel-card.last {
-  transform: scale(.75) translateX(-120px);
+  transform: scale(.75) translateX(-190px) translateY(50px);
   right: -30px;
   z-index: 0;
-  opacity: 0.5;
+  opacity: .5;
   /* visibility: hidden; */
 }
+
 .carousel-card.prev:hover {
-  transform: scale(.75) translateX(-80px) translateY(-40px);
+  transform: scale(.75) translateX(-130px) translateY(20px);
   opacity: 1;
 }
 
 .carousel-card.prev {
-  transform: scale(.75) translateX(-80px);
+  transform: scale(.75) translateX(-130px) translateY(50px);
   right: -30px;
   z-index: 1;
-  opacity: 0.6;
+  opacity: .5;
   /* visibility: hidden; */
 }
 
 .carousel-card.active:hover {
-  transform: scale(.85) translateX(0) translateY(-30px);
+  transform: scale(.85) translateX(-20px) translateY(20px);
   opacity: 1;
 }
 
 .carousel-card.active {
-  opacity: .7;
+  opacity: .5;
   /* top: 20px; */
-  transform: scale(.85) translateX(0);
+  transform: scale(.85) translateX(-20px) translateY(50px);
   box-shadow: 0 30px 20px rgba(0, 0, 0, 0.1);
   z-index: 2;
 }
 
 .carousel-card.next:hover {
-  transform: scale(1) translateX(40px) translateY(-20px);
+  transform: scale(1) translateX(40px) translateY(20px);
   opacity: 1;
 }
 
 .carousel-card.next {
-  opacity: .8;
+  transform: translateX(40px) translateY(50px);
+  opacity: 1;
   z-index: 3;
 }
 
@@ -144,6 +143,7 @@ li.carousel-card > img {
   opacity: 0.5;
   visibility: hidden;
 } */
+
 
 /*======================= OVERVIEW CSS START ===========================*/
 .widget {
@@ -177,7 +177,6 @@ li.carousel-card > img {
   width: 60%;
   margin: 0 auto;
   margin-bottom: 10px;
-  min-height: 1150px;
 }
 
 
@@ -190,12 +189,11 @@ li.carousel-card > img {
 
 #sizeSelector {
   border-style: solid;
-
-  display: flex;
+  display: inline-block;
   padding: 10px;
   width: 66%;
   margin-right: 10px;
-  height: 40px;
+  height: 20px;
   position: relative
 }
 
@@ -257,15 +255,10 @@ li.carousel-card > img {
   margin-right: 10px;
 }
 
-#productPrice {
-  margin-right: 10px;
-}
-
 #features {
   width: 40%;
   border-style: solid;
   display: inline-block;
-  min-height: 110px;
 }
 
 #prodDescrip {
@@ -321,7 +314,7 @@ li.carousel-card > img {
   margin: 10px;
   list-style: none;
   background-color: transparent;
-  max-height: 795px;
+  height: 728px;
   overflow-y: scroll;
   scrollbar-color: red;
 }
@@ -338,7 +331,6 @@ ul::-webkit-scrollbar {
 
 .selectorSpace {
   height: 20px;
-  margin-bottom: 10px;
 }
 
 #mainPhoto {
@@ -364,13 +356,6 @@ ul::-webkit-scrollbar {
   display: inline-block;
 }
 
-#upButton {
-
-}
-
-#downButton {
-
-}
 
 
 
@@ -387,7 +372,7 @@ ul::-webkit-scrollbar {
   border-style: solid;
   width: 19%;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 10px
 }
 
 #test {
@@ -460,26 +445,10 @@ ul::-webkit-scrollbar {
   position: relative;
   padding: 32px;
   width: 100%;
-  max-width: 1000px;
-
+  max-width: 640px;
+  height: 60%;
   background-color: white;
   z-index: 9;
-  display: flex;
-
-}
-
-#expandedPhoto {
-  width: 100%;
-  height: 100%;
-  margin: 40px;
-}
-
-#close {
-  top: -10px;
-  right: -10px;
-  height: 30px;
-  position: relative;
-  float: right;
 }
 
 /*======================= OVERVIEW CSS END ===========================*/
