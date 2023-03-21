@@ -32,6 +32,7 @@ const ImageGallery = () => {
       var lastUrl = items[items.length - 1].getElementsByTagName('img')[0].currentSrc;
 
 
+
       if (items.length > 7) {
         document.getElementById('upButton').classList.remove('hide');
         document.getElementById('upButton').classList.add('show');
@@ -132,27 +133,12 @@ const ImageGallery = () => {
 
 
 
-
   return (mainPhotos.length !== 0) ? (
     <div id='test'>
 
 
 
         <div id='gallery'>
-          <ul id='imageGallery'>
-            {mainPhotos.map((photo) => {
-
-              return <li id={photo.thumbnail_url} onClick={() => { thumbnailSelect(photo.thumbnail_url); }} key={photo.thumbnail_url} value='test'>
-                <img className='imageGalleryItem' src={photo.thumbnail_url}></img>
-                <div className='selectorSpace'>
-                  <div className='hide'>selected</div>
-                </div>
-                </li>;
-            })}
-
-          </ul>
-        </div>
-
           <button id='upButton' className='hide' onClick={() => { document.getElementById('imageGallery').scrollBy(0, -115)}}> UP </button>
             <ul id='imageGallery'>
               {mainPhotos.map((photo) => {
