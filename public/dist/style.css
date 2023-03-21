@@ -177,6 +177,7 @@ li.carousel-card > img {
   width: 60%;
   margin: 0 auto;
   margin-bottom: 10px;
+  min-height: 1150px;
 }
 
 
@@ -189,11 +190,12 @@ li.carousel-card > img {
 
 #sizeSelector {
   border-style: solid;
-  display: inline-block;
+
+  display: flex;
   padding: 10px;
   width: 66%;
   margin-right: 10px;
-  height: 20px;
+  height: 40px;
   position: relative
 }
 
@@ -255,10 +257,15 @@ li.carousel-card > img {
   margin-right: 10px;
 }
 
+#productPrice {
+  margin-right: 10px;
+}
+
 #features {
   width: 40%;
   border-style: solid;
   display: inline-block;
+  min-height: 110px;
 }
 
 #prodDescrip {
@@ -314,7 +321,7 @@ li.carousel-card > img {
   margin: 10px;
   list-style: none;
   background-color: transparent;
-  height: 728px;
+  max-height: 795px;
   overflow-y: scroll;
   scrollbar-color: red;
 }
@@ -331,6 +338,7 @@ ul::-webkit-scrollbar {
 
 .selectorSpace {
   height: 20px;
+  margin-bottom: 10px;
 }
 
 #mainPhoto {
@@ -356,6 +364,14 @@ ul::-webkit-scrollbar {
   display: inline-block;
 }
 
+#upButton {
+
+}
+
+#downButton {
+
+
+}
 
 
 
@@ -372,7 +388,7 @@ ul::-webkit-scrollbar {
   border-style: solid;
   width: 19%;
   display: inline-block;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 #test {
@@ -445,10 +461,26 @@ ul::-webkit-scrollbar {
   position: relative;
   padding: 32px;
   width: 100%;
-  max-width: 640px;
-  height: 60%;
+  max-width: 1000px;
+
   background-color: white;
   z-index: 9;
+  display: flex;
+
+}
+
+#expandedPhoto {
+  width: 100%;
+  height: 100%;
+  margin: 40px;
+}
+
+#close {
+  top: -10px;
+  right: -10px;
+  height: 30px;
+  position: relative;
+  float: right;
 }
 
 /*======================= OVERVIEW CSS END ===========================*/

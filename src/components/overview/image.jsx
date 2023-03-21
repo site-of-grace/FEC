@@ -31,6 +31,21 @@ const ImageGallery = () => {
       var firstUrl = items[0].getElementsByTagName('img')[0].currentSrc;
       var lastUrl = items[items.length - 1].getElementsByTagName('img')[0].currentSrc;
 
+
+      if (items.length > 7) {
+        document.getElementById('upButton').classList.remove('hide');
+        document.getElementById('upButton').classList.add('show');
+        document.getElementById('downButton').classList.remove('hide');
+        document.getElementById('downButton').classList.add('show');
+      } else {
+        document.getElementById('upButton').classList.remove('show');
+        document.getElementById('upButton').classList.add('hide');
+        document.getElementById('downButton').classList.remove('show');
+        document.getElementById('downButton').classList.add('hide');
+      }
+
+
+
       if (main === firstUrl) {
         document.getElementById('backButton').classList.remove('show');
         document.getElementById('backButton').classList.add('hide');
@@ -95,9 +110,6 @@ const ImageGallery = () => {
       return;
     }
 
-
-
-
     for (var i = 0; i < items.length; i++) {
       var url = items[i].getElementsByTagName('img')[0].currentSrc;
       var nextUrl = items[i + 1].getElementsByTagName('img')[0].currentSrc;
@@ -114,10 +126,18 @@ const ImageGallery = () => {
   var showExpanded = () => {
     setExpandedView(true);
     document.getElementById('skuSelect').classList.remove('dropDown');
+    document.getElementById('quantitySelect').classList.remove('dropDown');
   };
+
+
+
+
 
   return (mainPhotos.length !== 0) ? (
     <div id='test'>
+
+
+
         <div id='gallery'>
           <ul id='imageGallery'>
             {mainPhotos.map((photo) => {
@@ -133,6 +153,22 @@ const ImageGallery = () => {
           </ul>
         </div>
 
+          <button id='upButton' className='hide' onClick={() => { document.getElementById('imageGallery').scrollBy(0, -115)}}> UP </button>
+            <ul id='imageGallery'>
+              {mainPhotos.map((photo) => {
+
+                return <li id={photo.thumbnail_url} onClick={() => { thumbnailSelect(photo.thumbnail_url); }} key={photo.thumbnail_url} value='test'>
+                  <img className='imageGalleryItem' src={photo.thumbnail_url}></img>
+                  <div className='selectorSpace'>
+                    <div className='hide'>selected</div>
+                  </div>
+                  </li>;
+              })}
+
+            </ul>
+            <button id='downButton' className='hide'  onClick={() => { document.getElementById('imageGallery').scrollBy(0, 115) }}> DOWN </button>
+          </div>
+
       <div id='mainPhoto'>
 
         <div id='backward-button'>
@@ -145,7 +181,7 @@ const ImageGallery = () => {
           <button id='forwardButton' onClick={fowardButton}>forward</button>
         </div>
       </div>
-      <ExpandedView render={expandedView}/>
+      <ExpandedView render={expandedView} close={setExpandedView} mainPhoto={main} forward={fowardButton} backward={backButton}/>
     </div>
   ) : '';
 };
