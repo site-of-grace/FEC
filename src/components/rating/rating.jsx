@@ -4,7 +4,6 @@ import React, { useEffect} from 'react';
 
 import ReviewList  from './reviewList.jsx';
 import Breakdown from './breakdown.jsx';
-import AtrributeBreakdown from './attrBreakdown.jsx';
 
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';

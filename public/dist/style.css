@@ -673,6 +673,8 @@ ul::-webkit-scrollbar {
     margin-bottom: 15px;
   }
   .rating-progressBar-rating {
+    color: rgb(113, 113, 113);
+    font-size: 15px;
     display: inline-block;
     text-decoration: underline;
     cursor: pointer;
@@ -687,7 +689,7 @@ ul::-webkit-scrollbar {
   }
   .rating-progressBarEmpty {
     height: 7px;
-    background-color: rgb(164, 164, 164);
+    background-color: rgb(230, 230, 230);
   }
   .rating-progressBarFill {
     height: 7px;
@@ -707,6 +709,23 @@ ul::-webkit-scrollbar {
   }
   #rating-removeFilters:hover {
     color: green;
+  }
+  .rating-attrBarSection{
+    margin-top: 50px;
+  }
+  .rating-attrBarContainer{
+    display: inline-block;
+    margin-right: 5px;
+  }
+  .rating-attrBar{
+    height: 7px;
+    width: 80px;
+    background-color: rgb(230, 230, 230);
+  }
+  .rating-attrArrow{
+    transform: translate(-3px, 12px);
+    color: green;
+    font-size: 13px;
   }
   /* -- */
 /*======================= REVIEW CSS END ===========================*/
