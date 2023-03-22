@@ -22,7 +22,7 @@ const AtrributeBreakdown = () => {
 			var name = barLables[key];
 			for (var i = 0; i < name.length; i++) {
 				var textStyle = {'fontSize': '9px', 'marginTop':'4px', 'marginLeft': '12px'};
-				if (name[i] === 'Perfect') {
+				if (name[i] === 'Perfect') { //Match wire frame placements
 					textStyle['marginLeft'] = '26px';
 				}
 				if (name[i] === 'Too small') {
