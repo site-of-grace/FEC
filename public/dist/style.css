@@ -604,6 +604,7 @@ ul::-webkit-scrollbar {
   }
   #review-imgModel img {
     width: 600px;
+    max-height: 600px;
     border-radius: 10px;
     border: 2px solid black;
   }
@@ -711,15 +712,21 @@ ul::-webkit-scrollbar {
     color: green;
   }
   .rating-attrBarSection{
-    margin-top: 50px;
+    margin-top: 10px;
   }
   .rating-attrBarContainer{
     display: inline-block;
-    margin-right: 5px;
   }
-  .rating-attrBar{
+  .rating-attrBar3{
+    margin-right: 5px;
     height: 7px;
     width: 80px;
+    background-color: rgb(230, 230, 230);
+  }
+  .rating-attrBar5{
+    margin-right: 3px;
+    height: 7px;
+    width: 48px;
     background-color: rgb(230, 230, 230);
   }
   .rating-attrArrow{
