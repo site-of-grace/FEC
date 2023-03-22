@@ -95,27 +95,37 @@ const Questions = () => {
     return <div>Loading questions...</div>;
   }
   
+  const formattedDate = (date) => {
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  }
+
+  
   return (
     <div className="widget">
       <h1>QUESTIONS & ANSWERS</h1>
       <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
       
       
-      <div>        
+      <div>
             {console.log('questionS=====>', questions)}
 
-        {questions.questionArr.map((question) => {
-          // console.log('question=====>', question);
+        {/* {questions.questionArr.map((question) => { */}
+        {Object.values(questions.questionArr).splice(0, 2).map((question) => {
           return <div key={question.question_id}>
             {console.log('question=====>', question)}
             
             <p>Q: {question.question_body}</p>
-            
             A: {
             Object.values(question.answers).sort((a, b) => 
               b.helpfulnness - a.helpfulness).splice(0, 2).map((answer) => {
               return <div key={answer.id}>
-                {answer.body}
+                <p>{answer.body}</p>
+                <p>by {answer.isSeller ? <strong>Seller</strong> : answer.answerer_name}, {formattedDate(answer.date)}</p>
+
               </div>;
             })
             }
