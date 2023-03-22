@@ -101,7 +101,9 @@ const Questions = () => {
       <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
       
       
-      <div>
+      <div>        
+            {console.log('questionS=====>', questions)}
+
         {questions.questionArr.map((question) => {
           // console.log('question=====>', question);
           return <div key={question.question_id}>
