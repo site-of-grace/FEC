@@ -1,7 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { render, screen} from '../../store/test-utils.js';
-import RelatedItems from '../relatedItems/relatedItems';
+import { render } from '../../store/test-utils.js';
+import RelatedItems from './relatedItems';
 
+/* network error since server isn't running, will prob. move to App */
 describe('RelatedItems', () => {
   test('renders the title', () => {
     const { getByText } = render(<RelatedItems />);

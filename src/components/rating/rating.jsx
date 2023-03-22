@@ -82,9 +82,11 @@ const Rating = () => {
 
   return (
     <div className='widget' id='rating'>
-      <h1 className='title'>RATING</h1>
-      <Breakdown />
-      <ReviewList />
+      <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
+      <div id='rating-main'>
+        <Breakdown />
+        <ReviewList />
+      </div>
     </div>
   );
 };
