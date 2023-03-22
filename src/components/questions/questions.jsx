@@ -109,7 +109,6 @@ const Questions = () => {
       <h1>QUESTIONS & ANSWERS</h1>
       <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
       
-      
       <div>
             {console.log('questionS=====>', questions)}
 
