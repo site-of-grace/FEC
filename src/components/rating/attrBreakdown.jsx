@@ -12,7 +12,7 @@ const AtrributeBreakdown = () => {
 		var attributes = metaData.characteristics;
 		var barLables = {};
 		barLables.Comfort = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
-		barLables.Quality = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
+		barLables.Quality = ['Poor', 'Average', 'Perfect'];
 		barLables.Size = ['Too small', 'Perfect', 'Too large'];
 		barLables.Width = ['Too small', 'Perfect', 'Too large'];
 
@@ -22,13 +22,13 @@ const AtrributeBreakdown = () => {
 			var name = barLables[key];
 			for (var i = 0; i < name.length; i++) {
 				var textStyle = {'fontSize': '9px', 'marginTop':'4px', 'marginLeft': '12px'};
-				if (name[i] === 'Perfect') { //Match wire frame placements
+				if (name[i] === 'Perfect' && key !== 'Quality' || (name[i] === 'Average') && key === 'Quality') { //Match wire frame placements
 					textStyle['marginLeft'] = '26px';
 				}
-				if (name[i] === 'Too small') {
+				if (name[i] === 'Too small' || name[i] === 'Poor' && key === 'Quality') {
 					textStyle['marginLeft'] = '0px';
 				}
-				if (name[i] === 'Too large') {
+				if (name[i] === 'Too large' || name[i] === 'Perfect' && key === 'Quality') {
 					textStyle['marginLeft'] = '40px';
 				}
 
