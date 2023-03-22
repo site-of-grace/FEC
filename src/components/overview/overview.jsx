@@ -11,9 +11,6 @@ const Overview = () => {
 
 
   useEffect(() => {
-    // make axios
-    // dispatch(setMessage('Hello FEC!'))
-    // dispatch(setMessage('Hello FEC!'))
     axios
       .get('/initialRender')
         .then((productInfo) => {
@@ -43,11 +40,7 @@ useEffect(() => {
         if (!productStyles) {
           throw productStyles;
         }
-        console.log('------ product styles --->', productStyles.data);
-
-        console.log('------ product styles --->', productStyles.data.results[0].photos);
-
-
+        console.log(productStyles);
 
         dispatch(setStyles(productStyles.data));
         dispatch(setMainPhotos(productStyles.data.results[0].photos));
@@ -61,8 +54,6 @@ useEffect(() => {
 
 
 
-
-console.log('mainProduct', mainProduct);
 
   return (
     <div>

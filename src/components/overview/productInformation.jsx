@@ -19,7 +19,7 @@ const ProductInformation = (props) => {
       <div><b>PRODUCT CATEGORY</b></div>
       <div>{mainProduct.category}</div>
       <div><b>PRODUCT TITLE</b></div>
-      <div>{mainProduct.name}</div>
+      <div>{mainProduct.name}</div>1
       <div><b>PRODUCT PRICE</b></div>
       <span id='productPrice'>{mainProduct.default_price}</span>
       <span id='salePrice'></span>
