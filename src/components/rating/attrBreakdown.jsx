@@ -11,30 +11,23 @@ const AtrributeBreakdown = () => {
 		var endSize = 245; //barSize - arrowSize
 		var attributes = metaData.characteristics;
 		var barLables = {};
-		barLables.Comfort = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
-		barLables.Quality = ['Poor', 'Average', 'Perfect'];
+		barLables.Comfort = ['Uncomfortable', 'Ok', 'Perfect'];
+		barLables.Quality = ['Poor', 'As Expected', 'Perfect'];
 		barLables.Size = ['Too small', 'Perfect', 'Too large'];
-		barLables.Width = ['Too small', 'Perfect', 'Too large'];
+		barLables.Width = ['Narrow', 'Perfect', 'Too large'];
+		barLables.Fit = ['Tight', 'Perfect', 'Too Long'];
+		barLables.Length = ['Short', 'Perfect', 'Too Long'];
 
 		for (var key in attributes) {
 
 			var barDivs = [];
 			var name = barLables[key];
-			for (var i = 0; i < name.length; i++) {
-				var textStyle = {'fontSize': '9px', 'marginTop':'4px', 'marginLeft': '12px'};
-				if (name[i] === 'Perfect' && key !== 'Quality' || (name[i] === 'Average') && key === 'Quality') { //Match wire frame placements
-					textStyle['marginLeft'] = '26px';
-				}
-				if (name[i] === 'Too small' || name[i] === 'Poor' && key === 'Quality') {
-					textStyle['marginLeft'] = '0px';
-				}
-				if (name[i] === 'Too large' || name[i] === 'Perfect' && key === 'Quality') {
-					textStyle['marginLeft'] = '40px';
-				}
+			var textStyle = {'text-align': 'center'};
 
+			for (var i = 0; i < name.length; i++) {
 				barDivs.push(<div className='rating-attrBarContainer' key={i*10} >
-					{name.length === 3 ? <div className='rating-attrBar3'></div> : <div className='rating-attrBar5'></div>}
-					<div style={textStyle}>{name[i]}</div>
+					<div className='rating-attrBar3'></div>
+					<div style={textStyle} className='rating-attrBarText'>{name[i]}</div>
 				</div>);
 			}
 
@@ -43,7 +36,7 @@ const AtrributeBreakdown = () => {
 			var marginLeft = endSize * ratingPercent; //Puts arrow in correct spot
 
 			attributeDivs.push(<div className='rating-attrBarSection' key={attributes[key].id}>
-				<div style={{'fontSize': '10px'}}>{key}</div>
+				<div style={{'fontSize': '10px', 'color': 'rgb(33, 33, 33)', 'transform': 'translateY(10px)'}}>{key}</div>
 				<div className='rating-attrArrow' style={{'marginLeft': marginLeft}}>▼</div>
 				{barDivs}
 			</div>);

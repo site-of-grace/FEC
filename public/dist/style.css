@@ -717,16 +717,14 @@ ul::-webkit-scrollbar {
   .rating-attrBarContainer{
     display: inline-block;
   }
+  .rating-attrBarText{
+    font-size: 9px;
+    color: rgb(33, 33, 33);
+  }
   .rating-attrBar3{
     margin-right: 5px;
     height: 7px;
     width: 80px;
-    background-color: rgb(230, 230, 230);
-  }
-  .rating-attrBar5{
-    margin-right: 3px;
-    height: 7px;
-    width: 48px;
     background-color: rgb(230, 230, 230);
   }
   .rating-attrArrow{

@@ -44,7 +44,15 @@ const Breakdown = () => {
 	//Percent Recommended
 	if (metaData.recommended) {
 		var recommended = metaData.recommended;
-		percentRecommended = Math.round((Number(recommended.true)/(Number(recommended.true) + Number(recommended.false)))*100);
+		if (recommended.false && recommended.true) {
+			percentRecommended = Math.round((Number(recommended.true)/(Number(recommended.true) + Number(recommended.false)))*100);
+		} else {
+			if (recommended.false) {
+				percentRecommended = 0;
+			} else {
+				percentRecommended = 100;
+			}
+		}
 	}
 
 	//Creates a progress bar filled by rating percent
