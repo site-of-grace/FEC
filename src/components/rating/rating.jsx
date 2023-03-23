@@ -82,12 +82,16 @@ const Rating = () => {
 
   useEffect(() => { if (mainProduct.id) { fetchMetaData(mainProduct.id);} }, [mainProduct]);
 
+  const addReview = () => {
+
+  };
+
   return (
     <div className='widget' id='rating'>
       <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
       <div id='rating-main'>
         <Breakdown />
-        <ReviewList />
+        <ReviewList addReview={addReview}/>
       </div>
     </div>
   );

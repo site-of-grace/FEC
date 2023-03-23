@@ -506,14 +506,15 @@ ul::-webkit-scrollbar {
     width: 80%;
     margin: auto auto;
   }
-  #rating-expand {
+  .rating-button {
     color: rgb(41, 41, 41);
     background-color: white;
     border: 1px solid black;
     padding: 14px;
     font-weight: bold;
-  }
-  #rating-expand:hover {
+    margin-right: 15px;
+}
+  .rating-button:hover {
     color: white;
     background-color: blue;
     border-radius: 2px;
@@ -640,13 +641,6 @@ ul::-webkit-scrollbar {
   /* -- */
 
   /*  Breakdown */
-  #rating-expand {
-    color: rgb(41, 41, 41);
-    background-color: white;
-    border: 1px solid black;
-    padding: 14px;
-    font-weight: bold;
-  }
   #rating-breakdown {
     transform: translateY(-30px);
     margin-left: 15%;
