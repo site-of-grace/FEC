@@ -1,9 +1,10 @@
 //Remove console.logs!
 
-import React, { useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import ReviewList  from './reviewList.jsx';
 import Breakdown from './breakdown.jsx';
+import AddReviewMod from './addReviewMod.jsx';
 
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
@@ -12,6 +13,8 @@ import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setRevi
 import _ from 'lodash';
 
 const Rating = () => {
+
+  const [addReview, setAddReview] = useState(false);
 
   const dispatch = useDispatch();
   //current product ids = 71697, 71698, 71699, 71700, 71701
@@ -82,16 +85,13 @@ const Rating = () => {
 
   useEffect(() => { if (mainProduct.id) { fetchMetaData(mainProduct.id);} }, [mainProduct]);
 
-  const addReview = () => {
-
-  };
-
   return (
     <div className='widget' id='rating'>
       <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
       <div id='rating-main'>
         <Breakdown />
-        <ReviewList addReview={addReview}/>
+        <ReviewList setAddReview={setAddReview}/>
+        {addReview ? <AddReviewMod /> : null}
       </div>
     </div>
   );

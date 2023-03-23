@@ -5,7 +5,7 @@ import SortOptions from './sortOptions.jsx';
 
 import Review from './review.jsx';
 //Only displays 2 at a time
-const ReviewList = ({addReview}) => {
+const ReviewList = ({setAddReview}) => {
 	const reviews = useSelector((state) => state.rating.reviews);
 	const filterRating = useSelector((state) => state.rating.filterRating);
 	const [curReviews, setCurReviews] = useState([]);
@@ -46,7 +46,7 @@ const ReviewList = ({addReview}) => {
 
 			{/*If more reviews left show expand button*/}
 			{reviews[curReviewPos + 2] && !filterRating ? <button id='rating-expand' className='rating-button' onClick={handleExpand}>MORE REVIEWS</button> : null}
-			<button id='rating-add' className='rating-button' onClick={addReview()}>ADD A REVIEW +</button>
+			<button id='rating-add' className='rating-button' onClick={() => setAddReview(true)}>ADD A REVIEW +</button>
 		</div>
 		</div>
 	);

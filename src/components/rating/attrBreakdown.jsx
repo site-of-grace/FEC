@@ -22,7 +22,7 @@ const AtrributeBreakdown = () => {
 
 			var barDivs = [];
 			var name = barLables[key];
-			var textStyle = {'text-align': 'center'};
+			var textStyle = {'textAlign': 'center'};
 
 			for (var i = 0; i < name.length; i++) {
 				barDivs.push(<div className='rating-attrBarContainer' key={i*10} >
