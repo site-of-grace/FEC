@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { setMainProduct, } from '../../store/overviewSlice';
 import { setProducts } from '../../store/productSlice';
 import styles from './styles.module.css';
-const RelatedRow = lazy(() => import('./RelatedList.jsx'));
+const Row = lazy(() => import('./Row.jsx'));
 
 const RelatedItems = () => {
   const dispatch = useDispatch();
@@ -48,11 +48,11 @@ const RelatedItems = () => {
   return (
     <>
       <h1 className={styles.title}>RELATED ITEMS</h1>
-      {/* <RelatedRow products={products} /> */}
+      {/* <Row products={products} /> */}
       <div ref={relatedRef}>
         {showRelated && (
           <Suspense fallback={<div>Loading...</div>}>
-            <RelatedRow products={products} />
+            <Row products={products} />
           </Suspense>
         )}
       </div>
