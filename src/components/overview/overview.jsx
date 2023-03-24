@@ -31,6 +31,8 @@ const Overview = () => {
 
 useEffect(() => {
 
+  console.log('main product', mainProduct.rating);
+
   if (Object.keys(mainProduct).length !== -1) {
 
 
