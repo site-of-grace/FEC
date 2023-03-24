@@ -6,6 +6,8 @@ import {setFilterRating} from '../../store/ratingSlice';
 
 import Stars from '../general/Stars.jsx';
 
+import AtrributeBreakdown from './attrBreakdown.jsx';
+
 const Breakdown = () => {
 	const dispatch = useDispatch();
 
@@ -42,7 +44,15 @@ const Breakdown = () => {
 	//Percent Recommended
 	if (metaData.recommended) {
 		var recommended = metaData.recommended;
-		percentRecommended = Math.round((Number(recommended.true)/(Number(recommended.true) + Number(recommended.false)))*100);
+		if (recommended.false && recommended.true) {
+			percentRecommended = Math.round((Number(recommended.true)/(Number(recommended.true) + Number(recommended.false)))*100);
+		} else {
+			if (recommended.false) {
+				percentRecommended = 0;
+			} else {
+				percentRecommended = 100;
+			}
+		}
 	}
 
 	//Creates a progress bar filled by rating percent
@@ -53,7 +63,7 @@ const Breakdown = () => {
 			var ratingPercent = metaData.ratings[i]/metaDataTotal;
 			var filledWidth = Math.round(width*ratingPercent);
 			progressBars.push(
-				<div className='rating-progressBarSection'>
+				<div className='rating-progressBarSection' key={i * 10}>
 					<div onClick={(e) => handleRatingSelection(e.target.innerHTML[0])} className='rating-progressBar-rating'>{i} stars</div>
 					<div className='rating-progressBar'>
 						<div style={{'width': `${filledWidth}px`}} className='rating-progressBarFill'></div>
@@ -74,6 +84,8 @@ const Breakdown = () => {
 			<div id='rating-recommended'>{percentRecommended}% of reviews recommended this product</div>
 			{progressBars}
 			{filterRating ? <div style={{'color': 'red'}}>Filters Applied <div id='rating-removeFilters' onClick={handleRatingSelection}>Remove All Filters</div></div> : null}
+
+			<AtrributeBreakdown />
 		</div>
 	);
 };
