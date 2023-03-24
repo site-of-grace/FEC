@@ -45,7 +45,7 @@ const Card = React.memo(({ product }) => {
 
   return (
     <div
-      className={styles.card}
+      className={`${styles.card} slide`}
     >
       <span className={styles.imageContainer}>
         <CardCarousel
