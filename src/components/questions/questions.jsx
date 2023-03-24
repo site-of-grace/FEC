@@ -101,7 +101,7 @@ const Questions = () => {
       day: 'numeric',
       year: 'numeric',
     });
-  }
+  };
 
   
   return (
@@ -117,25 +117,27 @@ const Questions = () => {
           return <div key={question.question_id}>
             {console.log('question=====>', question)}
             
-            <p>Q: {question.question_body}</p>
-            A: {
-            Object.values(question.answers).sort((a, b) => 
+            <strong>Q: {question.question_body}</strong>
+            {
+              console.log('question.answers=====> ', question.answers)}
+              {Object.values(question.answers).sort((a, b) => 
               b.helpfulnness - a.helpfulness).splice(0, 2).map((answer) => {
               return <div key={answer.id}>
-                <p>{answer.body}</p>
-                <p>by {answer.isSeller ? <strong>Seller</strong> : answer.answerer_name}, {formattedDate(answer.date)}</p>
+                <p>A: {answer.body}</p>
+                <div class="qa-left">by {answer.answerer_name === 'seller' ? <strong>Seller</strong> : answer.answerer_name}, {formattedDate(answer.date)}</div>
+                <div class="qa-right"> | Helpful? Yes ({answer.helpfulness}) </div>
+
 
               </div>;
-            })
+              })
             }
-            
-            {/* <p>FAKE A: {fakeData.results[0].answers['5892754'].body}</p>
-            FAKE by {fakeData.results[0].answers['5892754'].answerer_name}, 
-            {Date(fakeData.results[0].answers['5892754'].date)} 
-            | FAKE Helpful? Yes ({fakeData.results[0].question_helpfulness}) 
-            | FAKE Report
-            <p>FAKE Yes, as you can see in these photos</p>
-            <p>FAKE {fakeData.results[0].answers['5892754'].photos[0]}</p> */}
+            {/*             
+              | FAKE Helpful? Yes ({fakeData.results[0].question_helpfulness}) 
+              
+              | FAKE Report
+              <p>FAKE Yes, as you can see in these photos</p>
+              
+              <p>FAKE {fakeData.results[0].answers['5892754'].photos[0]}</p> */}
           </div>;
         })}
       </div>
