@@ -60,7 +60,10 @@ const Breakdown = () => {
 	if (metaData.ratings) {
 		var width = 200;
 		for (var i = 5; i >= 1; i--) {
-			var ratingPercent = metaData.ratings[i]/metaDataTotal;
+			var ratingPercent = 0;
+			if (metaData.ratings[i]) {
+				ratingPercent = metaData.ratings[i]/metaDataTotal;
+			}
 			var filledWidth = Math.round(width*ratingPercent);
 			progressBars.push(
 				<div className='rating-progressBarSection' key={i * 10}>

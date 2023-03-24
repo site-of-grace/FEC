@@ -8,18 +8,13 @@ const AddReviewMod = () => {
 	const [userRating, setUserRating] = useState(0);
 	const ratings = ['', 'Poor', 'Fair', 'Average', 'Good', 'Great'];
 
-	const [allowHover, setAllowHover] = useState(true);
-	console.log(allowHover);
 	var starHighlight = (id, hover) => {
-		if (!allowHover) {
-			return;
-		}
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
 			if (hover || i>id) { //Highlight to hovered
-				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id, true)} onMouseLeave={starsEmpty()} onClick={(e) => {starHighlight(e.target.id);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/unfilledStar.png'}></img>);
+				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id, true)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/unfilledStar.png'}></img>);
 			} else { //Highlight to clicked
-				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id, true)} key={i} id={i} src={'./icons/glowingStar.png'}></img>);
+				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} key={i} id={i} src={'./icons/glowingStar.png'}></img>);
 			}
 		}
 		setStars(newStars);
@@ -42,10 +37,14 @@ const AddReviewMod = () => {
 			<h2>About the {mainProduct.name}</h2>
 			<div className='review-bar'></div>
 			<h3>Overall Rating</h3>
-			<div onClick={() => setAllowHover(false)} onMouseLeave={() => setAllowHover(true)}>
-				{stars}
-			</div>
+			{stars}
 			<div id='userRatingChoice'>{ratings[userRating]}</div>
+			<form id='recommendedInput'>
+				<label>No</label>
+				<input type='radio' name='recommended' value='no'></input>
+				<label>Yes</label>
+				<input type='radio' name='recommended' value='yes'></input>
+			</form>
 		</div>
 	);
 };
