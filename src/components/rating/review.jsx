@@ -38,7 +38,9 @@ const Review = ({review, setSelectedImg}) => {
 
 	return (
 		<div className='review'>
-			{stars}
+			<div id='review-stars'>
+				{stars}
+			</div>
 			<div className='review-date-name'>{review['reviewer_name']}, {date}</div>
 			<div className='review-summary'>{review.summary}</div>
 			<div className='review-body'>

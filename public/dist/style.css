@@ -174,7 +174,8 @@ li.carousel-card > img {
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
-  width: 60%;
+  min-width: 1500px;
+  max-width: 1500px;
   margin: 0 auto;
   margin-bottom: 10px;
   min-height: 1150px;
@@ -318,12 +319,12 @@ li.carousel-card > img {
 }
 
 #imageGallery {
-  margin: 10px;
+  margin-top: 20px;
+  margin-left: 5px;
   list-style: none;
   background-color: transparent;
   max-height: 795px;
   overflow-y: scroll;
-  scrollbar-color: red;
 }
 
 .imageGalleryItem {
@@ -365,11 +366,11 @@ ul::-webkit-scrollbar {
 }
 
 #upButton {
-
+  margin: auto;
 }
 
 #downButton {
-
+  margin: auto;
 }
 
 
@@ -388,6 +389,7 @@ ul::-webkit-scrollbar {
   width: 19%;
   display: inline-block;
   margin-right: 10px;
+
 }
 
 #test {
@@ -495,17 +497,28 @@ ul::-webkit-scrollbar {
     flex: 1 100%;
     justify-content: center;
   }
+  /* Review list === */
   #review-list-section {
     min-width: 400px;
     flex: 3;
   }
-
-  /* Review list === */
   #review-list {
     overflow-y: scroll;
     max-height: 550px;
     width: 80%;
     margin: auto auto;
+  }
+  #rating-expand {
+    color: rgb(41, 41, 41);
+    background-color: white;
+    border: 1px solid black;
+    padding: 14px;
+    font-weight: bold;
+  }
+  #rating-expand:hover {
+    color: white;
+    background-color: blue;
+    border-radius: 2px;
   }
 
   /* -- */
@@ -518,10 +531,14 @@ ul::-webkit-scrollbar {
   .review-star {
     width: 15px;
   }
+  #review-stars {
+    display: inline-block;
+  }
   .review-date-name {
     font-size: 13px;
-    display: inline-block;
-    margin-left: 75%;
+    float: right;
+    width: 60%;
+    max-width: fit-content;
   }
   .review-summary {
     font-weight: bold;
@@ -589,6 +606,7 @@ ul::-webkit-scrollbar {
   }
   #review-imgModel img {
     width: 600px;
+    max-height: 600px;
     border-radius: 10px;
     border: 2px solid black;
   }
@@ -624,6 +642,13 @@ ul::-webkit-scrollbar {
   /* -- */
 
   /*  Breakdown */
+  #rating-expand {
+    color: rgb(41, 41, 41);
+    background-color: white;
+    border: 1px solid black;
+    padding: 14px;
+    font-weight: bold;
+  }
   #rating-breakdown {
     transform: translateY(-30px);
     margin-left: 15%;
@@ -651,6 +676,8 @@ ul::-webkit-scrollbar {
     margin-bottom: 15px;
   }
   .rating-progressBar-rating {
+    color: rgb(113, 113, 113);
+    font-size: 15px;
     display: inline-block;
     text-decoration: underline;
     cursor: pointer;
@@ -665,7 +692,7 @@ ul::-webkit-scrollbar {
   }
   .rating-progressBarEmpty {
     height: 7px;
-    background-color: rgb(164, 164, 164);
+    background-color: rgb(230, 230, 230);
   }
   .rating-progressBarFill {
     height: 7px;
@@ -685,6 +712,27 @@ ul::-webkit-scrollbar {
   }
   #rating-removeFilters:hover {
     color: green;
+  }
+  .rating-attrBarSection{
+    margin-top: 10px;
+  }
+  .rating-attrBarContainer{
+    display: inline-block;
+  }
+  .rating-attrBarText{
+    font-size: 9px;
+    color: rgb(33, 33, 33);
+  }
+  .rating-attrBar3{
+    margin-right: 5px;
+    height: 7px;
+    width: 80px;
+    background-color: rgb(230, 230, 230);
+  }
+  .rating-attrArrow{
+    transform: translate(-3px, 12px);
+    color: green;
+    font-size: 13px;
   }
   /* -- */
 /*======================= REVIEW CSS END ===========================*/
