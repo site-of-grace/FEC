@@ -3,10 +3,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './styles.module.css';
 import Card from './Card.jsx';
 
-export default function Carousel({ items, itemWidth = 200 }) {
+export default function Carousel({ items }) {
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef(null);
+  const itemWidth = 260;
 
   const movePrev = () => {
     if (currentIndex > 0) {
@@ -26,6 +27,7 @@ export default function Carousel({ items, itemWidth = 200 }) {
     }
 
     if (direction === 'next' && carousel.current !== null) {
+      console.log('current', carousel.current.offsetWidth * currentIndex, 'maxScrollWidth.current', maxScrollWidth.current);
       return carousel.current.offsetWidth * currentIndex >= maxScrollWidth.current;
     }
 
@@ -36,7 +38,7 @@ export default function Carousel({ items, itemWidth = 200 }) {
     if (carousel !== null && carousel.current !== null) {
       carousel.current.scrollLeft = currentIndex * itemWidth;
     }
-  }, [currentIndex, itemWidth]);
+  }, [currentIndex]);
 
   useEffect(() => {
     maxScrollWidth.current = carousel.current
@@ -45,7 +47,7 @@ export default function Carousel({ items, itemWidth = 200 }) {
   }, []);
 
   return (
-    <div className={styles.row}>
+    <div className={styles.row} ref={maxScrollWidth}>
       <span className={`${styles['chevron-row']}`}>
         <span
           className={`${styles['chevron-hover']} ${styles.slider} ${styles['chevron-group']}`}
