@@ -174,7 +174,8 @@ li.carousel-card > img {
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
-  width: 60%;
+  min-width: 1500px;
+  max-width: 1500px;
   margin: 0 auto;
   margin-bottom: 10px;
   min-height: 1150px;
@@ -318,12 +319,12 @@ li.carousel-card > img {
 }
 
 #imageGallery {
-  margin: 10px;
+  margin-top: 20px;
+  margin-left: 5px;
   list-style: none;
   background-color: transparent;
   max-height: 795px;
   overflow-y: scroll;
-  scrollbar-color: red;
 }
 
 .imageGalleryItem {
@@ -365,11 +366,11 @@ ul::-webkit-scrollbar {
 }
 
 #upButton {
-
+  margin: auto;
 }
 
 #downButton {
-
+  margin: auto;
 }
 
 
@@ -388,6 +389,7 @@ ul::-webkit-scrollbar {
   width: 19%;
   display: inline-block;
   margin-right: 10px;
+
 }
 
 #test {

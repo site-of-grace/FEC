@@ -146,13 +146,9 @@ const Cart = () => {
   //testing to see if empty stock works
   // dispatch(setSelectedstyle({skus: testing}))
 
-
-
-
-
   return (
     <div>
-      <h1 onClick={() => { console.log(); }}>CART</h1>
+      <h1 onClick={() => { document.getElementById('count-2').scrollIntoView(true);}}>CART</h1>
 
       <div id='selectSizeWarning' className='hideWarning' >PLEASE SELECT SIZE</div>
       <div className='cart'>
@@ -173,11 +169,10 @@ const Cart = () => {
       <div className='cart'>
         <div id='addToBag'>
           <div id='hideButton' onClick={() => { checkOut(); }}>
-            <label>
-            <span>ADD TO BAG</span>
+
+              <span>ADD TO BAG</span>
               <span id='plusSign'>+</span>
 
-            </label>
           </div>
         </div>
 

@@ -30,7 +30,6 @@ app.get('/productStyles', (req, res) => {
 
 
   app.post('/cart', (req, res) => {
-    console.log(req.body);
 
     axios
       .post(`${api}/cart`, req.body, config)
@@ -44,7 +43,7 @@ app.get('/productStyles', (req, res) => {
               if (!data) {
                 throw data;
               }
-              console.log('CART DATA', data.data);
+              res.status(200).send(data);
             })
             .catch((error) => {
               console.log('ERROR in get', error);
@@ -101,7 +100,7 @@ app.get('/questions', (req, res) => {
     .then((data) => {
       if (!data) {
         throw data;
-      }      
+      }
       console.log('OK request on questions route, data.data: ', data.data);
       res.send(data.data);
     })
@@ -110,9 +109,9 @@ app.get('/questions', (req, res) => {
       res.send(error);
     });
   });
-  
 
-    
+
+
 
 
 // ===================================================
