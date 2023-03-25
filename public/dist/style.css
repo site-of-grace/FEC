@@ -644,6 +644,7 @@ ul::-webkit-scrollbar {
 
   /*  Breakdown */
   #rating-breakdown {
+    z-index: -1;
     transform: translateY(-30px);
     margin-left: 15%;
   }
@@ -790,13 +791,13 @@ ul::-webkit-scrollbar {
 /*======================= Q&A CSS START ===========================*/
 
 .qa-answers {
-  display: flex; 
+  display: flex;
   justify-content: space-between;
-  padding: 0 15px; 
+  padding: 0 15px;
 }
 
 .qa-left, .qa-right {
-  display: inline-block; 
+  display: inline-block;
   padding: 0 15px;
 }
 
