@@ -101,15 +101,15 @@ export default function Carousel({ items }) {
     >
       <span className={`${styles['chevron-row']}`}>
         <span
-          className={`${styles['chevron-hover']} ${styles.slider} ${styles['chevron-group']}`}
+          className={`${styles['chevron-hover']} ${styles.slider}`}
         />
         <ChevronLeft
-          className={`${styles.chevron}`}
+          className={`${styles.chevron} ${styles['chevron-left']}`}
           onClick={movePrev}
           style={isDisabled('prev') ? disabledStyle : defaultStyle}
         />
         <ChevronRight
-          className={`${styles.chevron}`}
+          className={`${styles.chevron} ${styles['chevron-right']}`}
           onClick={moveNext}
           style={isDisabled('next') ? disabledStyle : defaultStyle}
         />
