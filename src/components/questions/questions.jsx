@@ -118,10 +118,7 @@ const Questions = () => {
                 );
               })
             }
-
-              | FAKE Report
-              FAKE Yes, as you can see in these photos
-              
+              | FAKE Report | <p>FAKE Yes, as you can see in these photos</p>
               <p>FAKE **PHOTOS HERE**</p>
           </div>;
         })}
