@@ -1,12 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, forwardRef } from 'react';
 import Stars from '../general/Stars.jsx';
+import ActionButton from './ActionButton.jsx';
 import CardCarousel from './CardCarousel.jsx';
 import styles from './card.module.css';
 import { useDispatch } from 'react-redux';
 import { setMainProduct } from '../../store/overviewSlice';
 import { findFirstThumbnail } from '../../utils/traverse.js';
 
-const Card = React.memo(({ product }) => {
+const Card = (props, ref) => {
+  const { product } = props;
   const [isHovered, setIsHovered] = useState(false);
   const [photo, setPhoto] = useState(findFirstThumbnail(product.styles));
   const dispatch = useDispatch();
@@ -46,7 +48,9 @@ const Card = React.memo(({ product }) => {
   return (
     <div
       className={`${styles.card} slide`}
+      ref={ref}
     >
+      <ActionButton product={product}/>
       <span className={styles.imageContainer}>
         <CardCarousel
           show={isHovered}
@@ -79,6 +83,6 @@ const Card = React.memo(({ product }) => {
       </span>
     </div>
   );
-});
+};
 
-export default Card;
+export default React.memo(forwardRef(Card));
