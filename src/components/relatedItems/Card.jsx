@@ -1,5 +1,6 @@
 import React, { useState, useCallback, forwardRef } from 'react';
 import Stars from '../general/Stars.jsx';
+import ActionButton from './ActionButton.jsx';
 import CardCarousel from './CardCarousel.jsx';
 import styles from './card.module.css';
 import { useDispatch } from 'react-redux';
@@ -49,6 +50,7 @@ const Card = (props, ref) => {
       className={`${styles.card} slide`}
       ref={ref}
     >
+      <ActionButton product={product}/>
       <span className={styles.imageContainer}>
         <CardCarousel
           show={isHovered}

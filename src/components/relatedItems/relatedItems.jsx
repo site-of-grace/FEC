@@ -3,8 +3,10 @@ import manualSWR from '../../utils/fetchers';
 import { useDispatch, useSelector } from 'react-redux';
 // import { setMainProduct, } from '../../store/overviewSlice';
 import { setProducts } from '../../store/productSlice';
+import ComparisonModal from './ComparisonModal.jsx';
 import styles from './styles.module.css';
 const Row = lazy(() => import('./Row.jsx'));
+
 
 const RelatedItems = () => {
   const dispatch = useDispatch();
