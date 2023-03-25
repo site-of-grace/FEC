@@ -7,6 +7,15 @@ const AddReviewMod = () => {
 	const [stars, setStars] = useState([]);
 	const [userRating, setUserRating] = useState(0);
 	const ratings = ['', 'Poor', 'Fair', 'Average', 'Good', 'Great'];
+	const [attributeSelection, setAttributeSelection] = useState([]);
+
+	const characteristics = {};
+	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
+	characteristics['Width'] = ['Too narrow', 'Slighlty narrow', 'Perfect', 'Slightly wide', 'Too wide'];
+	characteristics['Comfort'] = ['Uncomfortable', 'Slightly uncomfortable', 'Ok', 'Comfortable', 'Perfect'];
+	characteristics['Quality'] = ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'];
+	characteristics['Length'] = ['Runs short', 'Runs slighlty short', 'Perfect', 'Runs slightly long', 'Runs long'];
+	characteristics['Fit'] = ['Runs tight', 'Runs slighlty tight', 'Perfect', 'Runs slighlty long', 'Runs long'];
 
 	var starHighlight = (id, hover) => {
 		var newStars = [];
@@ -29,7 +38,29 @@ const AddReviewMod = () => {
 		}
 		setStars(newStars);
 	};
-	useEffect(starsEmpty ,[]);
+
+	var attributeSelectionCreator = () => {
+		var attributes = [];
+		for (var attribute in characteristics) {
+			var choices = characteristics[attribute];
+			var key = 0;
+			attributes.push(
+				<form className ='attributeSelections'>
+					<h3>{attribute}</h3>
+					{choices.map((choice) => {
+						key++;
+						return (
+						<div className='attributeSelection' key={key*123}>
+							<input type='radio' name={attribute} value={choice}></input>
+							<label>{choice}</label>
+						</div>);
+					})}
+				</form>
+			);
+		}
+		setAttributeSelection(attributes);
+	};
+	useEffect(() => {attributeSelectionCreator(); starsEmpty();},[]);
 
 	return(
 		<div id='addReviewMod'>
@@ -39,12 +70,17 @@ const AddReviewMod = () => {
 			<h3>Overall Rating</h3>
 			{stars}
 			<div id='userRatingChoice'>{ratings[userRating]}</div>
+			<div className='review-bar'></div>
 			<form id='recommendedInput'>
-				<label>No</label>
+				<h3>Recommended?</h3>
 				<input type='radio' name='recommended' value='no'></input>
-				<label>Yes</label>
+				<label>No</label>
 				<input type='radio' name='recommended' value='yes'></input>
+				<label>Yes</label>
 			</form>
+			<div className='review-bar'></div>
+			<h3>Characteristics</h3>
+			{attributeSelection}
 		</div>
 	);
 };
