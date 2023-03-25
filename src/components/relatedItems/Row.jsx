@@ -10,9 +10,9 @@ const Row = ({ products }) => {
       <div className={styles.row}>
         <Carousel items={products} />
       </div>
-      <div className={styles.row}>
+      {/* <div className={styles.row}>
         <Carousel items={products} />
-      </div>
+      </div> */}
     </>
   );
 };
