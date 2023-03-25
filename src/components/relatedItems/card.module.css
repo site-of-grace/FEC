@@ -11,8 +11,20 @@
   flex-direction: column;
   position: relative;
   min-width: 250px;
+  scroll-snap-align: start;
   /* padding: 20px; */
 }
+
+/* Regular CSS */
+/* .carousel-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  
+} */
 
 .imageContainer {
   height: 67%;
