@@ -3,5 +3,6 @@ public/dist/bundle.js
 .env
 githubToken.js
 coverage
-CardCarousel copy*.jsx
-Carousel copy*.jsx
+# CardCarousel copy*.jsx
+# Carousel copy*.jsx
+*copy*.jsx

@@ -15,17 +15,6 @@
   /* padding: 20px; */
 }
 
-/* Regular CSS */
-/* .carousel-item {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 4rem;
-  height: 4rem;
-  
-} */
-
 .imageContainer {
   height: 67%;
   max-height: 67%;
@@ -92,4 +81,21 @@
 /* pointer cursor on hover */
 .card:hover {
   cursor: pointer;
+}
+
+.action-button {
+  background-color: rgba(255, 255, 255, 0.274);
+  border-radius: 50%;
+  padding: 3px;
+  width: 30px;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  z-index: 10; /* make sure the button is stacked on top */
+  transition: all 0.75s ease;
+  /* add any other styles you want */
+}
+
+.action-button:hover {
+  background-color: rgba(255, 255, 255, 0.8);
 }

@@ -6,6 +6,7 @@ import { setProducts } from '../../store/productSlice';
 import styles from './styles.module.css';
 const Row = lazy(() => import('./Row.jsx'));
 
+
 const RelatedItems = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);

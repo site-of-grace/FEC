@@ -42,6 +42,8 @@ const questionsSlice = createSlice({
   }
 });
 
-export const { setQuestionId, setQuestionBody, setQuestionDate, setAskerName, setQuestionHelpfulness, setReported, setAnswers, setQuestionArr } = questionsSlice.actions;
+
+
+export const { setQuestionId, setQuestionBody, setQuestionDate, setAskerName, setQuestionHelpfulness, setReported, setAnswers, setQuestionArr, updateSortedAnswers } = questionsSlice.actions;
 
 export default questionsSlice.reducer;

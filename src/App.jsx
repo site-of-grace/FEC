@@ -9,7 +9,6 @@ const App = () => {
 
   return (
     <div id='FEC'>
-      <h1>Hello FEC</h1>
       <Overview />
       <RelatedItems />
       <Questions />
