@@ -26,10 +26,17 @@ router.get('/', async (req, res) => {
     const products = [];
     const reviews = [];
     const styles = [];
+    const relatedSet = new Set();
     data.forEach(productId => {
       if (cache && cache.has(productId)) {
         return;
       }
+
+      if (relatedSet.has(productId)) {
+        return;
+      }
+
+      relatedSet.add(productId);
       related.push(axios.get(`${api}/products/${productId}/related`, config));
       products.push(axios.get(`${api}/products/${productId}`, config));
       reviews.push(axios.get(`${api}/reviews/meta/?product_id=${productId}`, config));
