@@ -80,15 +80,6 @@ app.get('/productStyles', (req, res) => {
 
 
 // ============API requests for Q&A=======================================
-//I'm also scared of merge conflicts and just working on functionality at the moment
-//we can make things clean and efficient afterwards
-
-
-// var productId = req.query.id;
-// axios
-//   .get(`${api}/products/${productId}/styles`, config)
-
-
 
 // app.get('/questions', (req, res) => {
 app.get('/questions', (req, res) => {
@@ -110,11 +101,31 @@ app.get('/questions', (req, res) => {
       res.send(error);
     });
   });
+
   
+  app.put('/answer/helpful', (req, res) => {
 
-    
-
-
+    var answer_id = req.query.answer_id;
+    console.log('answer_id====> ', answer_id);
+    // console.log('productId in /QA/questions==========> ', product_id);
+    axios
+      .put(`${api}/qa/answers/${answer_id}/helpful`, config)
+      .then(() => {
+        res.status(204);
+      })
+      .catch((error) => {
+        // console.log('error on questions route ', error);
+        res.send(error);
+      });
+    });
+  
+  
+  
+  
+  
+  
+  
+  
 // ===================================================
 
 

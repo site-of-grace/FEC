@@ -120,15 +120,19 @@ const Questions = () => {
             <strong>Q: {question.question_body}</strong>
             {
               console.log('question.answers=====> ', question.answers)}
-              {Object.values(question.answers).sort((a, b) => 
-              b.helpfulnness - a.helpfulness).splice(0, 2).map((answer) => {
-              return <div key={answer.id}>
+              {Object.values(question.answers)
+              .sort((a, b) => b.helpfulnness - a.helpfulness ? 1 : -1)
+              .splice(0, 2)
+              .map((answer) => {
+              return (
+              <div key={answer.id}>
                 <p>A: {answer.body}</p>
-                <div class="qa-left">by {answer.answerer_name === 'seller' ? <strong>Seller</strong> : answer.answerer_name}, {formattedDate(answer.date)}</div>
-                <div class="qa-right"> | Helpful? Yes ({answer.helpfulness}) </div>
+                <div className="qa-left">by {answer.answerer_name === 'seller' ? (<div>{answer.answerer_name} - <strong>Seller</strong></div>) : answer.answerer_name}, {formattedDate(answer.date)}</div>
+                <div className="qa-right"> | Helpful? Yes ({answer.helpfulness}) </div>
 
 
-              </div>;
+              </div>
+              )
               })
             }
             {/*             
@@ -141,7 +145,6 @@ const Questions = () => {
           </div>;
         })}
       </div>
-
 
     </div>
   );
