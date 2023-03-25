@@ -9,56 +9,6 @@ const Questions = () => {
   const dispatch = useDispatch();
   const { mainProduct } = useSelector((state) => state.overview); // store.slice
   const questions  = useSelector((state) => state.question); // store.slice
-
-  
-  //fake data for skeleton
-  const fakeData = {
-    product_id: '71706',
-    results: [
-      {
-        question_id: 631421,
-        question_body: 'Where is this product made?',
-        question_date: '2018-02-28T00:00:00.000Z',
-        asker_name: 'funnygirl',
-        question_helpfulness: 15,
-        reported: false,
-        answers: {
-          5892754: {
-            answerer_name: "sillyguy",
-            body: "China",
-            date: "2018-03-28T00:00:00.000Z",
-            helpfulness: 11,
-            id: 5897275,
-            photos: [
-              "IM A PHOTO!"
-            ]
-          }
-        }
-      },
-      {
-        question_id: 631422,
-        question_body: 'What fabric is the top made of?',
-        question_date: '2019-09-12T00:00:00.000Z',
-        asker_name: 'l33tgamer',
-        question_helpfulness: 6,
-        reported: false,
-        answers: {
-          5999754: {
-            answerer_name: "secondguy",
-            body: "Mexico",
-            date: "2099-03-28T00:00:00.000Z",
-            helpfulness: 5,
-            id: 5897275,
-            photos: []
-          }
-        }
-      }
-    ]
-  };
-    
-  
-  
-  
   
   const [loading, setLoading] = useState(true);
   
@@ -79,6 +29,16 @@ const Questions = () => {
         console.log('err: ', err); 
       });
     };
+  };
+  
+  const handleAnswerVote = ( answerId ) => {
+    axios.put(`/answer/helpful/${answerId}`, {})
+    .then(() => {
+      console.log('Successfull helpful link click');
+    })
+    .catch((err) => {
+      console.log('err on helpful link click: ', err); 
+    });
   };
   
     
@@ -124,15 +84,31 @@ const Questions = () => {
               .sort((a, b) => b.helpfulnness - a.helpfulness ? 1 : -1)
               .splice(0, 2)
               .map((answer) => {
-              return (
-              <div key={answer.id}>
-                <p>A: {answer.body}</p>
-                <div className="qa-left">by {answer.answerer_name === 'seller' ? (<div>{answer.answerer_name} - <strong>Seller</strong></div>) : answer.answerer_name}, {formattedDate(answer.date)}</div>
-                <div className="qa-right"> | Helpful? Yes ({answer.helpfulness}) </div>
-
-
-              </div>
-              )
+                return (
+                <div key={answer.id}>
+                  <p>
+                    A: {answer.body}
+                  </p>
+                  <div className="qa-left">
+                    by {answer.answerer_name === 'seller' ? 
+                    (<div>{answer.answerer_name} - <strong>Seller</strong></div>) 
+                    :
+                    answer.answerer_name}, 
+                    {formattedDate(answer.date)}
+                  </div>
+                  <div className="qa-right">
+                    | Helpful?
+                    <a href="#" onClick={(e) => {
+                      e.preventDefault();
+                      handleAnswerVote(answer.id);
+                    }}
+                    >
+                    Yes 
+                    </a>
+                    ({answer.helpfulness})
+                  </div>
+                </div>
+                );
               })
             }
             {/*             
