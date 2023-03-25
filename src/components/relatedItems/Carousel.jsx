@@ -19,6 +19,16 @@ export default function Carousel({ items }) {
   const [itemWidth, setItemWidth] = useState(252);
   const carousel = useRef(null);
   const lastItem = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const callback = entries => {
+    const entry = entries[0];
+    if (entry.isIntersecting) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
 
   const movePrev = () => {
     setItemWidth(lastItem.current.offsetWidth);
@@ -41,7 +51,10 @@ export default function Carousel({ items }) {
 
     if (direction === 'next' && !!carousel.current) {
       // debugging
+
       // console.log(
+      //   'carousel.current.scrollWidth',
+      //   carousel.current.scrollWidth,
       //   'itemWidth * currentIndex',
       //   itemWidth * currentIndex,
       //   'maxScrollWidth.current',
@@ -94,25 +107,52 @@ export default function Carousel({ items }) {
     };
   }, []);
 
+  // Create an options object to specify the root, rootMargin and threshold values for the intersection observer
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.9
+  };
+
+  // Use the useEffect hook to create an intersection observer instance with our callback and options
+  useEffect(() => {
+    // Create a new observer
+    const observer = new IntersectionObserver(callback, options);
+
+    // Get the current element from the ref
+    const current = lastItem.current;
+
+    // Observe the element if it exists
+    if (current) {
+      observer.observe(current);
+    }
+
+    // Return a cleanup function that unobserves the element
+    return () => {
+      if (current) {
+        observer.unobserve(current);
+      }
+    };
+  }, [lastItem, options]);
+
   return (
     <div
       className={styles.row}
       ref={maxScrollWidth}
     >
       <span className={`${styles['chevron-row']}`}>
-        <span
-          className={`${styles['chevron-hover']} ${styles.slider}`}
-        />
+        <span className={`${styles['chevron-hover']} ${styles.slider}`} />
         <ChevronLeft
           className={`${styles.chevron} ${styles['chevron-left']}`}
           onClick={movePrev}
           style={isDisabled('prev') ? disabledStyle : defaultStyle}
         />
+        {!isVisible && (
         <ChevronRight
           className={`${styles.chevron} ${styles['chevron-right']}`}
           onClick={moveNext}
           style={isDisabled('next') ? disabledStyle : defaultStyle}
-        />
+        />)}
       </span>
       <div
         className={styles['carousel-container']}
