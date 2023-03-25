@@ -10,7 +10,11 @@ const Questions = () => {
   const { mainProduct } = useSelector((state) => state.overview); // store.slice
   const questions  = useSelector((state) => state.question); // store.slice
   
+  // console.log('QUESTIONS======>', questions);
+  
   const [loading, setLoading] = useState(true);
+  const [clickedAnswers, setClickedAnswers] = useState([]);
+
   
   const getQuestions = (product_id) => {
     return (dispatch) => {
@@ -32,9 +36,17 @@ const Questions = () => {
   };
   
   const handleAnswerVote = ( answerId ) => {
+    if (clickedAnswers.includes(answerId)) { //no click for you
+      return; 
+    }
+    
     axios.put(`/answer/helpful/${answerId}`, {})
     .then(() => {
       console.log('Successfull helpful link click');
+      setClickedAnswers([...clickedAnswers, answerId]);
+      // console.log('clickedAnswers=====>', clickedAnswers);
+      dispatch(getQuestions(mainProduct.id));
+
     })
     .catch((err) => {
       console.log('err on helpful link click: ', err); 
@@ -68,19 +80,14 @@ const Questions = () => {
     <div className="widget">
       <h1>QUESTIONS & ANSWERS</h1>
       <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
-      
       <div>
-            {console.log('questionS=====>', questions)}
-
-        {/* {questions.questionArr.map((question) => { */}
         {Object.values(questions.questionArr).splice(0, 2).map((question) => {
           return <div key={question.question_id}>
             {console.log('question=====>', question)}
             
             <strong>Q: {question.question_body}</strong>
-            {
-              console.log('question.answers=====> ', question.answers)}
-              {Object.values(question.answers)
+            {/* {console.log('question.answers=====> ', question.answers)} */}
+            {Object.values(question.answers)
               .sort((a, b) => b.helpfulnness - a.helpfulness ? 1 : -1)
               .splice(0, 2)
               .map((answer) => {
@@ -111,13 +118,11 @@ const Questions = () => {
                 );
               })
             }
-            {/*             
-              | FAKE Helpful? Yes ({fakeData.results[0].question_helpfulness}) 
-              
+
               | FAKE Report
-              <p>FAKE Yes, as you can see in these photos</p>
+              FAKE Yes, as you can see in these photos
               
-              <p>FAKE {fakeData.results[0].answers['5892754'].photos[0]}</p> */}
+              <p>FAKE **PHOTOS HERE**</p>
           </div>;
         })}
       </div>

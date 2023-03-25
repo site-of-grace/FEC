@@ -92,7 +92,7 @@ app.get('/questions', (req, res) => {
       if (!data) {
         throw data;
       }      
-      console.log('OK request on questions route, data.data: ', data.data);
+      // console.log('OK request on questions route, data.data: ', data.data);
       res.send(data.data);
     })
     .catch((error) => {
