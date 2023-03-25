@@ -79,17 +79,7 @@ app.get('/productStyles', (req, res) => {
 
 
 // ============API requests for Q&A=======================================
-//I'm also scared of merge conflicts and just working on functionality at the moment
-//we can make things clean and efficient afterwards
 
-
-// var productId = req.query.id;
-// axios
-//   .get(`${api}/products/${productId}/styles`, config)
-
-
-
-// app.get('/questions', (req, res) => {
 app.get('/questions', (req, res) => {
 
   var product_id = req.query.product_id;
@@ -100,8 +90,13 @@ app.get('/questions', (req, res) => {
     .then((data) => {
       if (!data) {
         throw data;
+<<<<<<< HEAD
+      }      
+      // console.log('OK request on questions route, data.data: ', data.data);
+=======
       }
       console.log('OK request on questions route, data.data: ', data.data);
+>>>>>>> main
       res.send(data.data);
     })
     .catch((error) => {
@@ -110,10 +105,39 @@ app.get('/questions', (req, res) => {
     });
   });
 
+<<<<<<< HEAD
+  
+  app.put('/answer/helpful/:answer_id', (req, res) => {
+    var answer_id = req.params.answer_id;
+    console.log('answer_id====> ', answer_id);
+    // console.log('req.params====> ', req.params);
+    // console.log('productId in /QA/questions==========> ', product_id);
+    axios
+      .put(`${api}/qa/answers/${answer_id}/helpful`, null, config)
+      .then((data) => {
+        res.sendStatus(204);
+        // console.log('data==========> ', data);
+        console.log('GOOD HELPFUL REQUEST');
+      })
+      .catch((error) => {
+        console.log('error on questions helpful route ', error);
+        res.send(error);
+      });
+    });
+    
+    
+  
+  
+  
+  
+  
+  
+=======
 
 
 
 
+>>>>>>> main
 // ===================================================
 
 

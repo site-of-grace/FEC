@@ -737,3 +737,17 @@ ul::-webkit-scrollbar {
   /* -- */
 /*======================= REVIEW CSS END ===========================*/
 
+/*======================= Q&A CSS START ===========================*/
+
+.qa-answers {
+  display: flex; 
+  justify-content: space-between;
+  padding: 0 15px; 
+}
+
+.qa-left, .qa-right {
+  display: inline-block; 
+  padding: 0 15px;
+}
+
+/*======================= Q&A CSS END ===========================*/
