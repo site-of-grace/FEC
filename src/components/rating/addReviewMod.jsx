@@ -51,8 +51,8 @@ const AddReviewMod = () => {
 						key++;
 						return (
 						<div className='attributeSelection' key={key*123}>
-							<input type='radio' name={attribute} value={choice}></input>
-							<label>{choice}</label>
+							<input type='radio' id={choice + attribute} name={attribute} value={choice}></input>
+							<label htmlFor={choice + attribute}>{choice}</label>
 						</div>);
 					})}
 				</form>
@@ -73,10 +73,10 @@ const AddReviewMod = () => {
 			<div className='review-bar'></div>
 			<form id='recommendedInput'>
 				<h3>Recommended?</h3>
-				<input type='radio' name='recommended' value='no'></input>
-				<label>No</label>
-				<input type='radio' name='recommended' value='yes'></input>
-				<label>Yes</label>
+				<input type='radio' id='rating-input-no' name='recommended' value='no'></input>
+				<label htmlFor='rating-input-no'>No</label>
+				<input type='radio' id='rating-input-yes' name='recommended' value='yes'></input>
+				<label htmlFor='rating-input-yes'>Yes</label>
 			</form>
 			<div className='review-bar'></div>
 			<h3>Characteristics</h3>
