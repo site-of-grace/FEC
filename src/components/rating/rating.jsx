@@ -93,6 +93,7 @@ const Rating = () => {
 
   return (
     <div className='widget' id='rating'>
+      {addReview ? <div id='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
       <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
       <div id='rating-main'>
         <Breakdown />

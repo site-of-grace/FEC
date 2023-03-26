@@ -12,7 +12,7 @@ const AddReviewMod = () => {
 	const characteristics = {};
 	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
 	characteristics['Width'] = ['Too narrow', 'Slighlty narrow', 'Perfect', 'Slightly wide', 'Too wide'];
-	characteristics['Comfort'] = ['Uncomfortable', 'Slightly uncomfortable', 'Ok', 'Comfortable', 'Perfect'];
+	characteristics['Comfort'] = ['Uncomfortable', 'Slightly uncomfortable', 'Alright', 'Comfortable', 'Perfect'];
 	characteristics['Quality'] = ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'];
 	characteristics['Length'] = ['Runs short', 'Runs slighlty short', 'Perfect', 'Runs slightly long', 'Runs long'];
 	characteristics['Fit'] = ['Runs tight', 'Runs slighlty tight', 'Perfect', 'Runs slighlty long', 'Runs long'];
@@ -51,8 +51,9 @@ const AddReviewMod = () => {
 						key++;
 						return (
 						<div className='attributeSelection' key={key*123}>
+							<div>{choice}</div>
 							<input type='radio' id={choice + attribute} name={attribute} value={choice}></input>
-							<label htmlFor={choice + attribute}>{choice}</label>
+							<label htmlFor={choice + attribute}></label>
 						</div>);
 					})}
 				</form>
@@ -73,10 +74,12 @@ const AddReviewMod = () => {
 			<div className='review-bar'></div>
 			<form id='recommendedInput'>
 				<h3>Recommended?</h3>
-				<input type='radio' id='rating-input-no' name='recommended' value='no'></input>
-				<label htmlFor='rating-input-no'>No</label>
-				<input type='radio' id='rating-input-yes' name='recommended' value='yes'></input>
-				<label htmlFor='rating-input-yes'>Yes</label>
+					No
+					<input type='radio' id='rating-input-no' name='recommended' value='no'></input>
+					<label style={{'marginRight': '10px'}} htmlFor='rating-input-no'></label>
+					Yes
+					<input type='radio' id='rating-input-yes' name='recommended' value='yes'></input>
+					<label htmlFor='rating-input-yes'></label>
 			</form>
 			<div className='review-bar'></div>
 			<h3>Characteristics</h3>

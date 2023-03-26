@@ -644,11 +644,9 @@ ul::-webkit-scrollbar {
 
   /*  Breakdown */
   #rating-breakdown {
-    z-index: -1;
     transform: translateY(-30px);
     margin-left: 15%;
   }
-
   #rating-average {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 50px;
@@ -735,10 +733,10 @@ ul::-webkit-scrollbar {
   #addReviewMod {
     position: fixed;
     text-align: center;
-    background-color: rgba(244, 244, 244, 0.96);
+    background-color: rgb(255, 255, 255);
     width: 60%;
     min-width: 600px;
-    border-radius: 20px;
+    border-radius: 10px;
     max-height: 800px;
     height: 90vh;
     overflow-y: scroll;
@@ -747,6 +745,7 @@ ul::-webkit-scrollbar {
     left: 50%;
     transform: translate(-50%,-50%);
     padding-bottom: 50px;
+    z-index: 2;
   }
   #addReviewMod h1, h2, h3{
     color: rgb(71, 71, 71);
@@ -767,25 +766,67 @@ ul::-webkit-scrollbar {
   }
 
   /*==Radio button Beautify*/
-  #addReviewMod label {
-    position: relative;
-    color: #666;
-    font-weight: bold;
-    display: inline-block;
-    margin-right: 10px;
-    font-size: 15px;
+  #addReviewMod input[type="radio"]{
+    display: none;
   }
-
+  #addReviewMod label {
+    height: 20px;
+    width: 20px;
+    border-radius: 40%;
+    border: 3px solid blue;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  #addReviewMod label:hover {
+    transition: 300ms ease-in-out 0s;
+    background-color: rgba(0, 0, 255, 0.353);
+  }
+  #addReviewMod label:after {
+    content: "";
+    height: 12px;
+    width: 12px;
+    background-color: blue;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 40%;
+    transition: 300ms ease-in-out 0s;
+  }
+  #addReviewMod input[type="radio"]:checked + label:after{
+    transform: translate(-50%, -50%) scale(1);
+  }
   /*==Radio button Beautify*/
-
+  .attributeSelection div {
+    font-size: 15px;
+    color: rgb(90, 90, 90);
+    margin: auto auto;
+    padding: 10px 10px;
+    text-decoration: underline;
+  }
   .attributeSelection {
     display: inline-block;
+    position: relative;
   }
   .attributeSelections {
     margin-top: 10px;
     border: 2px solid rgb(199, 199, 199);
     border-radius: 10px;
   }
+  #rating-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.396);/* Black with opacity */
+    z-index: 1;
+    cursor: auto;
+  }
+
 /*======================= REVIEW CSS END ===========================*/
 
 /*======================= Q&A CSS START ===========================*/
