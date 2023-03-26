@@ -9,6 +9,7 @@ const AddReviewMod = () => {
 	const ratings = ['', 'Poor', 'Fair', 'Average', 'Good', 'Great'];
 	const [attributeSelection, setAttributeSelection] = useState([]);
 	const [charLeft, setCharLeft] = useState(50);
+	const [curImgs, setCurImgs] = useState([]);
 
 	const characteristics = {};
 	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
@@ -53,8 +54,8 @@ const AddReviewMod = () => {
 						return (
 						<div className='attributeSelection' key={key*123}>
 							<div>{choice}</div>
-							<input type='radio' id={choice + attribute} name={attribute} value={choice}></input>
-							<label htmlFor={choice + attribute}></label>
+							<input type='radio' id={choice + attribute} name={attribute} value={choice}/>
+							<label htmlFor={choice + attribute}/>
 						</div>);
 					})}
 				</div>
@@ -67,35 +68,60 @@ const AddReviewMod = () => {
 	var handleTextInput = (e) => {
 		setCharLeft(50 - e.target.value.length);
 	};
+	var handleUpload = (e, changeImage) => {
+		var fr = new FileReader();
+		fr.readAsDataURL(e.target.files[0]);
+		fr.onloadend = () => {
+			if (changeImage) {
+				var newImgs = [].concat(curImgs);
+				newImgs[e.target.id] = fr.result;
+				setCurImgs(newImgs);
+			} else {
+				setCurImgs([fr.result].concat(curImgs));
+			}
+		};
+	};
 
 	return(
 		<div id='addReviewMod'>
 			<h1>Write Your Review</h1>
 			<h2>About the {mainProduct.name}</h2>
-			<div className='review-bar'></div>
+			<div className='review-bar'/>
 			<h3>Overall Rating</h3>
 			{stars}
 			<div id='userRatingChoice'>{ratings[userRating]}</div>
-			<div className='review-bar'></div>
+			<div className='review-bar'/>
 			<form id='rating-input'>
 				<h3>Recommended?</h3>
 				<div className='coolRadio'>
 					No
-					<input type='radio' id='rating-input-no' name='recommended' value='no'></input>
-					<label style={{'marginRight': '10px'}} htmlFor='rating-input-no'></label>
+					<input type='radio' id='rating-input-no' name='recommended' value='no'/>
+					<label style={{'marginRight': '10px'}} htmlFor='rating-input-no'/>
 					Yes
-					<input type='radio' id='rating-input-yes' name='recommended' value='yes'></input>
-					<label htmlFor='rating-input-yes'></label>
-					<div className='review-bar'></div>
+					<input type='radio' id='rating-input-yes' name='recommended' value='yes'/>
+					<label htmlFor='rating-input-yes'/>
+					<div className='review-bar'/>
 					<h3>Characteristics</h3>
 					{attributeSelection}
-					<div className='review-bar'></div>
-					<div>Review Summary</div>
-					<textarea rows='2' cols='40' maxLength="60" placeholder="Example: Best purchase ever!"></textarea>
-					<div>Review Body (mandatory)</div>
-					<textarea rows='16' cols='70' maxLength="1000" placeholder="Why did you like the product or not?" onChange={handleTextInput}></textarea>
-					{charLeft > 0 ? <div>Minimum required characters left [{charLeft}]</div> : <div>Minimum Reached</div>}
-					<div className='review-bar'></div>
+					<div className='review-bar'/>
+				</ div>
+				<div>Review Summary</div>
+				<textarea rows='2' cols='40' maxLength="60" placeholder="Example: Best purchase ever!"></textarea>
+				<div>Review Body (mandatory)</div>
+				<textarea rows='16' cols='70' maxLength="1000" placeholder="Why did you like the product or not?" onChange={handleTextInput}></textarea>
+				{charLeft > 0 ? <div>Minimum required characters left [{charLeft}]</div> : <div>Minimum Reached</div>}
+				<div className='review-bar'/>
+				<div id="rating-imageUpload">
+					<div>Upload your photos</div>
+					{curImgs.length < 5 ? <input type="file" accept=".png, .jpg, .jpeg" onChange={handleUpload}/> : null}
+					{curImgs.map((curImg, idx) => {
+						return(
+						<div key={idx * 12} style={{'display': 'inline-block', 'marginRight': '20px'}}>
+							<input style={{'position':'absolute', 'display':'inline-block'}} id={idx} type="file" accept=".png, .jpg, .jpeg" onChange={(e) => handleUpload(e, true)}/>
+							<img src={curImg}/>
+						</div>
+						);
+					})}
 				</div>
 			</form>
 		</div>

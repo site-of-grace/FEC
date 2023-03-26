@@ -840,6 +840,16 @@ ul::-webkit-scrollbar {
   #rating-input textarea{
     resize: none;
   }
+  #rating-imageUpload input[type='file'] {
+    color: transparent;
+    display: block;
+    margin: auto;
+  }
+  #rating-imageUpload img {
+    width: 150px;
+    height: 70px;
+    object-fit: cover;
+  }
 /*======================= REVIEW CSS END ===========================*/
 
 /*======================= Q&A CSS START ===========================*/
