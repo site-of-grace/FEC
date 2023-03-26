@@ -37,6 +37,10 @@ body {
   overflow: hidden;
 }
 
+.modal-open .content {
+  overflow: auto;
+}
+
 .card-carousel {
   /* opacity: 1; */
   list-style: none;
