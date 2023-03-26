@@ -8,6 +8,7 @@ const AddReviewMod = () => {
 	const [userRating, setUserRating] = useState(0);
 	const ratings = ['', 'Poor', 'Fair', 'Average', 'Good', 'Great'];
 	const [attributeSelection, setAttributeSelection] = useState([]);
+	const [charLeft, setCharLeft] = useState(50);
 
 	const characteristics = {};
 	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
@@ -45,7 +46,7 @@ const AddReviewMod = () => {
 			var choices = characteristics[attribute];
 			var key = 0;
 			attributes.push(
-				<form className ='attributeSelections'>
+				<div className ='attributeSelections'>
 					<h3>{attribute}</h3>
 					{choices.map((choice) => {
 						key++;
@@ -56,12 +57,16 @@ const AddReviewMod = () => {
 							<label htmlFor={choice + attribute}></label>
 						</div>);
 					})}
-				</form>
+				</div>
 			);
 		}
 		setAttributeSelection(attributes);
 	};
 	useEffect(() => {attributeSelectionCreator(); starsEmpty();},[]);
+
+	var handleTextInput = (e) => {
+		setCharLeft(50 - e.target.value.length);
+	};
 
 	return(
 		<div id='addReviewMod'>
@@ -72,18 +77,27 @@ const AddReviewMod = () => {
 			{stars}
 			<div id='userRatingChoice'>{ratings[userRating]}</div>
 			<div className='review-bar'></div>
-			<form id='recommendedInput'>
+			<form id='rating-input'>
 				<h3>Recommended?</h3>
+				<div className='coolRadio'>
 					No
 					<input type='radio' id='rating-input-no' name='recommended' value='no'></input>
 					<label style={{'marginRight': '10px'}} htmlFor='rating-input-no'></label>
 					Yes
 					<input type='radio' id='rating-input-yes' name='recommended' value='yes'></input>
 					<label htmlFor='rating-input-yes'></label>
+					<div className='review-bar'></div>
+					<h3>Characteristics</h3>
+					{attributeSelection}
+					<div className='review-bar'></div>
+					<div>Review Summary</div>
+					<textarea rows='2' cols='40' maxLength="60" placeholder="Example: Best purchase ever!"></textarea>
+					<div>Review Body (mandatory)</div>
+					<textarea rows='16' cols='70' maxLength="1000" placeholder="Why did you like the product or not?" onChange={handleTextInput}></textarea>
+					{charLeft > 0 ? <div>Minimum required characters left [{charLeft}]</div> : <div>Minimum Reached</div>}
+					<div className='review-bar'></div>
+				</div>
 			</form>
-			<div className='review-bar'></div>
-			<h3>Characteristics</h3>
-			{attributeSelection}
 		</div>
 	);
 };

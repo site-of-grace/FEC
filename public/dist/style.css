@@ -33,6 +33,14 @@ body {
   right: 5px;
 } */
 
+.modal-open {
+  overflow: hidden;
+}
+
+.modal-open .content {
+  overflow: auto;
+}
+
 .card-carousel {
   /* opacity: 1; */
   list-style: none;
@@ -769,7 +777,7 @@ ul::-webkit-scrollbar {
   #addReviewMod input[type="radio"]{
     display: none;
   }
-  #addReviewMod label {
+  .coolRadio label {
     height: 20px;
     width: 20px;
     border-radius: 40%;
@@ -779,11 +787,11 @@ ul::-webkit-scrollbar {
     cursor: pointer;
     user-select: none;
   }
-  #addReviewMod label:hover {
+  .coolRadio label:hover {
     transition: 300ms ease-in-out 0s;
     background-color: rgba(0, 0, 255, 0.353);
   }
-  #addReviewMod label:after {
+  .coolRadio label:after {
     content: "";
     height: 12px;
     width: 12px;
@@ -796,7 +804,7 @@ ul::-webkit-scrollbar {
     border-radius: 40%;
     transition: 300ms ease-in-out 0s;
   }
-  #addReviewMod input[type="radio"]:checked + label:after{
+  .coolRadio input[type="radio"]:checked + label:after{
     transform: translate(-50%, -50%) scale(1);
   }
   /*==Radio button Beautify*/
@@ -826,7 +834,12 @@ ul::-webkit-scrollbar {
     z-index: 1;
     cursor: auto;
   }
-
+  #rating-input {
+    color: rgb(68, 68, 68);
+  }
+  #rating-input textarea{
+    resize: none;
+  }
 /*======================= REVIEW CSS END ===========================*/
 
 /*======================= Q&A CSS START ===========================*/
