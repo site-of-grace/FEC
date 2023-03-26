@@ -90,13 +90,8 @@ app.get('/questions', (req, res) => {
     .then((data) => {
       if (!data) {
         throw data;
-<<<<<<< HEAD
-      }      
-      // console.log('OK request on questions route, data.data: ', data.data);
-=======
       }
       console.log('OK request on questions route, data.data: ', data.data);
->>>>>>> main
       res.send(data.data);
     })
     .catch((error) => {
@@ -104,8 +99,6 @@ app.get('/questions', (req, res) => {
       res.send(error);
     });
   });
-
-<<<<<<< HEAD
   
   app.put('/answer/helpful/:answer_id', (req, res) => {
     var answer_id = req.params.answer_id;
@@ -124,20 +117,6 @@ app.get('/questions', (req, res) => {
         res.send(error);
       });
     });
-    
-    
-  
-  
-  
-  
-  
-  
-=======
-
-
-
-
->>>>>>> main
 // ===================================================
 
 

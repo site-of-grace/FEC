@@ -31,14 +31,14 @@ export default function Carousel({ items }) {
   };
 
   const movePrev = () => {
-    setItemWidth(lastItem.current.offsetWidth);
+    setItemWidth(lastItem.current.scrollWidth);
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
   };
 
   const moveNext = () => {
-    setItemWidth(lastItem.current.offsetWidth);
+    setItemWidth(lastItem.current.scrollWidth);
     if (!!carousel.current && currentIndex * itemWidth < maxScrollWidth.current) {
       setCurrentIndex(prevState => prevState + 1);
     }
@@ -94,7 +94,7 @@ export default function Carousel({ items }) {
       setWidth(window.innerWidth);
 
       if (lastItem.current) {
-        setItemWidth(lastItem.current.offsetWidth);
+        setItemWidth(lastItem.current.scrollWidth);
         // debugging
         // console.log('lastItem.offsetWidth', lastItem.current.offsetWidth);
       }
@@ -155,7 +155,7 @@ export default function Carousel({ items }) {
         />)}
       </span>
       <div
-        className={styles['carousel-container']}
+        className={`${styles['carousel-container']} carousel`}
         ref={carousel}
       >
         {items.map((item, i) => (
