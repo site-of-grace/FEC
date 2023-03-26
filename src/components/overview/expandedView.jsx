@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSlice';
 
@@ -7,28 +7,68 @@ const ExpandedView = (props) => {
   const { mainProduct, styles, mainPhotos, products } = useSelector((state) => state.overview); // store.slice
   const dispatch = useDispatch();
 
+  var mainPhoto = props.expandedMain; // url
 
+  const [backgroundImage, setBackgroundImage] = useState(mainPhoto);
+  const [position, setPosition] = useState('0% 0%');
+  const [style, setStyle] = useState({
+    'background-size': '300%',
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundPosition: position
+  });
 
-  var closeExpanded = () => {
-    document.getElementById('skuSelect').classList.add('dropDown');
-    document.getElementById('quantitySelect').classList.add('dropDown');
-    props.close(false);
+  const [zoom, setZoom] = useState(false);
+
+  var handleMouseMove = e => {
+
+    console.log('hi', style);
+
+    const { left, top, width, height } = e.target.getBoundingClientRect();
+    const x = (e.pageX - left) / width * 120;
+    const y = (e.pageY - top) / height * 120;
+   setStyle({
+    'background-size': 'scale(2.5)',
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundPosition: `${x}% ${y}%`
+  });
   };
 
 
 
 
+  const zoomie = () => {
 
-  return (props.render ? (
+    if (zoom) {
+      document.getElementById('popup').setAttribute('disable', '');
+    } else {
+      document.getElementById('popup').setAttribute('disable', '');
+
+      setZoom(true);
+    }
+
+
+  };
+
+
+
+  return (
     <div id='popup'>
-      <div id='popUpBox'>
-        <button onClick={() => {props.backward();}}></button>
-        <img id='expandedPhoto' src={props.mainPhoto}></img>
-        <button onClick={() => {props.forward();}}></button>
-        <button id='close' onClick={() => {closeExpanded();}}>close page</button>
+
+      <figure onClick={() => {zoomie();}}>
+        <img id='expandedPhoto'src={props.expandedMain}></img>
+      </figure>
+
+
+
+
+
+      <div id='buttons'>
+        <button onClick={() => {props.setExpandedView(false)}}>close page</button>
+        <button onClick={() => {}}>backward</button>
+        <button onClick={() => {}}>foward</button>
       </div>
     </div>
-  ) : '');
+  );
 };
 
 export default ExpandedView;

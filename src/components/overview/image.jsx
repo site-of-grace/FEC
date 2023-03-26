@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles } from '../../store/overviewSlice';
-import ExpandedView from './expandedView.jsx';
 
-const ImageGallery = () => {
+const ImageGallery = (props) => {
   const { mainProduct, styles, mainPhotos } = useSelector((state) => state.overview); // store.slice
 
   useEffect(() => {
@@ -16,22 +15,25 @@ const ImageGallery = () => {
 
 
 
-  const [expandedView, setExpandedView] = useState(false);
   const [main, setMain] = useState('');
+
+
+
+
 
   useEffect(() => {
     if (main.length !== 0) {
+
+      props.setExpandedMain(main);
+
       var mainSelectShow = document.getElementById(main).getElementsByTagName('div')[1];
       mainSelectShow.classList.remove('hide');
       mainSelectShow.classList.add('show');
-
 
       var list = document.getElementById('imageGallery');
       var items = list.getElementsByTagName('li');
       var firstUrl = items[0].getElementsByTagName('img')[0].currentSrc;
       var lastUrl = items[items.length - 1].getElementsByTagName('img')[0].currentSrc;
-
-
 
       if (items.length > 7) {
         document.getElementById('upButton').classList.remove('hide');
@@ -44,8 +46,6 @@ const ImageGallery = () => {
         document.getElementById('downButton').classList.remove('show');
         document.getElementById('downButton').classList.add('hide');
       }
-
-
 
       if (main === firstUrl) {
         document.getElementById('backButton').classList.remove('show');
@@ -81,7 +81,7 @@ const ImageGallery = () => {
     var list = document.getElementById('imageGallery');
     var items = list.getElementsByTagName('li');
     var firstUrl = items[0].getElementsByTagName('img')[0].currentSrc;
-    if (main === firstUrl) { // if
+    if (main === firstUrl) {
       return;
     }
     for (var i = 0; i < items.length; i++) {
@@ -125,9 +125,9 @@ const ImageGallery = () => {
 
 
   var showExpanded = () => {
-    setExpandedView(true);
-    document.getElementById('skuSelect').classList.remove('dropDown');
-    document.getElementById('quantitySelect').classList.remove('dropDown');
+
+
+    props.setExpandedView(true);
   };
 
 
@@ -139,7 +139,7 @@ const ImageGallery = () => {
 
 
         <div id='gallery'>
-          <button id='upButton' className='hide' onClick={() => { document.getElementById('imageGallery').scrollBy(0, -115)}}> UP </button>
+          <button id='upButton' className='hide' onClick={() => { console.log(main), document.getElementById('imageGallery').scrollBy(0, -115)}}> UP </button>
             <ul id='imageGallery'>
               {mainPhotos.map((photo) => {
 
@@ -157,17 +157,16 @@ const ImageGallery = () => {
 
       <div id='mainPhoto'>
 
-        <div id='backward-button'>
+        <div className='backward-button'>
           <button id='backButton' onClick={backButton}>backward</button>
         </div>
 
         <img id='thePhoto' src={main} onClick={() => {showExpanded();}}></img>
 
-        <div id='forward-button'>
+        <div className='forward-button'>
           <button id='forwardButton' onClick={fowardButton}>forward</button>
         </div>
       </div>
-      <ExpandedView render={expandedView} close={setExpandedView} mainPhoto={main} forward={fowardButton} backward={backButton}/>
     </div>
   ) : '';
 };

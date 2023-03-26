@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSlice';
 import ProductInformation from './productInformation.jsx';
 import ImageGallery from './image.jsx';
+import ExpandedView from './expandedView.jsx';
 var axios = require('axios');
 
 const Overview = () => {
   const { mainProduct, styles, mainPhotos, products } = useSelector((state) => state.overview); // store.slice
   const dispatch = useDispatch();
 
+  const [expandedView, setExpandedView] = useState(false);
+  const [expandedMain, setExpandedMain] = useState('');
 
   useEffect(() => {
     axios
@@ -60,12 +63,15 @@ useEffect(() => {
   return (
     <div>
       <div id='overviewWidget'>
-        <div id='overview2-3'>
-          <ImageGallery />
-        </div>
-        <div id='overview1-3'>
+        {!expandedView ? (<div id='overview2-3'>
+          <ImageGallery setExpandedView={setExpandedView} setExpandedMain={setExpandedMain}/>
+        </div>) : ''}
+        {!expandedView ? (<div id='overview1-3'>
           <ProductInformation />
-        </div>
+        </div>) : ''}
+        {expandedView ? <div id='overviewExpand'>
+          <ExpandedView setExpandedView={setExpandedView} expandedMain={expandedMain}/>
+        </div> : ''}
       </div>
       <div id='prodDescrip'>
         <div id='productSlogan'>

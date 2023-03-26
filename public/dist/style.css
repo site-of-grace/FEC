@@ -165,7 +165,7 @@ li.carousel-card > img {
 #overview1-3 {
   width: 33%;
   border-style: solid;
-  display: inline-block;
+  display: flex;
   padding: 10px;
 }
 
@@ -174,11 +174,15 @@ li.carousel-card > img {
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
-  min-width: 1500px;
-  max-width: 1500px;
+
+  width: 1350px;
+  height: 648px;
+
   margin: 0 auto;
   margin-bottom: 10px;
-  min-height: 1150px;
+
+
+
 }
 
 
@@ -192,7 +196,6 @@ li.carousel-card > img {
 #sizeSelector {
   border-style: solid;
 
-  display: flex;
   padding: 10px;
   width: 66%;
   margin-right: 10px;
@@ -278,8 +281,8 @@ li.carousel-card > img {
 }
 
 .styles {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: inline-block;
 }
@@ -292,9 +295,6 @@ li.carousel-card > img {
   flex-wrap: wrap;
 }
 
-#styleContainer {
-  margin-top: 30px;
-}
 
 .thumbnailStyle {
   display: inline-block;
@@ -323,13 +323,13 @@ li.carousel-card > img {
   margin-left: 5px;
   list-style: none;
   background-color: transparent;
-  max-height: 795px;
+  max-height: 500px;
   overflow-y: scroll;
 }
 
 .imageGalleryItem {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
 }
 
 ul::-webkit-scrollbar {
@@ -350,7 +350,7 @@ ul::-webkit-scrollbar {
   align-items: center;
 }
 
-#forward-button {
+.forward-button {
 
 
   width: 80px;
@@ -358,7 +358,7 @@ ul::-webkit-scrollbar {
   display: inline-block;
 }
 
-#backward-button {
+.backward-button {
 
   width: 80px;
   height: 40px;
@@ -412,11 +412,11 @@ ul::-webkit-scrollbar {
 .showCheckMark {
   opacity: 100;
   position: absolute;
-  bottom: 80px;
-  left: 80px;
+  bottom: 40px;
+  left: 40px;
   border-radius: 50%;
-  width: 65%;
-  height: 20%;
+  width: 10px;
+  height: 10px;
 }
 
 .container {
@@ -445,44 +445,74 @@ ul::-webkit-scrollbar {
   display: block;
 }
 
+
+
+
+
+
+
+
+
+#Overview-Rating {
+  float: left;
+}
+
+#Overview-Review {
+  float: left;
+  margin-left: 10px;
+}
+
+#Overview-Rating-Review {
+  border-style: solid;
+  height: 30px;
+
+  padding: 10px;
+}
+
+#Overview-Product-Info {
+  border-style: solid;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+#styleContainer {
+  margin-top: 30px;
+  padding: 10px;
+}
+
+figure {
+  width: 600px;
+  background-repeat: no-repeat;
+}
+
+figure:hover img {
+  opacity: 0;
+}
+
 #popup {
+  display: flex;
   justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0,0,0,0.2);
-  display: flex;
   align-items: center;
-  z-index: 9;
-}
-
-#popUpBox {
-  position: relative;
-  padding: 32px;
-  width: 100%;
-  max-width: 1000px;
-
-  background-color: white;
-  z-index: 9;
-  display: flex;
-
-}
-
-#expandedPhoto {
   width: 100%;
   height: 100%;
-  margin: 40px;
+  border-style: dotted;
 }
 
-#close {
-  top: -10px;
-  right: -10px;
-  height: 30px;
-  position: relative;
-  float: right;
+ #expandedPhoto {
+  display: inline-block;
+  width: 100%;
+  pointer-events: none;
 }
+
+#overviewExpand {
+  width: 100%;
+  height: 100%;
+}
+
+#buttons {
+  display: inline-block;
+}
+
 
 /*======================= OVERVIEW CSS END ===========================*/
 
