@@ -1,3 +1,8 @@
+.wrapper {
+  position: relative;
+  z-index: 995; 
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -14,7 +19,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 85%;
+  width: 35%;
+  max-width: 1000px;
   height: auto;
   /* overflowY: scroll; */
   background-color: white;
@@ -23,6 +29,11 @@
   padding: 35px;
   z-index: 999;
   cursor: auto;
+  /* center items */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .table {
@@ -46,6 +57,7 @@
 
 .header {
   font-weight: bold;
+  z-index: 10;
 }
 
 .header.feature {
@@ -53,5 +65,5 @@
 }
 
 .header.product {
-  width: 40%;
+  width: 30%;
 }

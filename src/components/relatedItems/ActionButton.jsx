@@ -5,10 +5,16 @@ import styles from './card.module.css';
 
 export default function ActionButton({ product, related = true }) {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const { mainProduct } = useSelector((state) => state.overview);
+  const { mainProduct } = useSelector(state => state.overview);
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const openModal = () => {
+    setIsOpen(true);
+    document.body.classList.add('modal-open');
+  };
+  const closeModal = () => {//
+    setIsOpen(false);
+    document.body.classList.remove('modal-open');
+  };
   const icon = related ? '/icons/unfilledStar.png' : '/icons/filledStar.png';
   const clickHandler = related ? openModal : () => console.log('clicked');
   return (

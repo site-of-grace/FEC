@@ -33,6 +33,10 @@ body {
   right: 5px;
 } */
 
+.modal-open {
+  overflow: hidden;
+}
+
 .card-carousel {
   /* opacity: 1; */
   list-style: none;

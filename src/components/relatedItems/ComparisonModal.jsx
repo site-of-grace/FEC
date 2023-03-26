@@ -34,7 +34,7 @@ const ComparisonModal = ({ products, modalIsOpen, closeModal }) => {
   }
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <div
         className={styles.overlay}
         onClick={closeModal}
@@ -46,7 +46,7 @@ const ComparisonModal = ({ products, modalIsOpen, closeModal }) => {
             <tr>
               {products.map(({ name }, i) => (
                 <>
-                  {i === 1 && <th className={`${styles.header} ${styles.feature}`}>Characteristics</th>}
+                  {i === 1 && <th className={`${styles.header} ${styles.feature}`}>Features</th>}
                   <th
                     className={`${styles.header} ${styles.product}`}
                     key={name}
@@ -69,7 +69,7 @@ const ComparisonModal = ({ products, modalIsOpen, closeModal }) => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 
