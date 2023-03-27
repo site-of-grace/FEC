@@ -1,14 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
+const { getThumbnailMap } = require('../utils/traverse.js');
 
 const initialState = {
   mainProduct: {},
   styles: {},
   mainPhotos: [],
   selectedStyle: {},
-  myOutfit: []
+  myOutfit: [
+    {
+      id: '001',
+      name: 'Add to Outfit',
+      category: '',
+      default_price: '',
+      features: [],
+      validPhotos: [],
+      styles: [{ photos: [{ thumbnail_url: '/icons/placeholder-plus.jpg' }] }]
+    }
+  ]
 };
-
-
 
 const overviewSlice = createSlice({
   name: 'overview',
@@ -19,6 +28,8 @@ const overviewSlice = createSlice({
     },
     setStyles: (state, action) => {
       state.styles = action.payload;
+      state.mainProduct.styles = action.payload.results;
+      state.mainProduct.validPhotos = getThumbnailMap(action.payload.results);
     },
     setMainPhotos: (state, action) => {
       state.mainPhotos = action.payload;
@@ -32,6 +43,7 @@ const overviewSlice = createSlice({
   }
 });
 
-export const { setMainProduct, setStyles, setMainPhotos, setMyOutfit, setSelectedstyle } = overviewSlice.actions;
+export const { setMainProduct, setStyles, setMainPhotos, setMyOutfit, setSelectedstyle } =
+  overviewSlice.actions;
 
 export default overviewSlice.reducer;

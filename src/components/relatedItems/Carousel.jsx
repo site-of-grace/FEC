@@ -12,7 +12,7 @@ const defaultStyle = {
   opacity: 1
 };
 
-export default function Carousel({ items }) {
+export default function Carousel({ items, outfits = false }) {
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
@@ -161,6 +161,8 @@ export default function Carousel({ items }) {
         {items.map((item, i) => (
           <Card
             product={item}
+            outfit={outfits}
+            addToOutfit={outfits && i === 0}
             key={item.id}
             ref={i === items.length - 1 ? lastItem : null}
           />

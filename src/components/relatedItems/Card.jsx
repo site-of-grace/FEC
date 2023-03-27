@@ -3,16 +3,21 @@ import Stars from '../general/Stars.jsx';
 import ActionButton from './ActionButton.jsx';
 import CardCarousel from './CardCarousel.jsx';
 import styles from './card.module.css';
-import { useDispatch } from 'react-redux';
-import { setMainProduct } from '../../store/overviewSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMainProduct, setMyOutfit } from '../../store/overviewSlice';
 import { findFirstThumbnail } from '../../utils/traverse.js';
 
 const Card = (props, ref) => {
-  const { product } = props;
+  const { product, outfit, addToOutfit } = props;
   const [isHovered, setIsHovered] = useState(false);
   const [photo, setPhoto] = useState(findFirstThumbnail(product.styles));
+  const { mainProduct } = useSelector(state => state.overview);
   const dispatch = useDispatch();
   const onClick = () => {
+    if (addToOutfit) {
+      dispatch(setMyOutfit(mainProduct));
+      return;
+    }
     dispatch(setMainProduct(product));
   };
   const changePhoto = (url) => {
@@ -50,7 +55,7 @@ const Card = (props, ref) => {
       className={`${styles.card} slide`}
       ref={ref}
     >
-      <ActionButton product={product}/>
+      {!addToOutfit && <ActionButton product={product} related={!outfit}/>}
       <span className={styles.imageContainer}>
         <CardCarousel
           show={isHovered}
