@@ -17,7 +17,7 @@ const Overview = () => {
           if (!productInfo) {
             throw productInfo;
           }
-          // console.log('----successful productinfo -->', productInfo.data);
+          console.log('----successful productinfo -->', productInfo.data);
           dispatch(setMainProduct(productInfo.data));
           return productInfo.data.id;
         })
@@ -28,16 +28,17 @@ const Overview = () => {
   }, []);
 
 
-
+const { id } = mainProduct;
 useEffect(() => {
 
-  console.log('main product', mainProduct.rating);
+  console.log('main product', mainProduct);
+  
 
-  if (Object.keys(mainProduct).length !== -1) {
+  if (Object.keys(mainProduct).length !== -1 && id) {
 
 
     axios
-    .get(`/productStyles?id=${mainProduct.id}`)
+    .get(`/productStyles?id=${id}`)
       .then((productStyles) => {
         if (!productStyles) {
           throw productStyles;
@@ -51,7 +52,7 @@ useEffect(() => {
         console.log(error);
       });
   }
-}, [mainProduct]);
+}, [id]);
 
 
 
