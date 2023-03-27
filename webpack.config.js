@@ -4,20 +4,21 @@ require('dotenv').config();
 var SRC_DIR = path.join(__dirname, '/src');
 var DIST_DIR = path.join(__dirname, '/public/dist');
 const port = process.env.PORT || 3000;
+const livePort = process.env.LIVE_PORT || 5000;
 
 module.exports = {
   mode: 'development',
   devServer: {
     static: './public/dist',
     hot: true,
-    port: 5000,
+    port: livePort,
     proxy: {
       '/': {
-           target: 'http://localhost:5000',
-           router: () => 'http://localhost:' + port,
-           logLevel: 'debug' /*optional*/
+        target: 'http://localhost:' + livePort,
+        router: () => 'http://localhost:' + port,
+        logLevel: 'debug' /*optional*/
       }
-    },
+    }
   },
   entry: `${SRC_DIR}/index.js`,
   output: {

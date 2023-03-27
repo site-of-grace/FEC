@@ -16,7 +16,8 @@ const initialState = {
       validPhotos: [],
       styles: [{ photos: [{ thumbnail_url: '/icons/placeholder-plus.jpg' }] }]
     }
-  ]
+  ],
+  outfitMap: {'001': true},
 };
 
 const overviewSlice = createSlice({
@@ -38,12 +39,25 @@ const overviewSlice = createSlice({
       state.selectedStyle = action.payload;
     },
     setMyOutfit: (state, action) => {
+      if (state.outfitMap[action.payload.id]) {
+        return;
+      }
+
+      state.outfitMap[action.payload.id] = true;
       state.myOutfit.push(action.payload);
+    },
+    removeOutfit: (state, action) => {
+      if (!state.outfitMap[action.payload.id]) {
+        return;
+      }
+
+      delete state.outfitMap[action.payload.id];
+      state.myOutfit = state.myOutfit.filter((item) => item.id !== action.payload.id);
     }
   }
 });
 
-export const { setMainProduct, setStyles, setMainPhotos, setMyOutfit, setSelectedstyle } =
+export const { setMainProduct, setStyles, setMainPhotos, setMyOutfit, removeOutfit, setSelectedstyle } =
   overviewSlice.actions;
 
 export default overviewSlice.reducer;

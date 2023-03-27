@@ -7,6 +7,7 @@ const OutfitList = () => {
   const { myOutfit } = useSelector(state => state.overview);
   return (
     <>
+    <h1 className={styles['outfit-title']}>YOUR OUTFIT</h1>
       <div className={styles.row}>
         <Carousel items={myOutfit} outfits={true}/>
       </div>
