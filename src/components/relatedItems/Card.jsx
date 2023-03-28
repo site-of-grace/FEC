@@ -15,6 +15,12 @@ const Card = (props, ref) => {
   const dispatch = useDispatch();
   const onClick = () => {
     if (addToOutfit) {
+      const savedOutfits = localStorage.getItem('outfits');
+      if (savedOutfits) {
+        const outfits = JSON.parse(savedOutfits);
+        const newOutfits = [...outfits, product];
+        localStorage.setItem('outfits', JSON.stringify(newOutfits));
+      }
       dispatch(setMyOutfit(mainProduct));
       return;
     }

@@ -10,6 +10,7 @@ const ActionRows = lazy(() => import('./ActionRows.jsx'));
 const RelatedItems = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
+  const { myOutfit } = useSelector((state) => state.overview);
   const [showRelated, setShowRelated] = useState(false);
   const relatedRef = useRef();
   const onSuccess = (res) => {
@@ -41,6 +42,16 @@ const RelatedItems = () => {
       dispatch(setProducts(JSON.parse(savedProducts)));
     } else {
       trigger();
+    }
+
+    const savedOutfits = localStorage.getItem('outfits');
+    if (savedOutfits) {
+      const outfits = JSON.parse(savedOutfits);
+      dispatch(setProducts(outfits));
+    } else {
+      // setTimeout(() => {
+        localStorage.setItem('outfits', JSON.stringify(myOutfit));
+      // }, 1000);
     }
 
     return () => observer.disconnect();

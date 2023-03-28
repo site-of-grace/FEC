@@ -20,6 +20,12 @@ export default function ActionButton({ product, related = true }) {
   };
 
   const removeOutfitHandler = () => {
+    const savedOutfits = localStorage.getItem('outfits');
+    if (savedOutfits) {
+      const outfits = JSON.parse(savedOutfits);
+      const newOutfits = outfits.filter((item) => item.id !== product.id);
+      localStorage.setItem('outfits', JSON.stringify(newOutfits));
+    }
     dispatch(removeOutfit(product));
   };
 
