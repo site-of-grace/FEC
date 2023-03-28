@@ -14,6 +14,7 @@ const Questions = () => {
   
   const [loading, setLoading] = useState(true);
   const [clickedAnswers, setClickedAnswers] = useState([]);
+  const [numQuestions, setNumQuestions] = useState(2);
 
   
   const getQuestions = (product_id) => {
@@ -53,6 +54,10 @@ const Questions = () => {
     });
   };
   
+  const handleLoadMore = () => {
+    setNumQuestions(numQuestions + 2);
+  }
+  
     
   useEffect(() => {
     if(mainProduct.id) {
@@ -81,7 +86,7 @@ const Questions = () => {
       <h1>QUESTIONS & ANSWERS</h1>
       <input type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
       <div>
-        {Object.values(questions.questionArr).splice(0, 2).map((question) => {
+        {Object.values(questions.questionArr).splice(0, numQuestions).map((question) => {
           return <div key={question.question_id}>
             {console.log('question=====>', question)}
             
@@ -123,7 +128,7 @@ const Questions = () => {
           </div>;
         })}
       </div>
-
+      <button onClick={handleLoadMore}>MORE ANSWERED QUESTIONS</button>
     </div>
   );
 };
