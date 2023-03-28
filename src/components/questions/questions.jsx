@@ -128,7 +128,7 @@ const Questions = () => {
           </div>;
         })}
       </div>
-      {Object.values(questions.questionArr).length > 2 && (
+      {(Object.values(questions.questionArr).length > 2) && (Object.values(questions.questionArr).length > numQuestions) && (
         <button onClick={handleLoadMore}>MORE ANSWERED QUESTIONS</button>
       )}
     </div>
