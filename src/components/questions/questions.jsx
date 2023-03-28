@@ -128,7 +128,9 @@ const Questions = () => {
           </div>;
         })}
       </div>
-      <button onClick={handleLoadMore}>MORE ANSWERED QUESTIONS</button>
+      {Object.values(questions.questionArr).length > 2 && (
+        <button onClick={handleLoadMore}>MORE ANSWERED QUESTIONS</button>
+      )}
     </div>
   );
 };
