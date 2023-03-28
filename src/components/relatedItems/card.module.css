@@ -110,6 +110,10 @@
   /* add any other styles you want */
 }
 
-.action-button:hover {
+.action-button:hover  {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.action-button-outfit:hover  {
   background-color: rgba(255, 255, 255, 0.8);
 }

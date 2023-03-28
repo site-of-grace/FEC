@@ -29,12 +29,12 @@ export default function ActionButton({ product, related = true }) {
     <>
     { related ? (
       <img
-        className={related ? styles['action-button'] : styles['action-button-outfit'] }
+        className={styles['action-button']}
         src={'/icons/unfilledStar.png'}
         alt="Action Button"
         onClick={clickHandler}
       />) : (
-        <XCircle className={`${styles['action-button']}`} onClick={clickHandler} />
+        <XCircle className={styles['action-button-outfit']} onClick={clickHandler} />
       )}
       <ComparisonModal
         products={[mainProduct, product]}
