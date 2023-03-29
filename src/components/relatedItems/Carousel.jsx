@@ -31,14 +31,20 @@ export default function Carousel({ items, outfits = false }) {
   };
 
   const movePrev = () => {
-    setItemWidth(lastItem.current.scrollWidth);
+    if (lastItem.current) {
+      setItemWidth(lastItem.current.scrollWidth);
+    }
+    
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
   };
 
   const moveNext = () => {
-    setItemWidth(lastItem.current.scrollWidth);
+    if (lastItem.current) {
+      setItemWidth(lastItem.current.scrollWidth);
+    }
+
     if (!!carousel.current && currentIndex * itemWidth < maxScrollWidth.current) {
       setCurrentIndex(prevState => prevState + 1);
     }
@@ -143,12 +149,14 @@ export default function Carousel({ items, outfits = false }) {
       <span className={`${styles['chevron-row']}`}>
         <span className={`${styles['chevron-hover']} ${styles.slider}`} />
         <ChevronLeft
+          data-testid="chevron-left"
           className={`${styles.chevron} ${styles['chevron-left']}`}
           onClick={movePrev}
           style={isDisabled('prev') ? disabledStyle : defaultStyle}
         />
         {!isVisible && (
         <ChevronRight
+          data-testid="chevron-right"
           className={`${styles.chevron} ${styles['chevron-right']}`}
           onClick={moveNext}
           style={isDisabled('next') ? disabledStyle : defaultStyle}
@@ -157,6 +165,7 @@ export default function Carousel({ items, outfits = false }) {
       <div
         className={`${styles['carousel-container']} carousel`}
         ref={carousel}
+        data-testid="carousel"
       >
         {items.map((item, i) => (
           <Card
