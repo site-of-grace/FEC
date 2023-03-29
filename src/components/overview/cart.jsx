@@ -148,8 +148,6 @@ const Cart = () => {
 
   return (
     <div>
-      <h1 onClick={() => { console.log(size, quantity)}}>CART</h1>
-
       <div id='selectSizeWarning' className='hideWarning' >PLEASE SELECT SIZE</div>
       <div className='cart'>
         <div id='sizeSelector'>

@@ -156,7 +156,7 @@ li.carousel-card > img {
 #overview2-3 {
   width: 66%;
   border-style: solid;
-  display: inline-block;
+  display: flex;
   margin-right: 10px;
   padding: 10px;
 
@@ -176,26 +176,20 @@ li.carousel-card > img {
   display: flex;
 
   width: 1350px;
-  height: 648px;
-
+  height: 655px;
   margin: 0 auto;
   margin-bottom: 10px;
-
-
-
 }
 
 
 .cart {
   display: flex;
   margin: 10px;
-
 }
 
 
 #sizeSelector {
   border-style: solid;
-
   padding: 10px;
   width: 66%;
   margin-right: 10px;
@@ -293,6 +287,7 @@ li.carousel-card > img {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
+  width: 60%;
 }
 
 
@@ -344,36 +339,100 @@ ul::-webkit-scrollbar {
 
 #mainPhoto {
   border-style: solid;
-  width: 80%;
-  display: flex;
   justify-content: center;
   align-items: center;
+  display: flex;
+  width: 700px;
+  min-width: 700px;
+  max-height: 100%;
 }
 
-.forward-button {
+.foward_button {
+  min-width: 73px;
+}
+
+.backward_button {
+    min-width: 73px;
+
+}
 
 
-  width: 80px;
-  height: 40px;
+
+/*START OVERVIEW EXPANDED VIEW*/
+
+#overviewExpand {
+  width: 100%;
+  height: 100%;
+}
+
+#popup {
+  display: flex;
+  min-width: 100%;
+  min-height: 100%;
+  border-style: dotted;
+}
+
+#Small_Gallery_Scroll_Down {
+  max-height: 575px;
+}
+
+#Small_Gallery_Container {
+  max-height: 455px;
+  overflow: hidden;
+  overflow-y: scroll;
+  margin: 10px;
+}
+
+.Small_Thumbnail {
+  height: 50px;
+  width: 50px;
+}
+
+.Small_Thumbnail_Container {
+  min-height: 65px;
+}
+
+.selectColor {
+  border-style: double;
+  height: 5px;
+  background-color: black;
+}
+
+#Small_Gallery_Container::-webkit-scrollbar {
+  display: none;
+}
+
+#expandedPhoto {
   display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  pointer-events: none;
+  object-fit: contain;
 }
 
-.backward-button {
+#expandContainer {
+  border-style: solid;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 
-  width: 80px;
-  height: 40px;
-  display: inline-block;
+  min-width: 1200px;
+  min-height: 600px;
 }
+
+
+/*END OVERVIEW EXPANDED VIEW*/
+
 
 #upButton {
   margin: auto;
 }
 
+
+
 #downButton {
   margin: auto;
 }
-
-
 
 .removeBorder {
   border-style: none;
@@ -386,7 +445,7 @@ ul::-webkit-scrollbar {
 
 #gallery {
   border-style: solid;
-  width: 19%;
+  width: 120px;
   display: inline-block;
   margin-right: 10px;
 
@@ -395,15 +454,31 @@ ul::-webkit-scrollbar {
 #test {
   display: flex;
   padding: 10px;
+
 }
 
 #thePhoto {
  max-width: 100%;
  max-height: 100%;
+ object-fit: contain;
  display: inline-block;
- margin: 20px;
  cursor: zoom-in;
 }
+
+#photo_container {
+
+  /* object-fit: cover; */
+  /* object-position: center; */
+  /* height: auto; */
+  height: 546px;
+  width: 600px;
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
 
 #checkOutButton {
   float: right;
@@ -445,14 +520,6 @@ ul::-webkit-scrollbar {
   display: block;
 }
 
-
-
-
-
-
-
-
-
 #Overview-Rating {
   float: left;
 }
@@ -480,38 +547,11 @@ ul::-webkit-scrollbar {
   padding: 10px;
 }
 
-figure {
-  width: 600px;
-  background-repeat: no-repeat;
-}
-
-figure:hover img {
-  opacity: 0;
-}
-
-#popup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border-style: dotted;
-}
-
- #expandedPhoto {
-  display: inline-block;
-  width: 100%;
-  pointer-events: none;
-}
-
-#overviewExpand {
-  width: 100%;
-  height: 100%;
-}
-
 #buttons {
   display: inline-block;
 }
+
+
 
 
 /*======================= OVERVIEW CSS END ===========================*/

@@ -19,7 +19,7 @@ const ProductInformation = (props) => {
 
 
   return (
-    <div>
+    <div style={{width: '100%'}}>
       <div id='Overview-Rating-Review'>
         <div id='Overview-Rating'>{Stars({number: average})}</div>
         <div id='Overview-Review'>{(average !== 0) ? <a href='#rating-main'>Read all reviews</a> : ''}</div>
@@ -31,7 +31,9 @@ const ProductInformation = (props) => {
         <span id='salePrice'></span>
       </div>
         <StyleSelector />
-        <Cart />
+        <div>
+          <Cart />
+        </div>
     </div>
   );
 };

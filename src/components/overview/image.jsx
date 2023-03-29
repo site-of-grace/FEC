@@ -7,7 +7,7 @@ const ImageGallery = (props) => {
 
   useEffect(() => {
     if (mainPhotos[0] !== undefined) {
-      setMain(mainPhotos[0].thumbnail_url);
+      setMain(mainPhotos[0].url);
     }
   }, [mainPhotos]);
 
@@ -125,8 +125,6 @@ const ImageGallery = (props) => {
 
 
   var showExpanded = () => {
-
-
     props.setExpandedView(true);
   };
 
@@ -139,32 +137,33 @@ const ImageGallery = (props) => {
 
 
         <div id='gallery'>
-          <button id='upButton' className='hide' onClick={() => { console.log(main), document.getElementById('imageGallery').scrollBy(0, -115)}}> UP </button>
+           <button id='upButton' className='hide' onClick={() => { console.log(main), document.getElementById('imageGallery').scrollBy(0, -115)}}> UP </button>
             <ul id='imageGallery'>
               {mainPhotos.map((photo) => {
-
-                return <li id={photo.thumbnail_url} onClick={() => { thumbnailSelect(photo.thumbnail_url); }} key={photo.thumbnail_url} value='test'>
-                  <img className='imageGalleryItem' src={photo.thumbnail_url}></img>
+                return <li id={photo.url} onClick={() => { thumbnailSelect(photo.url); }} key={photo.url} value='test'>
+                  <img className='imageGalleryItem' src={photo.url}></img>
                   <div className='selectorSpace'>
                     <div className='hide'>selected</div>
                   </div>
                   </li>;
               })}
-
             </ul>
             <button id='downButton' className='hide'  onClick={() => { document.getElementById('imageGallery').scrollBy(0, 115) }}> DOWN </button>
           </div>
 
-      <div id='mainPhoto'>
 
-        <div className='backward-button'>
+
+
+      <div id='mainPhoto'>
+        <div className='backward_button'>
           <button id='backButton' onClick={backButton}>backward</button>
         </div>
+        <div id='photo_container'>
+          <img id='thePhoto' src={main} onClick={() => {showExpanded();}}></img>
+        </div>
 
-        <img id='thePhoto' src={main} onClick={() => {showExpanded();}}></img>
-
-        <div className='forward-button'>
-          <button id='forwardButton' onClick={fowardButton}>forward</button>
+        <div className='foward_button'>
+          <button id='forwardButton' onClick={fowardButton}>backward</button>
         </div>
       </div>
     </div>
