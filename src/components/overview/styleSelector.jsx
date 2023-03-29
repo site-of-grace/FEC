@@ -72,7 +72,8 @@ const StyleSelector = (props) => {
 
   return (Object.keys(styles).length) ? (
     <div id='styleContainer'>
-       <div id='productStyle' onClick={ () => { console.log(selectedStyle); }} >{styles.results[0].name}</div>
+      <span><b>{'STYLE>  '}</b></span>
+       <span id='productStyle'>{styles.results[0].name}</span>
       <div>
         <ul id='styleSelector'>
           {styles.results.map((styles) => {

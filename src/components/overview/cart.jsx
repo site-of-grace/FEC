@@ -127,6 +127,7 @@ const Cart = () => {
           throw data;
          }
          console.log('SUCCESSFUL POST REQUEST TO CART');
+         alert('SUCCESSFULLY ADDED TO CART');
         })
         .catch((error) => {
           console.log('SUCCESSFUL POST REQUEST TO CART', error);
@@ -148,8 +149,6 @@ const Cart = () => {
 
   return (
     <div>
-      <h1 onClick={() => { document.getElementById('count-2').scrollIntoView(true);}}>CART</h1>
-
       <div id='selectSizeWarning' className='hideWarning' >PLEASE SELECT SIZE</div>
       <div className='cart'>
         <div id='sizeSelector'>
