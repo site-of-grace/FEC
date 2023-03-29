@@ -28,7 +28,7 @@ const ReviewList = ({setAddReview}) => {
 		<div id='review-list'>
 			{selectedImg ? <div id='review-imgModel'> {/*If theres a selectedImg url*/}
 				<img className={'review-selectedImg'} src={selectedImg}></img>
-				<button onClick={() => setSelectedImg(false)}>✕</button>
+				<div id='rating-overlay' onClick={() => setSelectedImg(false)}></div>
 			</div> : null}
 
 			{!filterRating ? curReviews.map((curReview) => {

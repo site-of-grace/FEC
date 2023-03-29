@@ -99,6 +99,7 @@ const AddReviewMod = () => {
 			if (characteristics[curInput.name]) {
 				if (curInput.checked) {
 					chosenAmount++;
+					chosenAttr[curInput.name] = curInput.value;
 				}
 			}
 			if (curInput.name === 'body') {
@@ -173,4 +174,4 @@ const AddReviewMod = () => {
 	);
 };
 
-export default AddReviewMod;//
+export default AddReviewMod;
