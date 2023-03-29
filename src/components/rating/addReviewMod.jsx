@@ -20,11 +20,11 @@ const AddReviewMod = () => {
 	characteristics['Length'] = ['Runs short', 'Runs slighlty short', 'Perfect', 'Runs slightly long', 'Runs long'];
 	characteristics['Fit'] = ['Runs tight', 'Runs slighlty tight', 'Perfect', 'Runs slighlty long', 'Runs long'];
 
-	const starHighlight = (id, hover) => {
+	const starHighlight = (id, clicked) => {
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
-			if (hover || i>id) { //Highlight to hovered
-				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id, true)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/unfilledStar.png'}></img>);
+			if (!clicked || i > id) { //Highlight to hovered
+				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id, true);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/unfilledStar.png'}></img>);
 			} else { //Highlight to clicked
 				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} key={i} id={i} src={'./icons/glowingStar.png'}></img>);
 			}
@@ -92,6 +92,8 @@ const AddReviewMod = () => {
 		var recommended;
 		var chosenAmount = 0;
 		var bodyShort = false;
+		var nickShort = false;
+		var emailWrong = false;
 		Array.from(form.elements).forEach((curInput) => {
 			if (curInput.name === 'recommended' && curInput.checked) {
 				recommended = curInput.value;
@@ -107,6 +109,15 @@ const AddReviewMod = () => {
 					bodyShort = true;
 				}
 			}
+			if (curInput.name === 'nickname') {
+				if (curInput.value.length < 2) {
+					nickShort = true;
+				}
+			}
+			if (curInput.name === 'email') {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				emailWrong = !emailRegex.test(curInput.value);
+			}
 		});
 		if (recommended === undefined) {
 			setValidationError('Missing Recommended Selection!');
@@ -114,6 +125,10 @@ const AddReviewMod = () => {
 			setValidationError('Missing Characteristic Selection!');
 		} else if (bodyShort) {
 			setValidationError('Review body not long enough minimum of 50 characters required!');
+		} else if (nickShort) {
+			setValidationError('Nickname to short should be atleast 2 characters long');
+		} else if (emailWrong) {
+			setValidationError('Email syntax incorrect, see example');
 		}
 	};
 
