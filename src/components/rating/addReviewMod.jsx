@@ -37,7 +37,7 @@ const AddReviewMod = () => {
 		setUserRating(0);
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
-			newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id, true)} id={i} key={i} src='./icons/unfilledStar.png'></img>);
+			newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} id={i} key={i} src='./icons/unfilledStar.png'></img>);
 		}
 		setStars(newStars);
 	};
@@ -91,10 +91,11 @@ const AddReviewMod = () => {
 		var chosenAttr = {'Size': null, 'Width': null, 'Comfort': null, 'Quality': null, 'Length': null, 'Fit': null};
 		var recommended;
 		var chosenAmount = 0;
-		var bodyShort = false;
-		var nickShort = false;
-		var emailWrong = false;
-		Array.from(form.elements).forEach((curInput) => {
+		if (userRating === 0) {
+			setValidationError('You did not choose a rating!');
+			return;
+		}
+		Array.from(form.elements).every((curInput) => {
 			if (curInput.name === 'recommended' && curInput.checked) {
 				recommended = curInput.value;
 			}
@@ -106,29 +107,30 @@ const AddReviewMod = () => {
 			}
 			if (curInput.name === 'body') {
 				if (curInput.value.length < 50) {
-					bodyShort = true;
+					setValidationError('Review body not long enough minimum of 50 characters required!');
+					return false;
 				}
 			}
 			if (curInput.name === 'nickname') {
 				if (curInput.value.length < 2) {
-					nickShort = true;
+					setValidationError('Nickname to short should be atleast 2 characters long');
+					return false;
 				}
 			}
 			if (curInput.name === 'email') {
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-				emailWrong = !emailRegex.test(curInput.value);
+				var emailWrong = !emailRegex.test(curInput.value);
+				if (emailWrong) {
+					setValidationError('Email syntax incorrect, see example');
+					return false;
+				}
 			}
+			return true;
 		});
 		if (recommended === undefined) {
 			setValidationError('Missing Recommended Selection!');
 		} else if (chosenAmount !== 6) {
 			setValidationError('Missing Characteristic Selection!');
-		} else if (bodyShort) {
-			setValidationError('Review body not long enough minimum of 50 characters required!');
-		} else if (nickShort) {
-			setValidationError('Nickname to short should be atleast 2 characters long');
-		} else if (emailWrong) {
-			setValidationError('Email syntax incorrect, see example');
 		}
 	};
 
