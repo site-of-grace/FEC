@@ -44,6 +44,8 @@ const ExpandedView = (props) => {
       document.getElementById('expandMain').classList.add('show');
       document.getElementById('Small_Gallery_Scroll_Down').classList.remove('hide');
       document.getElementById('Small_Gallery_Scroll_Down').classList.add('show');
+      document.getElementById('closeButton').classList.remove('hide');
+      document.getElementById('closeButton').classList.add('show');
     } else {
       setZoom(true);
       setStyle({
@@ -55,6 +57,8 @@ const ExpandedView = (props) => {
       document.getElementById('expandMain').classList.add('hide');
       document.getElementById('Small_Gallery_Scroll_Down').classList.remove('show');
       document.getElementById('Small_Gallery_Scroll_Down').classList.add('hide');
+      document.getElementById('closeButton').classList.remove('show');
+      document.getElementById('closeButton').classList.add('hide');
     }
 
   };
@@ -119,7 +123,7 @@ const ExpandedView = (props) => {
 
 
 
-        <div>
+        <div id='Expanded_Photo_Container'>
           <figure onClick={() => {zoomie();}} style={{display: 'inline-block'}}>
             <img id='expandedPhoto'src={mainZoomPhoto}></img>
           </figure>

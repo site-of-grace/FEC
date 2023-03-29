@@ -127,6 +127,7 @@ const Cart = () => {
           throw data;
          }
          console.log('SUCCESSFUL POST REQUEST TO CART');
+         alert('SUCCESSFULLY ADDED TO CART');
         })
         .catch((error) => {
           console.log('SUCCESSFUL POST REQUEST TO CART', error);

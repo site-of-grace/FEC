@@ -1,6 +1,4 @@
-h1 {
-  color: red;
-}
+
 
 .small-stars {
   width: 20px;
@@ -174,7 +172,6 @@ li.carousel-card > img {
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
-
   width: 1350px;
   height: 655px;
   margin: 0 auto;
@@ -370,10 +367,12 @@ ul::-webkit-scrollbar {
   min-width: 100%;
   min-height: 100%;
   border-style: dotted;
+  align-items: center;
 }
 
 #Small_Gallery_Scroll_Down {
   max-height: 575px;
+  justify-content: center;
 }
 
 #Small_Gallery_Container {
@@ -405,9 +404,22 @@ ul::-webkit-scrollbar {
 #expandedPhoto {
   display: inline-block;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 546px;
   pointer-events: none;
   object-fit: contain;
+}
+
+#Expanded_Photo_Container {
+  min-width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+}
+
+#closeButton {
+  min-height: 630px;
+  border-style: solid;
 }
 
 #expandContainer {
