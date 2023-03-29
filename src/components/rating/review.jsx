@@ -35,7 +35,6 @@ const Review = ({review, setSelectedImg}) => {
 			stars.push(<img className='review-star' key={i} src='./icons/unfilledStar.png'></img>);
 		}
 	}
-
 	return (
 		<div className='review'>
 			<div id='review-stars'>
