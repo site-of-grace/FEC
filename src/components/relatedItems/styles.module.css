@@ -73,10 +73,12 @@ h1.outfit-title {
 
 .chevron-left {
   padding: 0;
+  padding-left: 10px;
 }
 
 .chevron-right {
   margin: 0 5px;
+  padding-right: 10px;
 }
 
 /* Regular CSS */

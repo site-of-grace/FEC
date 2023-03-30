@@ -47,12 +47,11 @@ const overviewSlice = createSlice({
       state.myOutfit.push(action.payload);
     },
     setOutfits: (state, action) => {
-      const { outfits } = action.payload;
-      outfits.forEach(outfit => {
+      action.payload.forEach(outfit => {
         state.outfitMap[outfit.id] = true;
       });
 
-      state.myOutfit = outfits;
+      state.myOutfit = action.payload;
     },
     removeOutfit: (state, action) => {
       if (!state.outfitMap[action.payload.id]) {
