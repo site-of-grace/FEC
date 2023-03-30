@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect, } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-// import { useSelector } from 'react-redux';
 import styles from './styles.module.css';
 import Card from './Card.jsx';
 
@@ -15,16 +14,12 @@ const defaultStyle = {
 
 export default function Carousel({ items, outfits = false }) {
   const maxScrollWidth = useRef(0);
-  // const { products } = useSelector(state => state.products);
-  // const { myOutfit } = useSelector(state => state.overview);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
   const [itemWidth, setItemWidth] = useState(252);
   const carousel = useRef(null);
   const lastItem = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-
-  console.log('carousel products', outfits, items);
 
   const callback = entries => {
     const entry = entries[0];
@@ -39,7 +34,7 @@ export default function Carousel({ items, outfits = false }) {
     if (lastItem.current) {
       setItemWidth(lastItem.current.scrollWidth);
     }
-
+    
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
@@ -118,33 +113,23 @@ export default function Carousel({ items, outfits = false }) {
     };
   }, []);
 
-  // Create an options object to specify the root, rootMargin and threshold values for the intersection observer
-  const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.9
-  };
-
-  // Use the useEffect hook to create an intersection observer instance with our callback and options
   useEffect(() => {
-    // Create a new observer
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.9
+    };
     const observer = new IntersectionObserver(callback, options);
-
-    // Get the current element from the ref
     const current = lastItem.current;
-
-    // Observe the element if it exists
     if (current) {
       observer.observe(current);
     }
-
-    // Return a cleanup function that unobserves the element
     return () => {
       if (current) {
         observer.unobserve(current);
       }
     };
-  }, [lastItem, options]);
+  }, [lastItem]);
 
   return (
     <div
@@ -160,13 +145,12 @@ export default function Carousel({ items, outfits = false }) {
           style={isDisabled('prev') ? disabledStyle : defaultStyle}
         />
         {!isVisible && (
-          <ChevronRight
-            data-testid="chevron-right"
-            className={`${styles.chevron} ${styles['chevron-right']}`}
-            onClick={moveNext}
-            style={isDisabled('next') ? disabledStyle : defaultStyle}
-          />
-        )}
+        <ChevronRight
+          data-testid="chevron-right"
+          className={`${styles.chevron} ${styles['chevron-right']}`}
+          onClick={moveNext}
+          style={isDisabled('next') ? disabledStyle : defaultStyle}
+        />)}
       </span>
       <div
         className={`${styles['carousel-container']} carousel`}
