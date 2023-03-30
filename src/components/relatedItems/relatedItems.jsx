@@ -1,7 +1,7 @@
 import React, { lazy, useState, Suspense, useEffect, useRef } from 'react';
 import manualSWR from '../../utils/fetchers';
 import { useDispatch, useSelector } from 'react-redux';
-// import { setMainProduct, } from '../../store/overviewSlice';
+import { setOutfits, } from '../../store/overviewSlice';
 import { setProducts } from '../../store/productSlice';
 import styles from './styles.module.css';
 const ActionRows = lazy(() => import('./ActionRows.jsx'));
@@ -47,7 +47,7 @@ const RelatedItems = () => {
     const savedOutfits = localStorage.getItem('outfits');
     if (savedOutfits) {
       const outfits = JSON.parse(savedOutfits);
-      dispatch(setProducts(outfits));
+      dispatch(setOutfits(outfits));
     } else {
       // setTimeout(() => {
         localStorage.setItem('outfits', JSON.stringify(myOutfit));

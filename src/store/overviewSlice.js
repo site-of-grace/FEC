@@ -46,6 +46,14 @@ const overviewSlice = createSlice({
       state.outfitMap[action.payload.id] = true;
       state.myOutfit.push(action.payload);
     },
+    setOutfits: (state, action) => {
+      const { outfits } = action.payload;
+      outfits.forEach(outfit => {
+        state.outfitMap[outfit.id] = true;
+      });
+
+      state.myOutfit = outfits;
+    },
     removeOutfit: (state, action) => {
       if (!state.outfitMap[action.payload.id]) {
         return;
@@ -57,7 +65,7 @@ const overviewSlice = createSlice({
   }
 });
 
-export const { setMainProduct, setStyles, setMainPhotos, setMyOutfit, removeOutfit, setSelectedstyle } =
+export const { setMainProduct, setOutfits, setStyles, setMainPhotos, setMyOutfit, removeOutfit, setSelectedstyle } =
   overviewSlice.actions;
 
 export default overviewSlice.reducer;

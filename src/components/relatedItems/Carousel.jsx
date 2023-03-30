@@ -21,6 +21,8 @@ export default function Carousel({ items, outfits = false }) {
   const lastItem = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  console.log('carousel products', outfits, items);
+
   const callback = entries => {
     const entry = entries[0];
     if (entry.isIntersecting) {
