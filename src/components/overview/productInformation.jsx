@@ -31,7 +31,7 @@ const ProductInformation = (props) => {
         <span id='salePrice'></span>
       </div>
         <StyleSelector />
-        <div>
+        <div id='mainCart'>
           <Cart />
         </div>
     </div>

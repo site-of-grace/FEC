@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSlice';
-import { AiOutlineLine } from "react-icons/ai";
+import { RxCaretUp, RxCaretDown, RxCaretRight, RxCaretLeft } from "react-icons/rx";
+import { GrClose } from "react-icons/gr";
+
 
 const ExpandedView = (props) => {
 
@@ -31,9 +33,10 @@ const ExpandedView = (props) => {
     const x = (e.pageX - left) / width * 100;
     const y = (e.pageY - top) / height * 100;
    setStyle({
-    'background-size': 'scale(2.5)',
+    'background-size': '250%',
     backgroundImage: `url(${mainZoomPhoto})`,
-    backgroundPosition: `${x}% ${y}%`
+    backgroundPosition: `${x}% ${y}%`,
+    cursor: 'zoom-out'
   });
   };
 
@@ -49,9 +52,10 @@ const ExpandedView = (props) => {
     } else {
       setZoom(true);
       setStyle({
-        'background-size': '300%',
+        'background-size': '250%',
         backgroundImage: `url(${mainZoomPhoto})`,
-        backgroundPosition: '0% 0%'
+        backgroundPosition: '0% 0%',
+        cursor: 'zoom-out'
       });
       document.getElementById('expandMain').classList.remove('show');
       document.getElementById('expandMain').classList.add('hide');
@@ -102,7 +106,7 @@ const ExpandedView = (props) => {
 
 
     <div id='Small_Gallery_Scroll_Down'>
-      <button id='up_Button' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => {document.getElementById('Small_Gallery_Container').scrollBy(0, -65)}} >up</button>
+      <div id='up_Button' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => { document.getElementById('Small_Gallery_Container').scrollBy(0, -65)}}><RxCaretUp size={30}/></div>
       <div id='Small_Gallery_Container'>
         {mainPhotos.map((photos) => {
           return (<div className='Small_Thumbnail_Container'>
@@ -111,33 +115,29 @@ const ExpandedView = (props) => {
           </div>);
         })}
       </div>
-      <button id='down_Button' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => {document.getElementById('Small_Gallery_Container').scrollBy(0, 65)}} >down</button>
+      <div id='down_Button' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => {document.getElementById('Small_Gallery_Container').scrollBy(0, 65)}}><RxCaretDown size={30}/></div>
     </div>
 
 
       <div id='expandMain'>
         <div id='expandContainer'>
-        <div className='back-foward-button'>
-          <button onClick={() => {backButton()}}>backward</button>
+        <div className='backward_button'>
+          <div className={(mainPhotos[0].url === mainZoomPhoto) ? 'hide' : 'show'} onClick={() => {backButton();}}><RxCaretLeft size={50}/></div>
         </div>
-
-
 
         <div id='Expanded_Photo_Container'>
           <figure onClick={() => {zoomie();}} style={{display: 'inline-block'}}>
             <img id='expandedPhoto'src={mainZoomPhoto}></img>
           </figure>
         </div>
-
-        <div className='back-foward-button'>
-          <button onClick={() => {fowardButton()}}>foward</button>
+        <div className='foward_button'>
+          <div className={(mainPhotos[mainPhotos.length - 1].url === mainZoomPhoto) ? 'hide' : 'show'}onClick={() => {fowardButton();}}><RxCaretRight size={50}/></div>
         </div>
       </div>
-
     </div>
 
       <div id='closeButton'>
-        <button onClick={() => {props.setExpandedView(false)}}>close page</button>
+        <div onClick={() => {props.setExpandedView(false)}}><GrClose size={20} /></div>
       </div>
     </div>
   );

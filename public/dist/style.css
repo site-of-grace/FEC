@@ -152,23 +152,21 @@ li.carousel-card > img {
 
 
 #overview2-3 {
-  width: 66%;
-  border-style: solid;
+  width: 72%;
   display: flex;
   margin-right: 10px;
   padding: 10px;
-
 }
 
 #overview1-3 {
-  width: 33%;
+  width: 28%;
   border-style: solid;
   display: flex;
   padding: 10px;
 }
 
 #overviewWidget {
-  border-style: solid;
+
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
@@ -268,7 +266,10 @@ li.carousel-card > img {
   margin-right: 30px;
   margin-bottom: 10px;
   display: flex;
+}
 
+#mainCart {
+  /* margin-top: 200px; */
 }
 
 .styles {
@@ -284,7 +285,8 @@ li.carousel-card > img {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  width: 60%;
+  width: 75%;
+  margin-top: 20px;
 }
 
 
@@ -311,46 +313,45 @@ li.carousel-card > img {
 }
 
 #imageGallery {
-  margin-top: 20px;
-  margin-left: 5px;
-  list-style: none;
   background-color: transparent;
-  max-height: 500px;
+  max-height: 518px;
   overflow-y: scroll;
 }
 
 .imageGalleryItem {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
 }
 
-ul::-webkit-scrollbar {
+#imageGallery::-webkit-scrollbar {
   display: none;
 }
 
 
 .selectorSpace {
-  height: 20px;
-  margin-bottom: 10px;
+  height: 10px;
 }
 
 #mainPhoto {
-  border-style: solid;
   justify-content: center;
   align-items: center;
   display: flex;
-  width: 700px;
-  min-width: 700px;
+  min-width: 800px;
   max-height: 100%;
 }
 
 .foward_button {
   min-width: 73px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .backward_button {
     min-width: 73px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -366,13 +367,22 @@ ul::-webkit-scrollbar {
   display: flex;
   min-width: 100%;
   min-height: 100%;
-  border-style: dotted;
   align-items: center;
 }
 
 #Small_Gallery_Scroll_Down {
   max-height: 575px;
   justify-content: center;
+
+}
+
+#up_Button {
+ margin-left: 20px;
+}
+
+#down_Button {
+  margin-left: 20px;
+
 }
 
 #Small_Gallery_Container {
@@ -405,8 +415,11 @@ ul::-webkit-scrollbar {
   display: inline-block;
   max-width: 100%;
   max-height: 546px;
-  pointer-events: none;
   object-fit: contain;
+}
+
+#expandedPhoto:hover {
+  cursor: zoom-in;
 }
 
 #Expanded_Photo_Container {
@@ -414,20 +427,17 @@ ul::-webkit-scrollbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-style: solid;
 }
 
 #closeButton {
   min-height: 630px;
-  border-style: solid;
+  right: 40px;
 }
 
 #expandContainer {
-  border-style: solid;
   justify-content: center;
   align-items: center;
   display: flex;
-
   min-width: 1200px;
   min-height: 600px;
 }
@@ -437,13 +447,14 @@ ul::-webkit-scrollbar {
 
 
 #upButton {
-  margin: auto;
+  margin-left: 15px;
 }
 
 
 
 #downButton {
-  margin: auto;
+  margin-left: 15px;
+
 }
 
 .removeBorder {
@@ -456,17 +467,14 @@ ul::-webkit-scrollbar {
 }
 
 #gallery {
-  border-style: solid;
-  width: 120px;
   display: inline-block;
-  margin-right: 10px;
-
+  justify-content: center;
+  align-items: center;
 }
 
 #test {
   display: flex;
-  padding: 10px;
-
+  align-items: center;
 }
 
 #thePhoto {
@@ -478,17 +486,11 @@ ul::-webkit-scrollbar {
 }
 
 #photo_container {
-
-  /* object-fit: cover; */
-  /* object-position: center; */
-  /* height: auto; */
   height: 546px;
-  width: 600px;
-  /* text-align: center; */
+  width: 700px;
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 
@@ -559,9 +561,6 @@ ul::-webkit-scrollbar {
   padding: 10px;
 }
 
-#buttons {
-  display: inline-block;
-}
 
 
 
