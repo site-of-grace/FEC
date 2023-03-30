@@ -1,0 +1,34 @@
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.carousel-card {
+  flex: 0 0 auto;
+  /* Add your own styling for the product card */
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.carousel-arrow-left {
+  left: 1rem;
+  transform: translateY(-50%);
+}
+
+.carousel-arrow-right {
+  right: 1rem;
+  transform: translateY(-50%);
+}
