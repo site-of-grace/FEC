@@ -10,11 +10,11 @@ const ActionRows = lazy(() => import('./ActionRows.jsx'));
 const RelatedItems = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
-  const { myOutfit } = useSelector((state) => state.overview);
+  const { myOutfit, mainProduct } = useSelector((state) => state.overview);
   const [showRelated, setShowRelated] = useState(false);
   const relatedRef = useRef();
   const onSuccess = (res) => {
-    console.log('res', res);
+    console.log('related api call res', res);
     const products = res.data;
     const productsString = JSON.stringify(products);
     localStorage.setItem('products', productsString);
