@@ -127,6 +127,7 @@ const Cart = () => {
           throw data;
          }
          console.log('SUCCESSFUL POST REQUEST TO CART');
+         alert('SUCCESSFULLY ADDED TO CART');
         })
         .catch((error) => {
           console.log('SUCCESSFUL POST REQUEST TO CART', error);
@@ -148,13 +149,11 @@ const Cart = () => {
 
   return (
     <div>
-      <h1 onClick={() => { document.getElementById('count-2').scrollIntoView(true);}}>CART</h1>
-
       <div id='selectSizeWarning' className='hideWarning' >PLEASE SELECT SIZE</div>
       <div className='cart'>
         <div id='sizeSelector'>
               <select id='skuSelect' name='size' onFocus={(e)=>{ Object.keys(selectedStyle.skus).length ? e.target.size=document.getElementById("skuSelect").options.length - 1 : null}}  onBlur={(e)=>{e.target.size='0'}} className='dropDown' onChange={() => { selectedSize(); }}>
-                { !quantityList ? <option id='defaultSelect' value="none" selected disabled hidden>SELECT SIZE</option> : null}
+                { !quantityList ? <option id='defaultSelect' style={{'font-size': '14px', 'color': 'black'}} value="none" selected disabled hidden>SELECT SIZE</option> : null}
                 {selectedStyle.skus ? sizeDropDown(selectedStyle.skus) : null}
               </select>
           </div>
@@ -170,7 +169,7 @@ const Cart = () => {
         <div id='addToBag'>
           <div id='hideButton' onClick={() => { checkOut(); }}>
 
-              <span>ADD TO BAG</span>
+              <span style={{'font-size': '14px', 'color': 'black'}}>ADD TO BAG</span>
               <span id='plusSign'>+</span>
 
           </div>

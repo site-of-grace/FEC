@@ -3,8 +3,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 
 const AtrributeBreakdown = () => {
-	const metaData = useSelector((state) => state.rating.ratingMeta);
-	console.log('META DATA ===>', metaData);
+	var metaData = useSelector((state) => state.rating.ratingMeta);
 
 	var attributeDivs = [];
 	if (metaData.characteristics) {
@@ -22,9 +21,14 @@ const AtrributeBreakdown = () => {
 
 			var barDivs = [];
 			var name = barLables[key];
-			var textStyle = {'text-align': 'center'};
 
 			for (var i = 0; i < name.length; i++) {
+				var textStyle = {'textAlign': 'center'};
+				if (i === 0) {
+					textStyle = {};
+				} else if (i === 2) {
+					textStyle = {'float': 'right', 'transform': 'translateX(-5px)'};
+				}
 				barDivs.push(<div className='rating-attrBarContainer' key={i*10} >
 					<div className='rating-attrBar3'></div>
 					<div style={textStyle} className='rating-attrBarText'>{name[i]}</div>

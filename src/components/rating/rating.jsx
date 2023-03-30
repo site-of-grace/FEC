@@ -1,9 +1,10 @@
 //Remove console.logs!
 
-import React, { useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import ReviewList  from './reviewList.jsx';
 import Breakdown from './breakdown.jsx';
+import AddReviewMod from './addReviewMod.jsx';
 
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
@@ -12,6 +13,8 @@ import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setRevi
 import _ from 'lodash';
 
 const Rating = () => {
+
+  const [addReview, setAddReview] = useState(false);
 
   const dispatch = useDispatch();
   //current product ids = 71697, 71698, 71699, 71700, 71701
@@ -32,6 +35,11 @@ const Rating = () => {
   var calculateAverage = (metaData) => {
     var total = 0;
     var reviewAmount = 0;
+
+    if (!metaData.rating) {
+      dispatch(setAverage(0));
+    }
+
     for (var i = 1; i <= 5; i++) {
       if (metaData.ratings[i]) {
         total += Number(metaData.ratings[i]) * i;
@@ -39,7 +47,8 @@ const Rating = () => {
       }
     }
     dispatch(setRatingMetaTotal(reviewAmount)); //Needed for rating breakdown
-    var longAverage = (total/reviewAmount);
+
+    var longAverage = reviewAmount > 0 ? (total/reviewAmount) : 0;
   //Rounds to nearest .25
     dispatch(setAverage((Math.round(longAverage * 4) / 4)));
   };
@@ -86,10 +95,12 @@ const Rating = () => {
 
   return (
     <div className='widget' id='rating'>
+      {addReview ? <div id='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
       <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
       <div id='rating-main'>
         <Breakdown />
-        <ReviewList />
+        <ReviewList setAddReview={setAddReview}/>
+        {addReview ? <AddReviewMod /> : null}
       </div>
     </div>
   );

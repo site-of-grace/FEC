@@ -6,7 +6,15 @@ const { api, config } = require('../config.js');
 router.get('/reviews', (req, res) => {
   //Gets the total review count for api request count
   var metaData = req.query.metaData;
-	var reviewCount = Number(metaData.recommended.false) + Number(metaData.recommended.true);
+  var recommended = metaData.recommended;
+  var reviewCount = 0;
+		if (recommended.false && recommended.true) {
+			reviewCount = Number(recommended.false) + Number(recommended.true);
+		} else if (recommended.false) {
+				reviewCount = Number(recommended.false);
+		} else {
+				reviewCount = Number(recommended.true);
+		}
 	axios.get(`${api}/reviews/?product_id=${req.query.product_id}&count=${reviewCount}&sort=newest`, config)
   .then((reviewData) => {
     if (!reviewData.data || !reviewData.data.results) {

@@ -6,7 +6,7 @@ const initialState = {
   reviewsRelevant: [],
   reviewsHelpful: [],
   reviewsRecent: [],
-  average: [],
+  average: 0,
   ratingMetaTotal: [], //A lot of these ratings are hidden from the user.
   filterRating: false
 };
