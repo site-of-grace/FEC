@@ -12,7 +12,7 @@
   position: relative;
   min-width: 250px;
   scroll-snap-align: start;
-  z-index: 0;
+  z-index: -1;
   /* padding: 20px; */
 }
 
@@ -23,7 +23,7 @@
   background-color: rgb(233, 233, 233);
   overflow: hidden;
   position: relative;
-  z-index: 0;
+  z-index: -1;
 }
 
 .image {

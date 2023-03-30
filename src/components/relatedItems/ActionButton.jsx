@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { XCircle } from 'lucide-react';
-import ComparisonModal from './ComparisonModal.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeOutfit } from '../../store/overviewSlice.js';
+import { setIsOpen, setProductsToCompare } from '../../store/productSlice.js';
 import styles from './card.module.css';
 
 export default function ActionButton({ product, related = true }) {
-  const [modalIsOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const { mainProduct } = useSelector(state => state.overview);
 
   const openModal = () => {
-    setIsOpen(true);
+    dispatch(setProductsToCompare([mainProduct, product]));
+    dispatch(setIsOpen(true));
     document.body.classList.add('modal-open');
-  };
-  const closeModal = () => {//
-    setIsOpen(false);
-    document.body.classList.remove('modal-open');
   };
 
   const removeOutfitHandler = () => {
@@ -42,11 +38,6 @@ export default function ActionButton({ product, related = true }) {
       />) : (
         <XCircle className={styles['action-button-outfit']} onClick={clickHandler} />
       )}
-      <ComparisonModal
-        products={[mainProduct, product]}
-        closeModal={closeModal}
-        modalIsOpen={modalIsOpen}
-      />
     </>
   );
 }
