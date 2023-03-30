@@ -43,12 +43,6 @@ const ExpandedView = (props) => {
   const zoomie = () => {
     if (zoom) {
       setZoom(false);
-      document.getElementById('expandMain').classList.remove('hide');
-      document.getElementById('expandMain').classList.add('show');
-      document.getElementById('Small_Gallery_Scroll_Down').classList.remove('hide');
-      document.getElementById('Small_Gallery_Scroll_Down').classList.add('show');
-      document.getElementById('closeButton').classList.remove('hide');
-      document.getElementById('closeButton').classList.add('show');
     } else {
       setZoom(true);
       setStyle({
@@ -57,14 +51,7 @@ const ExpandedView = (props) => {
         backgroundPosition: '0% 0%',
         cursor: 'zoom-out'
       });
-      document.getElementById('expandMain').classList.remove('show');
-      document.getElementById('expandMain').classList.add('hide');
-      document.getElementById('Small_Gallery_Scroll_Down').classList.remove('show');
-      document.getElementById('Small_Gallery_Scroll_Down').classList.add('hide');
-      document.getElementById('closeButton').classList.remove('show');
-      document.getElementById('closeButton').classList.add('hide');
     }
-
   };
 
   const showSelected = (id) => {
@@ -105,7 +92,7 @@ const ExpandedView = (props) => {
 
 
 
-    <div id='Small_Gallery_Scroll_Down'>
+    <div id='Small_Gallery_Scroll_Down' className={(zoom) ? 'hide' : 'show'}>
       <div id='up_Button' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => { document.getElementById('Small_Gallery_Container').scrollBy(0, -65)}}><RxCaretUp size={30}/></div>
       <div id='Small_Gallery_Container'>
         {mainPhotos.map((photos) => {
@@ -119,7 +106,7 @@ const ExpandedView = (props) => {
     </div>
 
 
-      <div id='expandMain'>
+      <div id='expandMain' className={(zoom) ? 'hide' : 'show'}>
         <div id='expandContainer'>
         <div className='backward_button'>
           <div className={(mainPhotos[0].url === mainZoomPhoto) ? 'hide' : 'show'} onClick={() => {backButton();}}><RxCaretLeft size={50}/></div>
@@ -136,7 +123,7 @@ const ExpandedView = (props) => {
       </div>
     </div>
 
-      <div id='closeButton'>
+      <div id='closeButton' className={(zoom) ? 'hide' : 'show'}>
         <div onClick={() => {props.setExpandedView(false)}}><GrClose size={20} /></div>
       </div>
     </div>
