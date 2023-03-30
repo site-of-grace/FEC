@@ -54,6 +54,7 @@ router.get('/', async (req, res) => {
       styles: styleData[i].data.results,
       validPhotos: getThumbnailMap(styleData[i].data.results),
       related: relatedData[i].data,
+      mainProduct: currentId,
     }));
 
     res.status(200).send(result);
