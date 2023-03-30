@@ -19,19 +19,19 @@ const ProductInformation = (props) => {
 
 
   return (
-    <div style={{width: '100%'}}>
+    <div id='productInformation'>
       <div id='Overview-Rating-Review'>
-        <div id='Overview-Rating'>{Stars({number: average})}</div>
-        <div id='Overview-Review'>{(average !== 0) ? <a href='#rating-main'>Read all reviews</a> : ''}</div>
+        <div id='Overview-Rating' onClick={() => {console.log(reviews)}}>{Stars({number: average})}</div>
+        <div id='Overview-Review'>{(average !== 0) ? <a href='#rating-main'>Read all&nbsp;{reviews.length}&nbsp;reviews</a> : ''}</div>
       </div>
       <div id='Overview-Product-Info'>
-        <div>{mainProduct.category}</div>
-        <div>{mainProduct.name}</div>
+        <h3 style={{color: 'grey', 'margin-bottom': '-10px'}}>{mainProduct.category}</h3>
+        <h1>{mainProduct.name}</h1>
         <span id='productPrice'>{mainProduct.default_price}</span>
         <span id='salePrice'></span>
       </div>
         <StyleSelector />
-        <div>
+        <div id='Overview_Cart'>
           <Cart />
         </div>
     </div>

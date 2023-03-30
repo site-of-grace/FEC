@@ -75,11 +75,11 @@ useEffect(() => {
       </div>
       <div id='prodDescrip'>
         <div id='productSlogan'>
-          <div>{mainProduct.slogan}</div>
+          <div style={{'margin-bottom': '10px'}}><b>{mainProduct.slogan}</b></div>
           <div>{mainProduct.description}</div>
         </div>
         <div id='features'>
-          <ul>
+          <ul id='featureList'>
           {mainProduct.features ? mainProduct.features.map((feature) => {
             return <li><b>{feature.feature}: </b>{feature.value}</li>
           }) : null}

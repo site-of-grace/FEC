@@ -12,6 +12,7 @@
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
 }
 
 * {
@@ -160,23 +161,22 @@ li.carousel-card > img {
 
 
 #overview2-3 {
-  width: 66%;
-  border-style: solid;
+  width: 72%;
   display: flex;
   margin-right: 10px;
   padding: 10px;
-
 }
 
 #overview1-3 {
-  width: 33%;
-  border-style: solid;
+  width: 28%;
   display: flex;
   padding: 10px;
+  justify-content: center;
+  height: 650px;
 }
 
 #overviewWidget {
-  border-style: solid;
+
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
@@ -254,7 +254,6 @@ li.carousel-card > img {
 
 #productSlogan {
   display: block;
-  border-style: solid;
   padding: 10px;
   width: 60%;
   margin-right: 10px;
@@ -266,9 +265,16 @@ li.carousel-card > img {
 
 #features {
   width: 40%;
-  border-style: solid;
   display: inline-block;
   min-height: 110px;
+}
+
+#featureList {
+  list-style: none;
+}
+
+#featureList li:before {
+  content: '✓ ';
 }
 
 #prodDescrip {
@@ -276,12 +282,38 @@ li.carousel-card > img {
   margin-right: 30px;
   margin-bottom: 10px;
   display: flex;
+  width: 1350px;
 
 }
 
+#banner {
+  background-color: black;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+}
+
+#bannerTitle {
+  background-color: black;
+  width: 100%;
+  margin: 0;
+  color: white;
+  font-size: 23px;
+}
+
+#bannerMessage {
+  display: flex;
+  background-color: white;
+  color: black;
+  justify-content: center;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
 .styles {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   display: inline-block;
 }
@@ -292,7 +324,8 @@ li.carousel-card > img {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  width: 60%;
+  width: 100%;
+  margin-top: 20px;
 }
 
 
@@ -319,46 +352,49 @@ li.carousel-card > img {
 }
 
 #imageGallery {
-  margin-top: 20px;
-  margin-left: 5px;
-  list-style: none;
   background-color: transparent;
-  max-height: 500px;
+  max-height: 518px;
   overflow-y: scroll;
+
 }
 
 .imageGalleryItem {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
 }
 
-ul::-webkit-scrollbar {
+#imageGallery::-webkit-scrollbar {
   display: none;
 }
 
 
 .selectorSpace {
-  height: 20px;
-  margin-bottom: 10px;
+  height: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 #mainPhoto {
-  border-style: solid;
   justify-content: center;
   align-items: center;
   display: flex;
-  width: 700px;
-  min-width: 700px;
+  min-width: 800px;
   max-height: 100%;
 }
 
 .foward_button {
   min-width: 73px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .backward_button {
     min-width: 73px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -374,13 +410,22 @@ ul::-webkit-scrollbar {
   display: flex;
   min-width: 100%;
   min-height: 100%;
-  border-style: dotted;
   align-items: center;
 }
 
 #Small_Gallery_Scroll_Down {
   max-height: 575px;
   justify-content: center;
+
+}
+
+#up_Button {
+ margin-left: 20px;
+}
+
+#down_Button {
+  margin-left: 20px;
+
 }
 
 #Small_Gallery_Container {
@@ -402,6 +447,7 @@ ul::-webkit-scrollbar {
 .selectColor {
   border-style: double;
   height: 5px;
+  width: 100%;
   background-color: black;
 }
 
@@ -413,8 +459,11 @@ ul::-webkit-scrollbar {
   display: inline-block;
   max-width: 100%;
   max-height: 546px;
-  pointer-events: none;
   object-fit: contain;
+}
+
+#expandedPhoto:hover {
+  cursor: zoom-in;
 }
 
 #Expanded_Photo_Container {
@@ -422,20 +471,17 @@ ul::-webkit-scrollbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-style: solid;
 }
 
 #closeButton {
   min-height: 630px;
-  border-style: solid;
+  right: 40px;
 }
 
 #expandContainer {
-  border-style: solid;
   justify-content: center;
   align-items: center;
   display: flex;
-
   min-width: 1200px;
   min-height: 600px;
 }
@@ -443,15 +489,22 @@ ul::-webkit-scrollbar {
 
 /*END OVERVIEW EXPANDED VIEW*/
 
+#productInformation {
+  position: relative;
+  width: 100%;
+}
+
+
 
 #upButton {
-  margin: auto;
+  margin-left: 15px;
 }
 
 
 
 #downButton {
-  margin: auto;
+  margin-left: 15px;
+
 }
 
 .removeBorder {
@@ -464,17 +517,14 @@ ul::-webkit-scrollbar {
 }
 
 #gallery {
-  border-style: solid;
-  width: 120px;
   display: inline-block;
-  margin-right: 10px;
-
+  justify-content: center;
+  align-items: center;
 }
 
 #test {
   display: flex;
-  padding: 10px;
-
+  align-items: center;
 }
 
 #thePhoto {
@@ -486,17 +536,11 @@ ul::-webkit-scrollbar {
 }
 
 #photo_container {
-
-  /* object-fit: cover; */
-  /* object-position: center; */
-  /* height: auto; */
   height: 546px;
-  width: 600px;
-  /* text-align: center; */
+  width: 700px;
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 
@@ -507,11 +551,11 @@ ul::-webkit-scrollbar {
 .showCheckMark {
   opacity: 100;
   position: absolute;
-  bottom: 40px;
-  left: 40px;
+  bottom: 53px;
+  left: 53px;
   border-radius: 50%;
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
 }
 
 .container {
@@ -550,14 +594,11 @@ ul::-webkit-scrollbar {
 }
 
 #Overview-Rating-Review {
-  border-style: solid;
   height: 30px;
-
   padding: 10px;
 }
 
 #Overview-Product-Info {
-  border-style: solid;
   margin-top: 20px;
   padding: 10px;
 }
@@ -567,10 +608,11 @@ ul::-webkit-scrollbar {
   padding: 10px;
 }
 
-#buttons {
-  display: inline-block;
+#Overview_Cart {
+  position: absolute;
+  margin-top: 10px;
+  width: 100%;
 }
-
 
 
 
