@@ -12,6 +12,7 @@
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
 }
 
 * {
@@ -160,9 +161,10 @@ li.carousel-card > img {
 
 #overview1-3 {
   width: 28%;
-  border-style: solid;
   display: flex;
   padding: 10px;
+  justify-content: center;
+  height: 650px;
 }
 
 #overviewWidget {
@@ -244,7 +246,6 @@ li.carousel-card > img {
 
 #productSlogan {
   display: block;
-  border-style: solid;
   padding: 10px;
   width: 60%;
   margin-right: 10px;
@@ -256,9 +257,16 @@ li.carousel-card > img {
 
 #features {
   width: 40%;
-  border-style: solid;
   display: inline-block;
   min-height: 110px;
+}
+
+#featureList {
+  list-style: none;
+}
+
+#featureList li:before {
+  content: '✓ ';
 }
 
 #prodDescrip {
@@ -266,15 +274,38 @@ li.carousel-card > img {
   margin-right: 30px;
   margin-bottom: 10px;
   display: flex;
+  width: 1350px;
+
 }
 
-#mainCart {
-  /* margin-top: 200px; */
+#banner {
+  background-color: black;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+}
+
+#bannerTitle {
+  background-color: black;
+  width: 100%;
+  margin: 0;
+  color: white;
+  font-size: 23px;
+}
+
+#bannerMessage {
+  display: flex;
+  background-color: white;
+  color: black;
+  justify-content: center;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 12px;
 }
 
 .styles {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   display: inline-block;
 }
@@ -285,7 +316,7 @@ li.carousel-card > img {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  width: 75%;
+  width: 100%;
   margin-top: 20px;
 }
 
@@ -316,6 +347,7 @@ li.carousel-card > img {
   background-color: transparent;
   max-height: 518px;
   overflow-y: scroll;
+
 }
 
 .imageGalleryItem {
@@ -330,6 +362,9 @@ li.carousel-card > img {
 
 .selectorSpace {
   height: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 #mainPhoto {
@@ -404,6 +439,7 @@ li.carousel-card > img {
 .selectColor {
   border-style: double;
   height: 5px;
+  width: 100%;
   background-color: black;
 }
 
@@ -444,6 +480,12 @@ li.carousel-card > img {
 
 
 /*END OVERVIEW EXPANDED VIEW*/
+
+#productInformation {
+  position: relative;
+  width: 100%;
+}
+
 
 
 #upButton {
@@ -501,11 +543,11 @@ li.carousel-card > img {
 .showCheckMark {
   opacity: 100;
   position: absolute;
-  bottom: 40px;
-  left: 40px;
+  bottom: 53px;
+  left: 53px;
   border-radius: 50%;
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
 }
 
 .container {
@@ -544,14 +586,11 @@ li.carousel-card > img {
 }
 
 #Overview-Rating-Review {
-  border-style: solid;
   height: 30px;
-
   padding: 10px;
 }
 
 #Overview-Product-Info {
-  border-style: solid;
   margin-top: 20px;
   padding: 10px;
 }
@@ -561,7 +600,11 @@ li.carousel-card > img {
   padding: 10px;
 }
 
-
+#Overview_Cart {
+  position: absolute;
+  margin-top: 10px;
+  width: 100%;
+}
 
 
 

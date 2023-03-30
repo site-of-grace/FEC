@@ -8,13 +8,21 @@ const App = () => {
 
 
   return (
+  <>
+    <header id='banner'>
+      <h1 id='bannerTitle'>GRACE OUTFITTERS</h1>
+    </header>
+     <div id='bannerMessage'>
+      SITE-WIDE ANNOUNCEMENT MESSAGE! - SALE / DISCOUNT&nbsp;<b>OFFER</b>&nbsp;-&nbsp;<div style={{'text-decoration': 'underline'}}> NEW PRODUCT HIGHLIGHT</div></div>
     <div id='FEC'>
-      <h1>Hello FEC</h1>
       <Overview />
       <RelatedItems />
       <Questions />
       <Rating />
     </div>
+  </>
+
+
     );
 };
 
