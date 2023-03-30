@@ -1,5 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+// import { useSelector } from 'react-redux';
 import styles from './styles.module.css';
 import Card from './Card.jsx';
 
@@ -14,6 +15,8 @@ const defaultStyle = {
 
 export default function Carousel({ items, outfits = false }) {
   const maxScrollWidth = useRef(0);
+  // const { products } = useSelector(state => state.products);
+  // const { myOutfit } = useSelector(state => state.overview);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
   const [itemWidth, setItemWidth] = useState(252);
@@ -36,7 +39,7 @@ export default function Carousel({ items, outfits = false }) {
     if (lastItem.current) {
       setItemWidth(lastItem.current.scrollWidth);
     }
-    
+
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
@@ -157,12 +160,13 @@ export default function Carousel({ items, outfits = false }) {
           style={isDisabled('prev') ? disabledStyle : defaultStyle}
         />
         {!isVisible && (
-        <ChevronRight
-          data-testid="chevron-right"
-          className={`${styles.chevron} ${styles['chevron-right']}`}
-          onClick={moveNext}
-          style={isDisabled('next') ? disabledStyle : defaultStyle}
-        />)}
+          <ChevronRight
+            data-testid="chevron-right"
+            className={`${styles.chevron} ${styles['chevron-right']}`}
+            onClick={moveNext}
+            style={isDisabled('next') ? disabledStyle : defaultStyle}
+          />
+        )}
       </span>
       <div
         className={`${styles['carousel-container']} carousel`}

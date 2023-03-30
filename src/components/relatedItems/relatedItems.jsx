@@ -57,6 +57,10 @@ const RelatedItems = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('outfits', JSON.stringify(myOutfit));
+  }, [myOutfit]);
+
   return (
     <>
       <h1 className={styles.title}>RELATED ITEMS</h1>
