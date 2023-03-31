@@ -1,5 +1,5 @@
-import React, { lazy, useState, Suspense, useEffect, useRef } from 'react';
-import manualSWR from '../../utils/fetchers';
+import React, { lazy, useState, Suspense, useEffect, useRef, useCallback } from 'react';
+import manualSWR, { fetcher } from '../../utils/fetchers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOutfits, } from '../../store/overviewSlice';
 import { setProducts } from '../../store/productSlice';
@@ -9,13 +9,16 @@ const ActionRows = lazy(() => import('./ActionRows.jsx'));
 
 const RelatedItems = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.products);
-  const { myOutfit, mainProduct } = useSelector((state) => state.overview);
+  const { products, cacheArray } = useSelector((state) => state.products);
+  const { myOutfit, mainProduct, prevProduct } = useSelector((state) => state.overview);
   const [showRelated, setShowRelated] = useState(false);
   const relatedRef = useRef();
-  const onSuccess = (res) => {
-    console.log('related api call res', res);
-    const products = res.data;
+  const onSuccess = (data) => {
+    console.log('related api call res', data);
+    const products = data;
+    if (prevProduct?.id) {
+      products.push({...prevProduct, mainProduct: mainProduct.id});
+    }
     const productsString = JSON.stringify(products);
     localStorage.setItem('products', productsString);
     dispatch(setProducts(products));
@@ -37,10 +40,20 @@ const RelatedItems = () => {
     observer.observe(relatedRef.current);
 
     const savedProducts = localStorage.getItem('products');
-    if (savedProducts) {
+    // write a function to check if all saveproducts.mainProduct === mainProduct.id
+
+    function allSavedProductsMatchMainProductId(savedProducts, mainProduct) {
+      console.log('savedProducts', savedProducts, mainProduct);
+      // if (!mainProduct.id) return true;
+      const result = savedProducts.every(product => product.mainProduct === mainProduct.id);
+      console.log('savedProducts result', result);
+    }
+      
+    if (savedProducts && (allSavedProductsMatchMainProductId(JSON.parse(savedProducts), mainProduct))) {
       console.log('$$$ cache money $$$');
       dispatch(setProducts(JSON.parse(savedProducts)));
     } else {
+      console.log('no cache or mainProduct.id changed');
       trigger();
     }
 
@@ -61,10 +74,17 @@ const RelatedItems = () => {
     localStorage.setItem('outfits', JSON.stringify(myOutfit));
   }, [myOutfit]);
 
+  useEffect(() => {
+    // const { trigger: getRelated } = manualSWR({ path: '/related', params: {cache: cacheArray}, type: 'get', onSuccess });
+    if (prevProduct?.id) {
+      fetcher('/related?id=' + mainProduct.id, {cache: [...cacheArray, prevProduct.id]}, onSuccess );
+    }
+
+  }, [prevProduct]);
+
   return (
     <>
       <h1 className={styles.title}>RELATED ITEMS</h1>
-      {/* <Row products={products} /> */}
       <div ref={relatedRef}>
         {showRelated && (
           <Suspense fallback={<div>Loading...</div>}>

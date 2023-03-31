@@ -3,6 +3,7 @@ const { getThumbnailMap } = require('../utils/traverse.js');
 
 const initialState = {
   mainProduct: {},
+  prevProduct: {},
   styles: {},
   mainPhotos: [],
   selectedStyle: {},
@@ -25,6 +26,9 @@ const overviewSlice = createSlice({
   initialState,
   reducers: {
     setMainProduct: (state, action) => {
+      if (state.mainProduct?.id) {
+        state.prevProduct = state.mainProduct;
+      }
       state.mainProduct = action.payload;
     },
     setStyles: (state, action) => {

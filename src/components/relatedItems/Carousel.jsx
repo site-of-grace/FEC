@@ -14,29 +14,44 @@ const defaultStyle = {
 };
 
 export default function Carousel({ items, outfits = false }) {
-  //   const { products } = useSelector((state) => state.products);
-  const { myOutfit } = useSelector((state) => state.overview);
+  // const { products } = useSelector((state) => state.products);
+  const { myOutfit, mainProduct, prevProduct } = useSelector(state => state.overview);
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
   const [itemWidth, setItemWidth] = useState(252);
   const carouselRef = useRef(null);
   const lastItemRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
+  const [showRight, setShowRight] = useState(true);
   const [currentOffset, setCurrentOffset] = useState(0);
 
-  const callback = entries => {
-    const entry = entries[0];
-    if (entry.isIntersecting) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
+  const isDisabled = direction => {
+    if (direction === 'prev') {
+      return currentIndex <= 0;
     }
+
+    if (direction === 'next') {
+      // debugging
+
+      const widthProduct = Math.abs(itemWidth * currentIndex);
+      console.log(
+        'carousel.current.scrollWidth',
+        carouselRef.current.scrollWidth,
+        'itemWidth * currentIndex (widthProduct)',
+        widthProduct,
+        'maxScrollWidth.current',
+        maxScrollWidth.current,
+        'screen width',
+        width
+      );
+      return widthProduct >= maxScrollWidth.current;
+    }
+
+    return false;
   };
 
   const movePrev = () => {
-    setCurrentOffset((prevOffset) => {
+    setCurrentOffset(prevOffset => {
       const newOffset = prevOffset + carouselRef.current.clientWidth;
       return Math.min(newOffset, 0);
     });
@@ -44,14 +59,16 @@ export default function Carousel({ items, outfits = false }) {
     if (lastItemRef.current) {
       setItemWidth(lastItemRef.current.scrollWidth);
     }
-    
+
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
+
+    setShowRight(!isDisabled('next'));
   };
 
   const moveNext = () => {
-    setCurrentOffset((prevOffset) => {
+    setCurrentOffset(prevOffset => {
       const newOffset = prevOffset - carouselRef.current.clientWidth;
       const maxOffset = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
       return Math.max(newOffset, -maxOffset);
@@ -64,35 +81,13 @@ export default function Carousel({ items, outfits = false }) {
     if (!!carouselRef.current && currentIndex * itemWidth < maxScrollWidth.current) {
       setCurrentIndex(prevState => prevState + 1);
     }
-  };
 
-  const isDisabled = direction => {
-    if (direction === 'prev') {
-      return currentIndex <= 0;
-    }
-
-    if (direction === 'next' && !!carouselRef.current) {
-      // debugging
-
-      // console.log(
-      //   'carousel.current.scrollWidth',
-      //   carousel.current.scrollWidth,
-      //   'itemWidth * currentIndex',
-      //   itemWidth * currentIndex,
-      //   'maxScrollWidth.current',
-      //   maxScrollWidth.current,
-      //   'screen width',
-      //   width
-      // );
-      return itemWidth * currentIndex >= maxScrollWidth.current;
-    }
-
-    return false;
+    setShowRight(!isDisabled('next'));
   };
 
   useEffect(() => {
     if (outfits && myOutfit.length > 1) {
-      setCurrentIndex(items.length - 1);
+      setCurrentIndex(0);
       moveNext();
     }
   }, [myOutfit]);
@@ -101,7 +96,7 @@ export default function Carousel({ items, outfits = false }) {
     if (!!carouselRef && !!carouselRef.current) {
       carouselRef.current.scrollLeft = currentIndex * itemWidth;
     }
-  }, [currentIndex, items]);
+  }, [currentIndex]);
 
   useEffect(() => {
     maxScrollWidth.current = carouselRef.current
@@ -110,19 +105,18 @@ export default function Carousel({ items, outfits = false }) {
 
     if (lastItemRef.current) {
       // debugging
-      // console.log('maxScrollWidth.current', maxScrollWidth.current, 'lastItem scroll & offsetWidth', lastItem.current.scrollWidth, lastItem.current.offsetWidth);
+      console.log('maxScrollWidth.current', maxScrollWidth.current, 'lastItem scroll & offsetWidth', lastItemRef.current.scrollWidth, lastItemRef.current.offsetWidth);
+      setShowRight(!isDisabled('next'));
     }
-  }, [maxScrollWidth, width]);
+  }, [maxScrollWidth, width, itemWidth, currentIndex, items]);
 
   useEffect(() => {
-    let observer;
+    setShowRight(!isDisabled('next'));
     const handleResize = () => {
       setCurrentIndex(0);
-      movePrev();
+      setShowRight(!isDisabled('next'));
       console.log('screen resizing');
-      if (observer) observer.disconnect();
       setWidth(window.innerWidth);
-
       if (lastItemRef.current) {
         setItemWidth(lastItemRef.current.scrollWidth);
         // debugging
@@ -135,24 +129,26 @@ export default function Carousel({ items, outfits = false }) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [mainProduct]);
 
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.95
-    };
-    const observer = new IntersectionObserver(callback, options);
-    const current = lastItemRef.current;
-    if (current) {
-      observer.observe(current);
+    if (!prevProduct?.id) {
+      return;
     }
-    return () => {
-      if (current) {
-        observer.unobserve(current);
-      }
-    };
+    console.log('rerender carousel on new products');
+    // setIsVisible(true);
+    setCurrentIndex(0);
+    setWidth(window.innerWidth);
+
+    if (lastItemRef.current) {
+      setItemWidth(lastItemRef.current.scrollWidth);
+    }
+
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = 0;
+    }
+
+    // movePrev();
   }, [lastItemRef]);
 
   return (
@@ -166,15 +162,18 @@ export default function Carousel({ items, outfits = false }) {
           data-testid="chevron-left"
           className={`${styles.chevron} ${styles['chevron-left']}`}
           onClick={movePrev}
-          style={currentOffset < 0 ? defaultStyle : disabledStyle}
+          style={!isDisabled('prev') ? defaultStyle : disabledStyle}
         />
         {(
-        <ChevronRight
-          data-testid="chevron-right"
-          className={`${styles.chevron} ${styles['chevron-right']}`}
-          onClick={moveNext}
-          style={currentOffset > -(carouselRef.current?.scrollWidth - carouselRef.current?.clientWidth) ? defaultStyle : disabledStyle}
-        />)}
+          <ChevronRight
+            data-testid="chevron-right"
+            className={`${styles.chevron} ${styles['chevron-right']}`}
+            onClick={moveNext}
+            // style={currentOffset > -(carouselRef.current?.scrollWidth - carouselRef.current?.clientWidth) ? defaultStyle : disabledStyle}
+            // style={!isDisabled('next') ? defaultStyle : disabledStyle}
+            style={showRight ? defaultStyle : disabledStyle}
+          />
+        )}
       </span>
       <div
         className={`${styles['carousel-container']} carousel`}

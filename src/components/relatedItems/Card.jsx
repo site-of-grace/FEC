@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, forwardRef } from 'react';
 import Stars from '../general/Stars.jsx';
 import ActionButton from './ActionButton.jsx';
 import CardCarousel from './CardCarousel.jsx';
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setMyOutfit } from '../../store/overviewSlice';
 import { findFirstThumbnail } from '../../utils/traverse.js';
 
-const Card = ({ product, outfit, addToOutfit }) => {
+const Card = forwardRef(({ product, outfit, addToOutfit }, ref) => {
   const [isHovered, setIsHovered] = useState(false);
   const [photo, setPhoto] = useState(findFirstThumbnail(product.styles));
   const { mainProduct } = useSelector(state => state.overview);
@@ -58,6 +58,7 @@ const Card = ({ product, outfit, addToOutfit }) => {
   return (
     <div
       className={`${styles.card} slide`}
+      ref={ref}
     >
       {!addToOutfit && <ActionButton product={product} related={!outfit}/>}
       <span className={styles.imageContainer}>
@@ -92,6 +93,6 @@ const Card = ({ product, outfit, addToOutfit }) => {
       </span>
     </div>
   );
-};
+});
 
 export default React.memo(Card);
