@@ -41,22 +41,23 @@ const RelatedItems = () => {
 
     observer.observe(relatedRef.current);
 
-    const savedProducts = localStorage.getItem('products');
-    // write a function to check if all saveproducts.mainProduct === mainProduct.id
+    const savedProducts = JSON.parse(localStorage.getItem('products'));
+    const cachedMainProduct = JSON.parse(localStorage.getItem('mainProduct'));
 
-    function allSavedProductsMatchMainProductId(savedProducts, mainProduct) {
-      console.log('savedProducts', savedProducts, mainProduct);
-      // if (!mainProduct.id) return true;
-      const result = savedProducts.every(product => product.mainProduct === mainProduct.id);
+    function initialCacheMatch(saved, main) {
+      console.log('savedProducts', saved, main);
+      if (!main) {
+        return false;
+      }
+
+      const result = saved.some(product => product.mainProduct === main.id);
       console.log('savedProducts result', result);
+      return result;
     }
 
-    if (
-      savedProducts &&
-      allSavedProductsMatchMainProductId(JSON.parse(savedProducts), mainProduct)
-    ) {
+    if (savedProducts && initialCacheMatch(savedProducts, cachedMainProduct)) {
       console.log('$$$ cache money $$$');
-      dispatch(setProducts(JSON.parse(savedProducts)));
+      dispatch(setProducts(savedProducts));
     } else {
       console.log('no cache or mainProduct.id changed');
       trigger();
@@ -78,12 +79,14 @@ const RelatedItems = () => {
   }, [myOutfit]);
 
   useEffect(() => {
-    console.log('mainProduct.validPhotos effect');
     dispatch(addToCache(mainProduct));
+    const cachedMainProduct = JSON.parse(localStorage.getItem('mainProduct'));
+    if (!cachedMainProduct && mainProduct.validPhotos) {
+      localStorage.setItem('mainProduct', JSON.stringify(mainProduct));
+    }
   }, [mainProduct.validPhotos]);
 
   useEffect(() => {
-    // const { trigger: getRelated } = manualSWR({ path: '/related', params: {cache: cacheArray}, type: 'get', onSuccess });
     if (prevProduct?.id) {
       fetcher(
         '/related?id=' + mainProduct.id,

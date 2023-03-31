@@ -17,6 +17,9 @@ const currentSlice = createSlice({
       for (let i = 0; i < action.payload.length; i++) {
         let current = action.payload[i];
         if (state.cache[current.id]) {
+          if (state.products.find(obj => obj.id === current.id)) {
+            continue;
+          }
           state.products.push(state.cache[current.id]);
           continue;
         }
