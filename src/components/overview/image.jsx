@@ -1,99 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles } from '../../store/overviewSlice';
-import ExpandedView from './expandedView.jsx';
+import { RxCaretUp, RxCaretDown, RxCaretRight, RxCaretLeft } from "react-icons/rx";
 
-const ImageGallery = () => {
+
+
+
+
+const ImageGallery = (props) => {
   const { mainProduct, styles, mainPhotos } = useSelector((state) => state.overview); // store.slice
 
   useEffect(() => {
     if (mainPhotos[0] !== undefined) {
-      setMain(mainPhotos[0].thumbnail_url);
+      setMain(mainPhotos[0].url);
     }
   }, [mainPhotos]);
 
 
-
-
-
-  const [expandedView, setExpandedView] = useState(false);
   const [main, setMain] = useState('');
+
 
   useEffect(() => {
     if (main.length !== 0) {
-      var mainSelectShow = document.getElementById(main).getElementsByTagName('div')[1];
-      mainSelectShow.classList.remove('hide');
-      mainSelectShow.classList.add('show');
 
+      props.setExpandedMain(main);
+      document.getElementById(main).scrollIntoView({behavior: 'smooth', block: 'end'});
 
-      var list = document.getElementById('imageGallery');
-      var items = list.getElementsByTagName('li');
-      var firstUrl = items[0].getElementsByTagName('img')[0].currentSrc;
-      var lastUrl = items[items.length - 1].getElementsByTagName('img')[0].currentSrc;
-
-
-
-      if (items.length > 7) {
-        document.getElementById('upButton').classList.remove('hide');
-        document.getElementById('upButton').classList.add('show');
-        document.getElementById('downButton').classList.remove('hide');
-        document.getElementById('downButton').classList.add('show');
-      } else {
-        document.getElementById('upButton').classList.remove('show');
-        document.getElementById('upButton').classList.add('hide');
-        document.getElementById('downButton').classList.remove('show');
-        document.getElementById('downButton').classList.add('hide');
-      }
-
-
-
-      if (main === firstUrl) {
-        document.getElementById('backButton').classList.remove('show');
-        document.getElementById('backButton').classList.add('hide');
-      } else {
-        document.getElementById('backButton').classList.remove('hide');
-        document.getElementById('backButton').classList.add('show');
-      }
-
-      if (main === lastUrl) {
-        document.getElementById('forwardButton').classList.remove('show');
-        document.getElementById('forwardButton').classList.add('hide');
-      } else {
-        document.getElementById('forwardButton').classList.add('hide');
-        document.getElementById('forwardButton').classList.add('show');
-      }
     }
   }, [main]);
 
 
-  var thumbnailSelect = (url) => {
-    var selectedPic = document.getElementById(url).getElementsByTagName('div')[1];
-    var previousPic = document.getElementById(main).getElementsByTagName('div')[1];
-    previousPic.classList.remove('show');
-    previousPic.classList.add('hide');
-    setMain(url);
-    selectedPic.classList.remove('hide');
-    selectedPic.classList.add('show');
-  };
 
 
   var backButton = () => {
-    var list = document.getElementById('imageGallery');
-    var items = list.getElementsByTagName('li');
-    var firstUrl = items[0].getElementsByTagName('img')[0].currentSrc;
-    if (main === firstUrl) { // if
+    if (main === mainPhotos[0].url) {
       return;
     }
-    for (var i = 0; i < items.length; i++) {
-      var url = items[i].getElementsByTagName('img')[0].currentSrc;
-      var previousUrl = '';
-
-      if (i !== 0) {
-        previousUrl = items[i - 1].getElementsByTagName('img')[0].currentSrc;
-      }
-      if (url === main) {
-        thumbnailSelect(previousUrl);
-        document.getElementById(previousUrl).scrollIntoView({behavior: 'smooth', block: 'end'});
+    for (var i = 0; i < mainPhotos.length; i++) {
+      if (mainPhotos[i].url === main) {
+        setMain(mainPhotos[i - 1].url);
         return;
       }
     }
@@ -101,22 +46,13 @@ const ImageGallery = () => {
 
 
 
-
   var fowardButton = () => {
-    var list = document.getElementById('imageGallery');
-    var items = list.getElementsByTagName('li');
-    var lastUrl = items[items.length - 1].getElementsByTagName('img')[0].currentSrc;
-
-    if (main === lastUrl) {
+    if (main === mainPhotos[mainPhotos.length - 1].url) {
       return;
     }
-
-    for (var i = 0; i < items.length; i++) {
-      var url = items[i].getElementsByTagName('img')[0].currentSrc;
-      var nextUrl = items[i + 1].getElementsByTagName('img')[0].currentSrc;
-      if (url === main) {
-       thumbnailSelect(nextUrl);
-       document.getElementById(nextUrl).scrollIntoView({behavior: 'smooth', block: 'end'});
+    for (var i = 0; i < mainPhotos.length; i++) {
+      if (mainPhotos[i].url === main) {
+        setMain(mainPhotos[i + 1].url);
         return;
       }
     }
@@ -125,9 +61,7 @@ const ImageGallery = () => {
 
 
   var showExpanded = () => {
-    setExpandedView(true);
-    document.getElementById('skuSelect').classList.remove('dropDown');
-    document.getElementById('quantitySelect').classList.remove('dropDown');
+    props.setExpandedView(true);
   };
 
 
@@ -135,39 +69,33 @@ const ImageGallery = () => {
 
   return (mainPhotos.length !== 0) ? (
     <div id='test'>
-
-
-
         <div id='gallery'>
-          <button id='upButton' className='hide' onClick={() => { document.getElementById('imageGallery').scrollBy(0, -115)}}> UP </button>
-            <ul id='imageGallery'>
+           <div id='upButton' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => { document.getElementById('imageGallery').scrollBy(0, -74)}}><RxCaretUp size={30}/></div>
+            <div id='imageGallery'>
               {mainPhotos.map((photo) => {
-
-                return <li id={photo.thumbnail_url} onClick={() => { thumbnailSelect(photo.thumbnail_url); }} key={photo.thumbnail_url} value='test'>
-                  <img className='imageGalleryItem' src={photo.thumbnail_url}></img>
+                return <div onClick={() => { setMain(photo.url); }} key={photo.url} value='test'>
+                  <img className='imageGalleryItem' src={photo.url}></img>
                   <div className='selectorSpace'>
-                    <div className='hide'>selected</div>
+                    <div id={photo.url} className={(main === photo.url) ? 'show selectColor' : 'hide selectColor'}></div>
                   </div>
-                  </li>;
+                  </div>;
               })}
-
-            </ul>
-            <button id='downButton' className='hide'  onClick={() => { document.getElementById('imageGallery').scrollBy(0, 115) }}> DOWN </button>
+            </div>
+            <div id='downButton'  className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => { document.getElementById('imageGallery').scrollBy(0, 74) }}><RxCaretDown size={30}/></div>
           </div>
 
       <div id='mainPhoto'>
-
-        <div id='backward-button'>
-          <button id='backButton' onClick={backButton}>backward</button>
+        <div className='backward_button'>
+          <div id='backButton' className={(mainPhotos[0].url === main) ? 'hide' : ''} onClick={backButton}><RxCaretLeft size={50}/></div>
+        </div>
+        <div id='photo_container'>
+          <img id='thePhoto' src={main} onClick={() => {showExpanded();}}></img>
         </div>
 
-        <img id='thePhoto' src={main} onClick={() => {showExpanded();}}></img>
-
-        <div id='forward-button'>
-          <button id='forwardButton' onClick={fowardButton}>forward</button>
+        <div className='foward_button'>
+          <div id='forwardButton' className={(mainPhotos[mainPhotos.length - 1].url === main) ? 'hide' : ''} onClick={fowardButton}><RxCaretRight size={50}/></div>
         </div>
       </div>
-      <ExpandedView render={expandedView} close={setExpandedView} mainPhoto={main} forward={fowardButton} backward={backButton}/>
     </div>
   ) : '';
 };
