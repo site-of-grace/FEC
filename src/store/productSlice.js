@@ -31,9 +31,17 @@ const currentSlice = createSlice({
     setProductsToCompare: (state, action) => {
       state.productsToCompare = action.payload;
     },
+    addToCache: (state, action) => {
+      let current = action.payload;
+      if (state.cache[current.id]) {
+        return;
+      }
+      state.cache[current.id] = current;
+      state.cacheArray.push(current.id);
+    },
   }
 });
 
-export const { setProducts, setIsOpen, setProductsToCompare } = currentSlice.actions;
+export const { setProducts, setIsOpen, setProductsToCompare, addToCache } = currentSlice.actions;
 
 export default currentSlice.reducer;

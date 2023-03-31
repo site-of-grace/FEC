@@ -23,7 +23,6 @@ export default function Carousel({ items, outfits = false }) {
   const carouselRef = useRef(null);
   const lastItemRef = useRef(null);
   const [showRight, setShowRight] = useState(true);
-  const [currentOffset, setCurrentOffset] = useState(0);
 
   const isDisabled = direction => {
     if (direction === 'prev') {
@@ -51,11 +50,6 @@ export default function Carousel({ items, outfits = false }) {
   };
 
   const movePrev = () => {
-    setCurrentOffset(prevOffset => {
-      const newOffset = prevOffset + carouselRef.current.clientWidth;
-      return Math.min(newOffset, 0);
-    });
-
     if (lastItemRef.current) {
       setItemWidth(lastItemRef.current.scrollWidth);
     }
@@ -68,12 +62,6 @@ export default function Carousel({ items, outfits = false }) {
   };
 
   const moveNext = () => {
-    setCurrentOffset(prevOffset => {
-      const newOffset = prevOffset - carouselRef.current.clientWidth;
-      const maxOffset = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
-      return Math.max(newOffset, -maxOffset);
-    });
-
     if (lastItemRef.current) {
       setItemWidth(lastItemRef.current.scrollWidth);
     }

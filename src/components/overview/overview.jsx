@@ -47,7 +47,6 @@ useEffect(() => {
           throw productStyles;
         }
         console.log(productStyles);
-
         dispatch(setStyles(productStyles.data));
         dispatch(setMainPhotos(productStyles.data.results[0].photos));
       })

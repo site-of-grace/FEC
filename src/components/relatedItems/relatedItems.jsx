@@ -1,25 +1,27 @@
-import React, { lazy, useState, Suspense, useEffect, useRef, useCallback } from 'react';
+import React, { lazy, useState, Suspense, useEffect, useRef } from 'react';
 import manualSWR, { fetcher } from '../../utils/fetchers';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOutfits, } from '../../store/overviewSlice';
-import { setProducts } from '../../store/productSlice';
+import { setOutfits } from '../../store/overviewSlice';
+import { setProducts, addToCache } from '../../store/productSlice';
 import styles from './styles.module.css';
 const ActionRows = lazy(() => import('./ActionRows.jsx'));
 
-
 const RelatedItems = () => {
   const dispatch = useDispatch();
-  const { products, cacheArray } = useSelector((state) => state.products);
-  const { myOutfit, mainProduct, prevProduct } = useSelector((state) => state.overview);
+  const { products, cacheArray } = useSelector(state => state.products);
+  const { myOutfit, mainProduct, prevProduct } = useSelector(state => state.overview);
   const [showRelated, setShowRelated] = useState(false);
   const relatedRef = useRef();
-  const onSuccess = (data) => {
+  const onSuccess = data => {
     console.log('related api call res', data);
     const products = data;
     if (prevProduct?.id) {
-      products.push({...prevProduct, mainProduct: mainProduct.id});
+      products.push({ ...prevProduct, mainProduct: mainProduct.id });
     }
     const productsString = JSON.stringify(products);
+    if (!products) {
+      return;
+    }
     localStorage.setItem('products', productsString);
     dispatch(setProducts(products));
   };
@@ -48,8 +50,11 @@ const RelatedItems = () => {
       const result = savedProducts.every(product => product.mainProduct === mainProduct.id);
       console.log('savedProducts result', result);
     }
-      
-    if (savedProducts && (allSavedProductsMatchMainProductId(JSON.parse(savedProducts), mainProduct))) {
+
+    if (
+      savedProducts &&
+      allSavedProductsMatchMainProductId(JSON.parse(savedProducts), mainProduct)
+    ) {
       console.log('$$$ cache money $$$');
       dispatch(setProducts(JSON.parse(savedProducts)));
     } else {
@@ -62,9 +67,7 @@ const RelatedItems = () => {
       const outfits = JSON.parse(savedOutfits);
       dispatch(setOutfits(outfits));
     } else {
-      // setTimeout(() => {
-        localStorage.setItem('outfits', JSON.stringify(myOutfit));
-      // }, 1000);
+      localStorage.setItem('outfits', JSON.stringify(myOutfit));
     }
 
     return () => observer.disconnect();
@@ -75,11 +78,19 @@ const RelatedItems = () => {
   }, [myOutfit]);
 
   useEffect(() => {
+    console.log('mainProduct.validPhotos effect');
+    dispatch(addToCache(mainProduct));
+  }, [mainProduct.validPhotos]);
+
+  useEffect(() => {
     // const { trigger: getRelated } = manualSWR({ path: '/related', params: {cache: cacheArray}, type: 'get', onSuccess });
     if (prevProduct?.id) {
-      fetcher('/related?id=' + mainProduct.id, {cache: [...cacheArray, prevProduct.id]}, onSuccess );
+      fetcher(
+        '/related?id=' + mainProduct.id,
+        { cache: [...cacheArray, prevProduct.id] },
+        onSuccess
+      );
     }
-
   }, [prevProduct]);
 
   return (

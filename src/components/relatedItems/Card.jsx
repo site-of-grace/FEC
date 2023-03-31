@@ -4,7 +4,7 @@ import ActionButton from './ActionButton.jsx';
 import CardCarousel from './CardCarousel.jsx';
 import styles from './card.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMainProduct, setMyOutfit } from '../../store/overviewSlice';
+import { setMainProduct, setMainPhotos, setMyOutfit } from '../../store/overviewSlice';
 import { findFirstThumbnail } from '../../utils/traverse.js';
 
 const Card = forwardRef(({ product, outfit, addToOutfit }, ref) => {
@@ -24,6 +24,7 @@ const Card = forwardRef(({ product, outfit, addToOutfit }, ref) => {
       return;
     }
     dispatch(setMainProduct(product));
+    dispatch(setMainPhotos(product.styles[0].photos));
   };
   const changePhoto = (url) => {
     setPhoto(url);
