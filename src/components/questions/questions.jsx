@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSlice';
 import { setQuestionId, setQuestionBody, setQuestionDate, setAskerName, setQuestionHelpfulness, setReported, setAnswers, setQuestionArr } from '../../store/questionsSlice';
+import QuestionForm from './QuestionForm.jsx';
+
 const axios = require('axios');
+
 
 const Questions = () => {
   
@@ -15,6 +18,8 @@ const Questions = () => {
   const [loading, setLoading] = useState(true);
   const [clickedAnswers, setClickedAnswers] = useState([]);
   const [numQuestions, setNumQuestions] = useState(2);
+  const [showModal, setShowModal] = useState(false);
+
 
   
   const getQuestions = (product_id) => {
@@ -56,18 +61,22 @@ const Questions = () => {
   
   const handleLoadMore = () => {
     setNumQuestions(numQuestions + 2);
-  }
+  };
   
-    
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   useEffect(() => {
     if(mainProduct.id) {
       dispatch(getQuestions(mainProduct.id));
     }
   }, [dispatch, mainProduct.id]);
-  
-  
-  // console.log('mainProduct=====> ', mainProduct);  
-  
+
   if (loading) {
     return <div>Loading questions...</div>;
   }
@@ -79,7 +88,6 @@ const Questions = () => {
       year: 'numeric',
     });
   };
-
   
   return (
     <>
@@ -138,16 +146,39 @@ const Questions = () => {
             backgroundColor: "transparent",
             border: "2px solid black",
             padding: "1rem 2rem",
-            // borderRadius: "10px",
             margin: "2rem auto",
             display: "block",
-            // position: "fixed",
-            // left: "10px",
           }}>
             MORE ANSWERED QUESTIONS
-          </button>
+          </button>  
         )}
+    <>
+      <button 
+        onClick={handleOpenModal} 
+        style={{
+          fontSize: "1.5rem",
+          backgroundColor: "transparent",
+          border: "2px solid black",
+          padding: "1rem 2rem",
+          margin: "2rem auto",
+          display: "block",
+        }}
+      >
+        ASK YOUR QUESTION
+      </button>
+      {showModal && (
+        <div>
+          <QuestionForm 
+            onClose={handleCloseModal} 
+            showModal={showModal}
+            title={`About the ${mainProduct.name}`}
+          />
+        </div>
+      )}
     </>
+
+
+  </>
   );
 };
 
