@@ -15,7 +15,7 @@ const Card = forwardRef(({ product, outfit, addToOutfit }, ref) => {
   const onClick = () => {
     if (addToOutfit) {
       const savedOutfits = localStorage.getItem('outfits');
-      if (savedOutfits) {
+      if (savedOutfits && product.id !== '001') {
         const outfits = JSON.parse(savedOutfits);
         const newOutfits = [...outfits, product];
         localStorage.setItem('outfits', JSON.stringify(newOutfits));
