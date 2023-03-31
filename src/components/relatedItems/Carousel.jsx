@@ -33,16 +33,16 @@ export default function Carousel({ items, outfits = false }) {
       // debugging
 
       const widthProduct = Math.abs(itemWidth * currentIndex);
-      console.log(
-        'carousel.current.scrollWidth',
-        carouselRef.current.scrollWidth,
-        'itemWidth * currentIndex (widthProduct)',
-        widthProduct,
-        'maxScrollWidth.current',
-        maxScrollWidth.current,
-        'screen width',
-        width
-      );
+      // console.log(
+      //   'carousel.current.scrollWidth',
+      //   carouselRef.current.scrollWidth,
+      //   'itemWidth * currentIndex (widthProduct)',
+      //   widthProduct,
+      //   'maxScrollWidth.current',
+      //   maxScrollWidth.current,
+      //   'screen width',
+      //   width
+      // );
       return widthProduct >= maxScrollWidth.current;
     }
 
@@ -93,7 +93,8 @@ export default function Carousel({ items, outfits = false }) {
 
     if (lastItemRef.current) {
       // debugging
-      console.log('maxScrollWidth.current', maxScrollWidth.current, 'lastItem scroll & offsetWidth', lastItemRef.current.scrollWidth, lastItemRef.current.offsetWidth);
+      // console.log('maxScrollWidth.current', maxScrollWidth.current, 'lastItem scroll & offsetWidth', lastItemRef.current.scrollWidth, lastItemRef.current.offsetWidth);
+      // this one is necessary for buttons to show correctly
       setShowRight(!isDisabled('next'));
     }
   }, [maxScrollWidth, width, itemWidth, currentIndex, items]);
@@ -172,7 +173,7 @@ export default function Carousel({ items, outfits = false }) {
           <Card
             product={item}
             outfit={outfits}
-            addToOutfit={outfits && i === 0}
+            addToOutfit={outfits && item.id === '001'}
             key={item.id}
             ref={i === items.length - 1 ? lastItemRef : null}
           />
