@@ -30,11 +30,20 @@ const overviewSlice = createSlice({
         state.prevProduct = state.mainProduct;
       }
       state.mainProduct = action.payload;
+      if (state.mainProduct.validPhotos) {
+        state.mainPhotos = state.mainProduct.styles[0].photos;
+        state.styles = {
+          product_id: state.mainProduct.id + '',
+          results: state.mainProduct.styles
+        };
+      }
     },
     setStyles: (state, action) => {
       state.styles = action.payload;
-      state.mainProduct.styles = action.payload.results;
-      state.mainProduct.validPhotos = getThumbnailMap(action.payload.results);
+      if (!state.mainProduct.validPhotos) {
+        state.mainProduct.styles = action.payload.results;
+        state.mainProduct.validPhotos = getThumbnailMap(action.payload.results);
+      }
     },
     setMainPhotos: (state, action) => {
       state.mainPhotos = action.payload;

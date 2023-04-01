@@ -7,87 +7,123 @@ import ExpandedView from './expandedView.jsx';
 var axios = require('axios');
 
 const Overview = () => {
-  const { mainProduct, styles, mainPhotos, products } = useSelector((state) => state.overview); // store.slice
+  const { mainProduct } = useSelector(state => state.overview); // store.slice
   const dispatch = useDispatch();
 
   const [expandedView, setExpandedView] = useState(false);
   const [expandedMain, setExpandedMain] = useState('');
 
   useEffect(() => {
-    axios
-      .get('/initialRender')
-        .then((productInfo) => {
-          if (!productInfo) {
-            throw productInfo;
-          }
-          console.log('----successful productinfo -->', productInfo.data);
-          dispatch(setMainProduct(productInfo.data));
-          return productInfo.data.id;
-        })
-        .catch((error) => {
-          console.log('error in setting initial product data', error);
-        });
+    async function fetchData() {
+      try {
+        const cachedMainProduct = JSON.parse(localStorage.getItem('mainProduct'));
+        if (cachedMainProduct) {
+          dispatch(setMainProduct(cachedMainProduct));
+        }
 
+        const productInfo = await axios.get('/initialRender');
+        if (!productInfo) {
+          throw productInfo;
+        }
+        console.log('----successful productinfo -->', productInfo.data);
+        dispatch(setMainProduct(productInfo.data));
+      } catch (error) {
+        console.log('error in setting initial product data', error);
+      }
+    }
+
+    fetchData();
   }, []);
 
+  const { id } = mainProduct;
+  useEffect(() => {
+    console.log('main product', mainProduct);
 
-const { id } = mainProduct;
-useEffect(() => {
+    // Return early if the conditions are not met
+    if (Object.keys(mainProduct).length === -1 || !id) {
+      return;
+    }
 
-  console.log('main product', mainProduct);
-  
+    const cachedMainProduct = JSON.parse(localStorage.getItem('mainProduct'));
+    if (cachedMainProduct && cachedMainProduct.id === id && cachedMainProduct.validPhotos) {
+      dispatch(setMainProduct(cachedMainProduct));
+      return;
+    }
 
-  if (Object.keys(mainProduct).length !== -1 && id) {
+    const fetchProductStyles = async () => {
+      try {
+        const response = await axios.get(`/productStyles?id=${id}`);
+        const productStyles = response.data;
 
-
-    axios
-    .get(`/productStyles?id=${id}`)
-      .then((productStyles) => {
         if (!productStyles) {
           throw productStyles;
         }
+
         console.log(productStyles);
-        dispatch(setStyles(productStyles.data));
-        dispatch(setMainPhotos(productStyles.data.results[0].photos));
-      })
-      .catch((error) => {
+        dispatch(setStyles(productStyles));
+        dispatch(setMainPhotos(productStyles.results[0].photos));
+      } catch (error) {
         console.log(error);
-      });
-  }
-}, [id]);
+      }
+    };
 
-
-
-
+    fetchProductStyles();
+  }, [id]);
 
   return (
     <div>
-      <div id='overviewWidget'>
-        {!expandedView ? (<div id='overview2-3'>
-          <ImageGallery setExpandedView={setExpandedView} setExpandedMain={setExpandedMain}/>
-        </div>) : ''}
-        {!expandedView ? (<div id='overview1-3'>
-          <ProductInformation />
-        </div>) : ''}
-        {expandedView ? <div id='overviewExpand'>
-          <ExpandedView setExpandedView={setExpandedView} expandedMain={expandedMain}/>
-        </div> : ''}
+      <div id="overviewWidget">
+        {!expandedView ? (
+          <div id="overview2-3">
+            <ImageGallery
+              setExpandedView={setExpandedView}
+              setExpandedMain={setExpandedMain}
+            />
+          </div>
+        ) : (
+          ''
+        )}
+        {!expandedView ? (
+          <div id="overview1-3">
+            <ProductInformation />
+          </div>
+        ) : (
+          ''
+        )}
+        {expandedView ? (
+          <div id="overviewExpand">
+            <ExpandedView
+              setExpandedView={setExpandedView}
+              expandedMain={expandedMain}
+            />
+          </div>
+        ) : (
+          ''
+        )}
       </div>
-      <div id='prodDescrip'>
-        <div id='productSlogan'>
-          <div style={{'margin-bottom': '10px'}}><b>{mainProduct.slogan}</b></div>
+      <div id="prodDescrip">
+        <div id="productSlogan">
+          <div style={{ 'margin-bottom': '10px' }}>
+            <b>{mainProduct.slogan}</b>
+          </div>
           <div>{mainProduct.description}</div>
         </div>
-        <div id='features'>
-          <ul id='featureList'>
-          {mainProduct.features ? mainProduct.features.map((feature) => {
-            return <li><b>{feature.feature}: </b>{feature.value}</li>
-          }) : null}
+        <div id="features">
+          <ul id="featureList">
+            {mainProduct.features
+              ? mainProduct.features.map((feature, i) => {
+                  return (
+                    <li key={i}>
+                      <b>{feature.feature}: </b>
+                      {feature.value}
+                    </li>
+                  );
+                })
+              : null}
           </ul>
         </div>
       </div>
     </div>
-
   );
 };
 
