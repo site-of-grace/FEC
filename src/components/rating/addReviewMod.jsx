@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
 
+import axios from 'axios';
+
 import {useSelector} from 'react-redux';
 
 const AddReviewMod = () => {
 	const mainProduct = useSelector((state) => state.overview.mainProduct);
+	const metaData = useSelector((state) => state.rating.ratingMeta);
 	const [stars, setStars] = useState([]);
 	const [userRating, setUserRating] = useState(0);
 	const ratings = ['', 'Poor', 'Fair', 'Average', 'Good', 'Great'];
@@ -11,15 +14,15 @@ const AddReviewMod = () => {
 	const [charLeft, setCharLeft] = useState(50);
 	const [curImgs, setCurImgs] = useState([]);
 	const [validationError, setValidationError] = useState(null);
+	const[attrLength, setAttrLength] = useState(0);
 
-	const characteristics = {};
+	var characteristics = {};
 	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
 	characteristics['Width'] = ['Too narrow', 'Slighlty narrow', 'Perfect', 'Slightly wide', 'Too wide'];
 	characteristics['Comfort'] = ['Uncomfortable', 'Slightly uncomfortable', 'Alright', 'Comfortable', 'Perfect'];
 	characteristics['Quality'] = ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'];
 	characteristics['Length'] = ['Runs short', 'Runs slighlty short', 'Perfect', 'Runs slightly long', 'Runs long'];
 	characteristics['Fit'] = ['Runs tight', 'Runs slighlty tight', 'Perfect', 'Runs slighlty long', 'Runs long'];
-
 	const starHighlight = (id, clicked) => {
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
@@ -41,27 +44,32 @@ const AddReviewMod = () => {
 		}
 		setStars(newStars);
 	};
-
 	const attributeSelectionCreator = () => {
 		var attributes = [];
+		var length = 0;
 		for (var attribute in characteristics) {
+			if (!metaData.characteristics[attribute]) { //If the chartaristic is not applicable for this product don't display
+				continue;
+			}
+			length++;
 			var choices = characteristics[attribute];
 			var key = 0;
 			attributes.push(
 				<div className ='attributeSelections'>
 					<h3>{attribute}</h3>
-					{choices.map((choice) => {
+					{choices.map((choice, idx) => {
 						key++;
 						return (
 						<div className='attributeSelection' key={key*123}>
 							<div>{choice}</div>
-							<input type='radio' id={choice + attribute} name={attribute} value={choice}/>
+							<input type='radio' id={choice + attribute} name={attribute} value={idx+1}/>
 							<label htmlFor={choice + attribute}/>
 						</div>);
 					})}
 				</div>
 			);
 		}
+		setAttrLength(length);
 		setAttributeSelection(attributes);
 	};
 	useEffect(() => {attributeSelectionCreator(); starsEmpty();},[]);
@@ -88,50 +96,77 @@ const AddReviewMod = () => {
 		setValidationError(null);
 		e.preventDefault();
 		let form = document.getElementById('rating-input');
-		var chosenAttr = {'Size': null, 'Width': null, 'Comfort': null, 'Quality': null, 'Length': null, 'Fit': null};
-		var recommended;
 		var chosenAmount = 0;
+		var formVals = {characteristics: {}, body: '', summary: '', name: '', email: ''};
 		if (userRating === 0) {
-			setValidationError('You did not choose a rating!');
+			setValidationError('Rating');
 			return;
 		}
-		Array.from(form.elements).every((curInput) => {
+		var error = Array.from(form.elements).every((curInput) => {
+			if (curInput.name === 'summary') {
+				formVals.summary = curInput.value;
+			}
 			if (curInput.name === 'recommended' && curInput.checked) {
-				recommended = curInput.value;
+				if (curInput.value === 'no') {
+					formVals.recommend = false;
+				} else {
+					formVals.recommend = true;
+				}
 			}
 			if (characteristics[curInput.name]) {
 				if (curInput.checked) {
 					chosenAmount++;
-					chosenAttr[curInput.name] = curInput.value;
+					formVals.characteristics[metaData.characteristics[curInput.name].id] = Number(curInput.value);
 				}
 			}
 			if (curInput.name === 'body') {
+				formVals.body = curInput.value;
 				if (curInput.value.length < 50) {
-					setValidationError('Review body not long enough minimum of 50 characters required!');
+					setValidationError('Body [not long enough minimum of 50 characters required]');
 					return false;
 				}
 			}
 			if (curInput.name === 'nickname') {
+				formVals.name = curInput.value;
 				if (curInput.value.length < 2) {
-					setValidationError('Nickname to short should be atleast 2 characters long');
+					setValidationError('Nickname [to short should be atleast 2 characters long]');
 					return false;
 				}
 			}
 			if (curInput.name === 'email') {
+				formVals.email = curInput.value;
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 				var emailWrong = !emailRegex.test(curInput.value);
 				if (emailWrong) {
-					setValidationError('Email syntax incorrect, see example');
+					setValidationError('Email [syntax incorrect, see example]');
 					return false;
 				}
 			}
 			return true;
 		});
-		if (recommended === undefined) {
-			setValidationError('Missing Recommended Selection!');
-		} else if (chosenAmount !== 6) {
-			setValidationError('Missing Characteristic Selection!');
+		if (formVals.recommend === undefined) {
+			setValidationError('Recommended');
+			return;
+		} else if (chosenAmount !== attrLength) {
+			setValidationError('Characteristics [missing inputs]');
+			return;
 		}
+		if (!error) {
+			return;
+		}
+		formVals.rating = Number(userRating);
+		sendReview(formVals);
+	};
+	const sendReview = (formVals) => {
+		formVals['product_id'] = mainProduct.id;
+		console.log(formVals);
+		axios.post('/rating/reviews', formVals)
+		.then(() => {
+			console.log('Review posted');
+		})
+		.catch((err) => {
+			console.log('Error from server while posting review', err);
+		});
 	};
 
 	return(
@@ -186,7 +221,7 @@ const AddReviewMod = () => {
 				<div className='review-bar'/>
 				<button style={{'marginTop': '20px'}} onClick={handleSubmit}>Submit Review</button>
 			</form>
-			<div>{validationError}</div>
+			{validationError ? <div style={{'color': 'red'}}>You must enter the following: {validationError}</div> : null}
 		</div>
 	);
 };
