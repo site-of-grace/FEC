@@ -100,7 +100,7 @@ const Rating = () => {
       <div id='rating-main'>
         <Breakdown />
         <ReviewList setAddReview={setAddReview}/>
-        {addReview ? <AddReviewMod /> : null}
+        {addReview ? <AddReviewMod setAddReview={setAddReview}/> : null}
       </div>
     </div>
   );
