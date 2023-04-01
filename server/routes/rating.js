@@ -55,7 +55,7 @@ router.get('/meta', (req, res) => {
       throw apiData;
     }
     if(apiData.data) {
-      res.statusCode = 200;
+      res.statusCode = 201;
       res.send(JSON.stringify(apiData.data));
     } else {
       res.statusCode = 404;
@@ -69,6 +69,20 @@ router.get('/meta', (req, res) => {
   });
 });
 
+router.post('/reviews', (req, res) => {
+  var options = req.body;
+  options.photos = ['https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png'];
+  axios.post(`${api}/reviews`, options, config)
+  .then(() => {
+    res.statusCode = 200;
+    res.end();
+  })
+  .catch((err) => {
+    console.log('Server err --->', err);
+    res.statusCode = 404;
+    res.send(JSON.stringify(err));
+  });
+});
 module.exports = router;
 
 
