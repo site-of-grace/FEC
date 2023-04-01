@@ -23,7 +23,7 @@ export default function Stars({ number = 0, hide = false }) {
         );
       } else if (i === fullStars) {
         if (partialStar >= 0.75) {
-          console.log('occured');
+          // console.log('occured');
           return (
             <img
               key="three-fourths-star"

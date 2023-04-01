@@ -27,8 +27,8 @@ const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave
   }
 
   const cycleCards = useCallback(
-    (index) => {
-      console.log('index', index, 'carditems', cardItems);
+    () => {
+      // console.log('index', index, 'carditems', cardItems);
       changePhoto(cardItems[indexes.nextIndex].url);
       // If we've reached the end, start again from the first card,
       // but carry previous value over
@@ -59,7 +59,7 @@ const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave
               prevState.currentIndex + 2 === cardItems.length ? 0 : prevState.currentIndex + 2
           };
 
-          console.log('obj', obj);
+          // console.log('obj', obj);
           return obj;
         });
       }
@@ -81,7 +81,7 @@ const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave
           nextIndex: prevState.currentIndex
         };
 
-        console.log('obj', obj);
+        // console.log('obj', obj);
         return obj;
       });
     },

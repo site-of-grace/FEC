@@ -89,7 +89,9 @@ const Rating = () => {
     });
   };
 
-  useEffect(() => { if (mainProduct.id) { fetchMetaData(mainProduct.id);} }, [mainProduct]);
+  const { id } = mainProduct;
+  // useEffect(() => { if (mainProduct.id) { fetchMetaData(mainProduct.id);} }, [mainProduct]);
+  useEffect(() => { if (id) { fetchMetaData(id);} }, [id]);
 
   return (
     <div className='widget' id='rating'>

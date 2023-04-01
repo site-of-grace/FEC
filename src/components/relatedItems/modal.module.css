@@ -1,6 +1,6 @@
 .wrapper {
-  position: relative;
-  z-index: 995; 
+  position: fixed;
+  z-index: 997; 
 }
 
 .overlay {

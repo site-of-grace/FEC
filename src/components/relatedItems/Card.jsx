@@ -3,17 +3,28 @@ import Stars from '../general/Stars.jsx';
 import ActionButton from './ActionButton.jsx';
 import CardCarousel from './CardCarousel.jsx';
 import styles from './card.module.css';
-import { useDispatch } from 'react-redux';
-import { setMainProduct } from '../../store/overviewSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMainProduct, setMainPhotos, setMyOutfit } from '../../store/overviewSlice';
 import { findFirstThumbnail } from '../../utils/traverse.js';
 
-const Card = (props, ref) => {
-  const { product } = props;
+const Card = forwardRef(({ product, outfit, addToOutfit }, ref) => {
   const [isHovered, setIsHovered] = useState(false);
   const [photo, setPhoto] = useState(findFirstThumbnail(product.styles));
+  const { mainProduct } = useSelector(state => state.overview);
   const dispatch = useDispatch();
   const onClick = () => {
+    if (addToOutfit) {
+      const savedOutfits = localStorage.getItem('outfits');
+      if (savedOutfits && product.id !== '001') {
+        const outfits = JSON.parse(savedOutfits);
+        const newOutfits = [...outfits, product];
+        localStorage.setItem('outfits', JSON.stringify(newOutfits));
+      }
+      dispatch(setMyOutfit(mainProduct));
+      return;
+    }
     dispatch(setMainProduct(product));
+    dispatch(setMainPhotos(product.styles[0].photos));
   };
   const changePhoto = (url) => {
     setPhoto(url);
@@ -50,7 +61,7 @@ const Card = (props, ref) => {
       className={`${styles.card} slide`}
       ref={ref}
     >
-      <ActionButton product={product}/>
+      {!addToOutfit && <ActionButton product={product} related={!outfit}/>}
       <span className={styles.imageContainer}>
         <CardCarousel
           show={isHovered}
@@ -83,6 +94,6 @@ const Card = (props, ref) => {
       </span>
     </div>
   );
-};
+});
 
-export default React.memo(forwardRef(Card));
+export default React.memo(Card);

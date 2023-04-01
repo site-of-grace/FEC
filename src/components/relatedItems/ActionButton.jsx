@@ -1,35 +1,43 @@
-import React, { useState } from 'react';
-import ComparisonModal from './ComparisonModal.jsx';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { XCircle } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeOutfit } from '../../store/overviewSlice.js';
+import { setIsOpen, setProductsToCompare } from '../../store/productSlice.js';
 import styles from './card.module.css';
 
 export default function ActionButton({ product, related = true }) {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
   const { mainProduct } = useSelector(state => state.overview);
 
   const openModal = () => {
-    setIsOpen(true);
+    dispatch(setProductsToCompare([mainProduct, product]));
+    dispatch(setIsOpen(true));
     document.body.classList.add('modal-open');
   };
-  const closeModal = () => {//
-    setIsOpen(false);
-    document.body.classList.remove('modal-open');
+
+  const removeOutfitHandler = () => {
+    const savedOutfits = localStorage.getItem('outfits');
+    if (savedOutfits) {
+      const outfits = JSON.parse(savedOutfits);
+      const newOutfits = outfits.filter((item) => item.id !== product.id);
+      localStorage.setItem('outfits', JSON.stringify(newOutfits));
+    }
+    dispatch(removeOutfit(product));
   };
-  const icon = related ? '/icons/unfilledStar.png' : '/icons/filledStar.png';
-  const clickHandler = related ? openModal : () => console.log('clicked');
+
+  const clickHandler = related ? openModal : removeOutfitHandler;
+
   return (
     <>
+    { related ? (
       <img
-        className={`${styles['action-button']}`}
-        src={icon}
+        className={styles['action-button']}
+        src={'/icons/unfilledStar.png'}
         alt="Action Button"
         onClick={clickHandler}
-      />
-      <ComparisonModal
-        products={[mainProduct, product]}
-        closeModal={closeModal}
-        modalIsOpen={modalIsOpen}
-      />
+      />) : (
+        <XCircle className={styles['action-button-outfit']} onClick={clickHandler} />
+      )}
     </>
   );
 }
