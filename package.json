@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "build": "webpack --mode production",
     "live": "webpack-dev-server --open",
     "react-dev": "webpack --mode development --watch",
     "server-dev": "npx nodemon server/index.js",
