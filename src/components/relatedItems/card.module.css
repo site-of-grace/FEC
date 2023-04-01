@@ -12,6 +12,7 @@
   position: relative;
   min-width: 250px;
   scroll-snap-align: start;
+  z-index: -1;
   /* padding: 20px; */
 }
 
@@ -22,7 +23,7 @@
   background-color: rgb(233, 233, 233);
   overflow: hidden;
   position: relative;
-  z-index: 0;
+  z-index: -1;
 }
 
 .image {
@@ -96,6 +97,24 @@
   /* add any other styles you want */
 }
 
-.action-button:hover {
+.action-button-outfit {
+  background-color: rgba(255, 255, 255, 0.274);
+  border-radius: 50%;
+  padding: 3px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  z-index: 10; /* make sure the button is stacked on top */
+  transition: all 0.75s ease;
+  /* add any other styles you want */
+}
+
+.action-button:hover  {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.action-button-outfit:hover  {
   background-color: rgba(255, 255, 255, 0.8);
 }

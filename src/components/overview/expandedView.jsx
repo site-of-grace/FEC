@@ -117,6 +117,7 @@ const ExpandedView = (props) => {
             <img id='expandedPhoto'src={mainZoomPhoto}></img>
           </figure>
         </div>
+
         <div className='foward_button'>
           <div className={(mainPhotos[mainPhotos.length - 1].url === mainZoomPhoto) ? 'hide' : 'show'}onClick={() => {fowardButton();}}><RxCaretRight size={50}/></div>
         </div>

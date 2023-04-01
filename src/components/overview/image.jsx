@@ -21,7 +21,7 @@ const ImageGallery = (props) => {
 
 
   useEffect(() => {
-    if (main.length !== 0) {
+    if (main && main.length > 0) {
 
       props.setExpandedMain(main);
       document.getElementById(main).scrollIntoView({behavior: 'smooth', block: 'end'});
