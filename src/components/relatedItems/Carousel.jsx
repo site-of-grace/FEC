@@ -82,7 +82,7 @@ export default function Carousel({ items, outfits = false }) {
 
   useEffect(() => {
     setCurrentIndex(0);
-    moveNext();
+    movePrev();
   }, [prevProduct]);
 
   useEffect(() => {
