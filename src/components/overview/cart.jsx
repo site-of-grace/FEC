@@ -35,11 +35,11 @@ const Cart = () => {
   Function for danny for carousol
   */
   const selectOutfit = () => {
-    var outfit = {
-      product: mainProduct,
-      style: selectedStyle
-    };
-    dispatch(setMyOutfit(outfit));
+    // var outfit = {
+    //   product: mainProduct,
+    //   style: selectedStyle
+    // };
+    dispatch(setMyOutfit(mainProduct));
   };
 
 
