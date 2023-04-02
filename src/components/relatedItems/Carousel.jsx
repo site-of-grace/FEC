@@ -75,14 +75,14 @@ export default function Carousel({ items, outfits = false }) {
 
   useEffect(() => {
     if (outfits && myOutfit.length > 1) {
-      setCurrentIndex(0);
-      // moveNext();
+      setCurrentIndex(items.length - 1);
+      moveNext();
     }
   }, [myOutfit]);
-
+  
   useEffect(() => {
     setCurrentIndex(0);
-    movePrev();
+    moveNext();
   }, [prevProduct]);
 
   useEffect(() => {
