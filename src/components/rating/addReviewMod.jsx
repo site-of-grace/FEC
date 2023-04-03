@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import {useSelector} from 'react-redux';
 
+import ImageUpload from './imageUpload.jsx';
+
 const AddReviewMod = ({setAddReview}) => {
 	const mainProduct = useSelector((state) => state.overview.mainProduct);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
@@ -12,7 +14,6 @@ const AddReviewMod = ({setAddReview}) => {
 	const ratings = ['', 'Poor', 'Fair', 'Average', 'Good', 'Great'];
 	const [attributeSelection, setAttributeSelection] = useState([]);
 	const [charLeft, setCharLeft] = useState(50);
-	const [curImgs, setCurImgs] = useState([]);
 	const [validationError, setValidationError] = useState(null);
 	const[attrLength, setAttrLength] = useState(0);
 
@@ -23,6 +24,7 @@ const AddReviewMod = ({setAddReview}) => {
 	characteristics['Quality'] = ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'];
 	characteristics['Length'] = ['Runs short', 'Runs slighlty short', 'Perfect', 'Runs slightly long', 'Runs long'];
 	characteristics['Fit'] = ['Runs tight', 'Runs slighlty tight', 'Perfect', 'Runs slighlty long', 'Runs long'];
+
 	const starHighlight = (id, clicked) => {
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
@@ -78,19 +80,6 @@ const AddReviewMod = ({setAddReview}) => {
 		setCharLeft(50 - e.target.value.length);
 	};
 
-	const handleUpload = (e, changeImage) => {
-		var fr = new FileReader();
-		fr.readAsDataURL(e.target.files[0]);
-		fr.onloadend = () => {
-			if (changeImage) {
-				var newImgs = [].concat(curImgs);
-				newImgs[e.target.id] = fr.result;
-				setCurImgs(newImgs);
-			} else {
-				setCurImgs([fr.result].concat(curImgs));
-			}
-		};
-	};
 
 	const handleSubmit = (e) => {
 		setValidationError(null);
@@ -160,7 +149,6 @@ const AddReviewMod = ({setAddReview}) => {
 	};
 	const sendReview = (formVals) => {
 		formVals['product_id'] = mainProduct.id;
-		console.log(formVals);
 		axios.post('/rating/reviews', formVals)
 		.then(() => {
 			console.log('Review posted');
@@ -200,18 +188,7 @@ const AddReviewMod = ({setAddReview}) => {
 				<textarea name="body" rows='16' cols='70' maxLength="1000" placeholder="Why did you like the product or not?" onChange={handleTextInput} required/>
 				{charLeft > 0 ? <div>Minimum required characters left [{charLeft}]</div> : <div>Minimum Reached</div>}
 				<div className='review-bar'/>
-				<div id="rating-imageUpload">
-					<h3>Upload your photos</h3>
-					{curImgs.length < 5 ? <input style={{'marginBottom': '20px', 'marginLeft': '240px'}} type="file" accept=".png, .jpg, .jpeg" onChange={handleUpload}/> : null}
-					{curImgs.map((curImg, idx) => {
-						return(
-						<div key={idx * 12} style={{'display': 'inline-block', 'marginRight': '20px'}}>
-							<input  style={{'position':'absolute', 'display':'inline-block'}} id={idx} type="file" accept=".png, .jpg, .jpeg" onChange={(e) => handleUpload(e, true)}/>
-							<img src={curImg}/>
-						</div>
-						);
-					})}
-				</div>
+				<ImageUpload />
 				<div className='review-bar'/>
 				<h3>What is your nickname (mandatory)</h3>
 				<input type="text" placeholder="Example: jackson11!" name="nickname" maxLength="60"/>
