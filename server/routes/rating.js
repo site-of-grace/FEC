@@ -6,6 +6,8 @@ const { api, config } = require('../config.js');
 const multer = require('multer');
 const upload = multer({dest: 'uploads/'});
 
+const uploadImage = require('../uploadImage.js');
+
 router.get('/reviews', (req, res) => {
   //Gets the total review count for api request count
   var metaData = req.query.metaData;
@@ -72,16 +74,32 @@ router.get('/meta', (req, res) => {
   });
 });
 
-router.post('/images', upload.array('images', 5),(req, res) => {
-  if (req.files) {
-    res.statusCode = 201;
-    res.end();
-  } else {
+
+//Handles image uploading
+router.post('/images', upload.array('images', 5), async (req, res) => {
+  if (!req.files) {
     res.statusCode = 404;
     res.end();
+    return;
   }
+  for (var i = 0; i < req.files.length; i++) {
+    var file = req.files[i];
+    try {
+      const result = await uploadImage(file);
+      console.log(result);
+      console.log('Image uploaded succesfully', result);
+    } catch (err) {
+      console.error('Error uploading image', err);
+      res.statusCode = 404;
+      res.send(JSON.stringify(err));
+      return;
+    }
+  }
+  res.statusCode = 201;
+  res.end();
 });
 
+//Handles review posting
 router.post('/reviews', (req, res) => {
   console.log(req.body);
   var options = req.body;
