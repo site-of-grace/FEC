@@ -606,11 +606,17 @@ ul::-webkit-scrollbar {
   #review-imgModel {
     position: fixed;
     left: 0;
+<<<<<<< HEAD
     right: 0;
     max-width: 600px;
     margin: 0 auto;
     top: 10%;
     z-index: 9;
+=======
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+>>>>>>> main
   }
   #review-imgModel img {
     width: 600px;

@@ -20,10 +20,14 @@ const ImageGallery = () => {
   const [main, setMain] = useState('');
 
   useEffect(() => {
+<<<<<<< HEAD
     if (main.length !== 0) {
       var mainSelectShow = document.getElementById(main).getElementsByTagName('div')[1];
       mainSelectShow.classList.remove('hide');
       mainSelectShow.classList.add('show');
+=======
+    if (main && main.length > 0) {
+>>>>>>> main
 
 
       var list = document.getElementById('imageGallery');

@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './modal.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsOpen } from '../../store/productSlice.js';
 
 const TableRow = ({ name, value1, value2 }) => {
   // render different values
@@ -28,10 +30,17 @@ const TableRow = ({ name, value1, value2 }) => {
 };
 
 // The main component that renders the modal and the table
-const ComparisonModal = ({ products, modalIsOpen, closeModal }) => {
+const ComparisonModal = () => {
+  const dispatch = useDispatch();
+  const { productsToCompare: products, modalIsOpen } = useSelector(state => state.products);
   if (!modalIsOpen) {
     return null;
   }
+
+  const closeModal = () => {
+    dispatch(setIsOpen(false));
+    document.body.classList.remove('modal-open');
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -46,7 +55,9 @@ const ComparisonModal = ({ products, modalIsOpen, closeModal }) => {
             <tr>
               {products.map(({ name }, i) => (
                 <>
-                  {i === 1 && <th className={`${styles.header} ${styles.feature}`}>Features</th>}
+                  {i === 1 && (
+                    <th className={`${styles.header} ${styles.feature}`}>Features</th>
+                  )}
                   <th
                     className={`${styles.header} ${styles.product}`}
                     key={name}

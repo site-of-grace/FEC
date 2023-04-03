@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "build": "webpack --mode production",
     "live": "webpack-dev-server --open",
     "react-dev": "webpack --mode development --watch",
     "server-dev": "npx nodemon server/index.js",
-    "test-related": "npx jest --testPathPattern=relatedItems"
+    "test-related": "npx jest --testPathPattern=relatedItems",
+    "test-": "npx jest --testPathPattern=ActionButton.test"
   },
   "repository": {
     "type": "git",
@@ -38,6 +40,7 @@
     "mysql2": "^3.2.0",
     "node-fetch": "^3.3.0",
     "nodemon": "^2.0.21",
+    "p-limit": "^4.0.0",
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -60,6 +63,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
+    "jsdom-testing-mocks": "^1.7.0",
     "webpack-dev-server": "^4.11.1"
   },
   "jest": {

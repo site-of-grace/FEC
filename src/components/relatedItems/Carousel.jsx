@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useSelector } from 'react-redux';
 import styles from './styles.module.css';
 import Card from './Card.jsx';
 
@@ -12,89 +13,106 @@ const defaultStyle = {
   opacity: 1
 };
 
-export default function Carousel({ items }) {
+export default function Carousel({ items, outfits = false }) {
+  // const { products } = useSelector((state) => state.products);
+  const { myOutfit, mainProduct, prevProduct } = useSelector(state => state.overview);
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
   const [itemWidth, setItemWidth] = useState(252);
-  const carousel = useRef(null);
-  const lastItem = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const callback = entries => {
-    const entry = entries[0];
-    if (entry.isIntersecting) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
-
-  const movePrev = () => {
-    setItemWidth(lastItem.current.scrollWidth);
-    if (currentIndex > 0) {
-      setCurrentIndex(prevState => prevState - 1);
-    }
-  };
-
-  const moveNext = () => {
-    setItemWidth(lastItem.current.scrollWidth);
-    if (!!carousel.current && currentIndex * itemWidth < maxScrollWidth.current) {
-      setCurrentIndex(prevState => prevState + 1);
-    }
-  };
+  const carouselRef = useRef(null);
+  const lastItemRef = useRef(null);
+  const [showRight, setShowRight] = useState(true);
 
   const isDisabled = direction => {
     if (direction === 'prev') {
       return currentIndex <= 0;
     }
 
-    if (direction === 'next' && !!carousel.current) {
+    if (direction === 'next') {
       // debugging
 
+      const widthProduct = Math.abs(itemWidth * currentIndex);
       // console.log(
       //   'carousel.current.scrollWidth',
-      //   carousel.current.scrollWidth,
-      //   'itemWidth * currentIndex',
-      //   itemWidth * currentIndex,
+      //   carouselRef.current.scrollWidth,
+      //   'itemWidth * currentIndex (widthProduct)',
+      //   widthProduct,
       //   'maxScrollWidth.current',
       //   maxScrollWidth.current,
       //   'screen width',
       //   width
       // );
-      return itemWidth * currentIndex >= maxScrollWidth.current;
+      return widthProduct >= maxScrollWidth.current;
     }
 
     return false;
   };
 
+  const movePrev = () => {
+    if (lastItemRef.current) {
+      setItemWidth(lastItemRef.current.scrollWidth);
+    }
+
+    if (currentIndex > 0) {
+      setCurrentIndex(prevState => prevState - 1);
+    }
+
+    setShowRight(!isDisabled('next'));
+  };
+
+  const moveNext = () => {
+    if (lastItemRef.current) {
+      setItemWidth(lastItemRef.current.scrollWidth);
+    }
+
+    if (!!carouselRef.current && currentIndex * itemWidth < maxScrollWidth.current) {
+      setCurrentIndex(prevState => prevState + 1);
+    }
+
+    setShowRight(!isDisabled('next'));
+  };
+
   useEffect(() => {
-    if (!!carousel && !!carousel.current) {
-      carousel.current.scrollLeft = currentIndex * itemWidth;
+    if (outfits && myOutfit.length > 1) {
+      setCurrentIndex(0);
+      // moveNext();
+    }
+  }, [myOutfit]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+    moveNext();
+  }, [prevProduct]);
+
+  useEffect(() => {
+    if (!!carouselRef && !!carouselRef.current) {
+      carouselRef.current.scrollLeft = currentIndex * itemWidth;
     }
   }, [currentIndex]);
 
   useEffect(() => {
-    maxScrollWidth.current = carousel.current
-      ? carousel.current.scrollWidth - carousel.current.offsetWidth
+    maxScrollWidth.current = carouselRef.current
+      ? carouselRef.current.scrollWidth - carouselRef.current.offsetWidth
       : 0;
 
-    if (lastItem.current) {
+    if (lastItemRef.current) {
       // debugging
-      // console.log('maxScrollWidth.current', maxScrollWidth.current, 'lastItem scroll & offsetWidth', lastItem.current.scrollWidth, lastItem.current.offsetWidth);
+      // console.log('maxScrollWidth.current', maxScrollWidth.current, 'lastItem scroll & offsetWidth', lastItemRef.current.scrollWidth, lastItemRef.current.offsetWidth);
+      // this one is necessary for buttons to show correctly
+      setShowRight(!isDisabled('next'));
     }
-  }, [maxScrollWidth, width]);
+  }, [maxScrollWidth, width, itemWidth, currentIndex, items]);
 
   useEffect(() => {
-    let observer;
+    setShowRight(!isDisabled('next'));
     const handleResize = () => {
       setCurrentIndex(0);
+      setShowRight(!isDisabled('next'));
       console.log('screen resizing');
-      if (observer) observer.disconnect();
       setWidth(window.innerWidth);
-
-      if (lastItem.current) {
-        setItemWidth(lastItem.current.scrollWidth);
+      if (lastItemRef.current) {
+        setItemWidth(lastItemRef.current.scrollWidth);
         // debugging
         // console.log('lastItem.offsetWidth', lastItem.current.offsetWidth);
       }
@@ -105,35 +123,27 @@ export default function Carousel({ items }) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [mainProduct]);
 
-  // Create an options object to specify the root, rootMargin and threshold values for the intersection observer
-  const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.9
-  };
-
-  // Use the useEffect hook to create an intersection observer instance with our callback and options
   useEffect(() => {
-    // Create a new observer
-    const observer = new IntersectionObserver(callback, options);
+    if (!prevProduct?.id) {
+      return;
+    }
+    console.log('rerender carousel on new products');
+    // setIsVisible(true);
+    setCurrentIndex(0);
+    setWidth(window.innerWidth);
 
-    // Get the current element from the ref
-    const current = lastItem.current;
-
-    // Observe the element if it exists
-    if (current) {
-      observer.observe(current);
+    if (lastItemRef.current) {
+      setItemWidth(lastItemRef.current.scrollWidth);
     }
 
-    // Return a cleanup function that unobserves the element
-    return () => {
-      if (current) {
-        observer.unobserve(current);
-      }
-    };
-  }, [lastItem, options]);
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = 0;
+    }
+
+    // movePrev();
+  }, [lastItemRef]);
 
   return (
     <div
@@ -143,26 +153,34 @@ export default function Carousel({ items }) {
       <span className={`${styles['chevron-row']}`}>
         <span className={`${styles['chevron-hover']} ${styles.slider}`} />
         <ChevronLeft
+          data-testid="chevron-left"
           className={`${styles.chevron} ${styles['chevron-left']}`}
           onClick={movePrev}
-          style={isDisabled('prev') ? disabledStyle : defaultStyle}
+          style={!isDisabled('prev') ? defaultStyle : disabledStyle}
         />
-        {!isVisible && (
-        <ChevronRight
-          className={`${styles.chevron} ${styles['chevron-right']}`}
-          onClick={moveNext}
-          style={isDisabled('next') ? disabledStyle : defaultStyle}
-        />)}
+        {(
+          <ChevronRight
+            data-testid="chevron-right"
+            className={`${styles.chevron} ${styles['chevron-right']}`}
+            onClick={moveNext}
+            // style={currentOffset > -(carouselRef.current?.scrollWidth - carouselRef.current?.clientWidth) ? defaultStyle : disabledStyle}
+            // style={!isDisabled('next') ? defaultStyle : disabledStyle}
+            style={showRight ? defaultStyle : disabledStyle}
+          />
+        )}
       </span>
       <div
         className={`${styles['carousel-container']} carousel`}
-        ref={carousel}
+        ref={carouselRef}
+        data-testid="carousel"
       >
         {items.map((item, i) => (
           <Card
             product={item}
+            outfit={outfits}
+            addToOutfit={outfits && item.id === '001'}
             key={item.id}
-            ref={i === items.length - 1 ? lastItem : null}
+            ref={i === items.length - 1 ? lastItemRef : null}
           />
         ))}
       </div>
