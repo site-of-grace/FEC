@@ -72,10 +72,12 @@ router.get('/meta', (req, res) => {
   });
 });
 
-router.post('/images', upload.single('image'),(req, res) => {
-  console.log(req.file);
-  if (req.file) {
+router.post('/images', upload.array('images', 5),(req, res) => {
+  if (req.files) {
     res.statusCode = 201;
+    res.end();
+  } else {
+    res.statusCode = 404;
     res.end();
   }
 });
