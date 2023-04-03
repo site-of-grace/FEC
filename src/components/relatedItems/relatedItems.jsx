@@ -5,6 +5,7 @@ import { setOutfits } from '../../store/overviewSlice';
 import { setProducts, addToCache, reloadCache } from '../../store/productSlice';
 import styles from './styles.module.css';
 import _ from 'lodash';
+import useClickTracking from '../../hooks/useClickTracking';
 const ActionRows = lazy(() => import('./ActionRows.jsx'));
 
 const RelatedItems = () => {
@@ -13,6 +14,8 @@ const RelatedItems = () => {
   const { myOutfit, mainProduct, prevProduct } = useSelector(state => state.overview);
   const [showRelated, setShowRelated] = useState(false);
   const relatedRef = useRef();
+  const titleRef = useClickTracking();
+
   const onSuccess = data => {
     console.log('related api call res', data);
     let products = data;
@@ -127,7 +130,7 @@ const RelatedItems = () => {
 
   return (
     <>
-      <h1 className={styles.title}>RELATED ITEMS</h1>
+      <h1 className={styles.title} ref={titleRef} data-widget="RelatedItems">RELATED ITEMS</h1>
       <div ref={relatedRef}>
         {showRelated && (
           <Suspense fallback={<div>Loading...</div>}>

@@ -11,6 +11,7 @@ app.use(express.json());
 // Routes
 app.use('/related', routes.related);
 app.use('/rating', routes.rating);
+app.use('/interaction', routes.interaction);
 
 app.get('/productStyles', (req, res) => {
   var productId = req.query.id;
