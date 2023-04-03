@@ -89,7 +89,8 @@ const Rating = () => {
       <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
       <div id='rating-main'>
         <Breakdown />
-        <ReviewList />
+        <ReviewList setAddReview={setAddReview}/>
+        {addReview ? <AddReviewMod setAddReview={setAddReview}/> : null}
       </div>
     </div>
   );

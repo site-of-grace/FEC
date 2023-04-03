@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import {useSelector} from 'react-redux';
 
-const AddReviewMod = () => {
+const AddReviewMod = ({setAddReview}) => {
 	const mainProduct = useSelector((state) => state.overview.mainProduct);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
 	const [stars, setStars] = useState([]);
@@ -156,6 +156,7 @@ const AddReviewMod = () => {
 		}
 		formVals.rating = Number(userRating);
 		sendReview(formVals);
+		setAddReview(false);
 	};
 	const sendReview = (formVals) => {
 		formVals['product_id'] = mainProduct.id;
@@ -163,6 +164,7 @@ const AddReviewMod = () => {
 		axios.post('/rating/reviews', formVals)
 		.then(() => {
 			console.log('Review posted');
+			location.reload();
 		})
 		.catch((err) => {
 			console.log('Error from server while posting review', err);
