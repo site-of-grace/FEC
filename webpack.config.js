@@ -1,13 +1,20 @@
 /* eslint-disable no-undef */
-var path = require('path');
+const path = require('path');
+const { EnvironmentPlugin } = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 require('dotenv').config();
-var SRC_DIR = path.join(__dirname, '/src');
-var DIST_DIR = path.join(__dirname, '/public/dist');
+
+const SRC_DIR = path.join(__dirname, '/src');
+const DIST_DIR = path.join(__dirname, '/public/dist');
 const port = process.env.PORT || 3000;
 const livePort = process.env.LIVE_PORT || 5000;
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  mode: 'development',
+  mode: isProduction ? 'production' : 'development',
   devServer: {
     static: './public/dist',
     hot: true,
@@ -22,9 +29,45 @@ module.exports = {
   },
   entry: `${SRC_DIR}/index.js`,
   output: {
-    filename: 'bundle.js',
+    filename: isProduction ? 'bundle.[contenthash].js' : 'bundle.js',
+    chunkFilename: isProduction ? '[name].[contenthash].js' : '[name].js',
     path: DIST_DIR
   },
+  optimization: {
+    minimize: isProduction,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true
+          }
+        }
+      })
+    ],
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          priority: -10
+        }
+      }
+    }
+  },
+  plugins: [
+    new EnvironmentPlugin(['NODE_ENV']),
+    new HtmlWebpackPlugin({
+      template: './public/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: isProduction ? '[name].[contenthash].css' : '[name].css'
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: isProduction ? 'static' : 'disabled',
+      openAnalyzer: false
+    })
+  ],
   module: {
     rules: [
       {
@@ -38,7 +81,9 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
           {
             loader: 'css-loader',
             options: {
@@ -51,7 +96,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
         exclude: /\.module\.css$/
       }
     ]
