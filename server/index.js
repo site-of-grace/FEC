@@ -6,6 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const { api, initialProduct, config } = require('./config.js');
 app.use(express.static(__dirname + '/../public/dist'));
+app.use(express.raw());
 app.use(express.json());
 
 // Routes

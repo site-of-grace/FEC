@@ -3,6 +3,9 @@ const router = express.Router();
 const axios = require('axios');
 const { api, config } = require('../config.js');
 
+const multer = require('multer');
+const upload = multer({dest: 'uploads/'});
+
 router.get('/reviews', (req, res) => {
   //Gets the total review count for api request count
   var metaData = req.query.metaData;
@@ -69,9 +72,17 @@ router.get('/meta', (req, res) => {
   });
 });
 
+router.post('/images', upload.single('image'),(req, res) => {
+  console.log(req.file);
+  if (req.file) {
+    res.statusCode = 201;
+    res.end();
+  }
+});
+
 router.post('/reviews', (req, res) => {
+  console.log(req.body);
   var options = req.body;
-  options.photos = ['https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png'];
   axios.post(`${api}/reviews`, options, config)
   .then(() => {
     res.statusCode = 200;
@@ -98,41 +109,3 @@ module.exports = router;
 
 
 
-//Old stuff
-// router.get('/reviews', async (req, res) => {
-// 	var options = {};
-// 	options.page = req.query.page ? req.query.page : 1;
-// 	options.sort = req.query.sort ? req.query.sort : 'relavant';
-// 	reviewsHandler(options, (err, data) => {
-// 		if (err) {
-// 			res.statusCode = 404;
-// 			res.send(JSON.stringify(err));
-// 		} else {
-// 			res.statusCode = 200;
-// 			res.send(JSON.stringify(data));
-// 		}
-// 	});
-// });
-
-// //Handles api request to reviews
-// var reviewsHandler = (options, cb) => {
-// 	axios.get(`${api}/reviews/?product_id=71701&count=2&sort=newest&page=${options.page}`, config)
-// .then((apiData) => {
-// 	if (!apiData) {
-// 		cb({err: 'Server request recieved no data'}, null);
-// 		throw apiData;
-// 	}
-// 	if (apiData.data.results) {
-// 		cb(null, apiData.data);
-// 		// console.log('---review data--->', apiData.data);
-// 	} else {
-// 		console.log('No review data');
-// 		cb({err: 'Server request failed no reviews fetched'}, null);
-// 	}
-// })
-// .catch((error) => {
-// 	console.log('---server error--->', error);
-// 	cb(error, null);
-// });
-// };
-//
