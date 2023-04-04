@@ -664,7 +664,7 @@ li.carousel-card > img {
   .review-star {
     width: 15px;
   }
-  #review-stars {
+  .review-stars {
     display: inline-block;
   }
   .review-date-name {

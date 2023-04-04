@@ -9,6 +9,8 @@ import { Provider } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
+import fakeReviewData from './utils/fakeReviewData.jsx';
+
 const mockStore = configureStore([]);
 
 describe('Rating Beginning Elements', () => {
@@ -49,34 +51,25 @@ describe('Rating Beginning Elements', () => {
 
   describe('ReviewList', () => {
     test('renders a review when provided with a list of reviews', () => {
-      const fakeReview = {  "review_id": 5,
-      "rating": 3,
-      "summary": "I'm enjoying wearing these shades",
-      "recommend": false,
-      "response": null,
-      "body": "Comfortable and practical.",
-      "date": "2019-04-14T00:00:00.000Z",
-      "reviewer_name": "shortandsweeet",
-      "helpfulness": 5,
-      "photos": [{
-          "id": 1,
-          "url": "urlplaceholder/review_5_photo_number_1.jpg"
-        },
-        {
-          "id": 2,
-          "url": "urlplaceholder/review_5_photo_number_2.jpg"
-        },
-      ]};
 
-      const store = mockStore({ rating: { reviews: [fakeReview] } });
+      const store = mockStore({ rating: { reviews: fakeReviewData } });
 
       const { getByText } = render(
         <Provider store={store}>
           <ReviewList />
         </Provider>
       );
+    var review = document.getElementsByClassName('review')[0];
+    expect(review).toBeInTheDocument();
+    var expectedClasses = ['review-stars', 'review-date-name', 'review-summary', 'review-body', 'review-photo', 'review-response', 'review-helpful', 'review-star'];
 
-      const review = screen.getByText("I'm enjoying wearing these shades");
-      expect(review).toBeInTheDocument();
+    expectedClasses.forEach((curClass) => {
+      const element = document.getElementsByClassName(curClass)[0];
+      expect(element).toBeInTheDocument();
     });
+  });
+});
+
+describe('Breakdown', () => {
+
 });
