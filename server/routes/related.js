@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
     console.log('related result', result.length);
     res.status(200).send(result);
   } catch (err) {
-    console.error('Error in /related');
+    console.error('Error in /related', err);
     res.status(500).send({ error: 'Internal server error in /related' });
   }
 });

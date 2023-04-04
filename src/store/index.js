@@ -13,6 +13,6 @@ export const store = configureStore({
     rating: ratingReducer,
     question: questionReducer,
   },
-  devTools: true,
+  devTools: false,
 });
 

@@ -1,6 +1,13 @@
 node_modules
-public/dist/*bundle*.js*
-public/dist/src*.js
+# public/dist/*bundle*.js*
+# public/dist/src*.js
+public/dist/*.js
+public/dist/*.txt
+public/dist/*.html
+public/dist/*.css
+!public/dist/style.css
+
+
 .env
 githubToken.js
 coverage

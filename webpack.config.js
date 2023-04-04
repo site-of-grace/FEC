@@ -58,7 +58,7 @@ module.exports = {
   plugins: [
     new EnvironmentPlugin(['NODE_ENV']),
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './public/dist/index.html'
     }),
     new MiniCssExtractPlugin({
       filename: isProduction ? '[name].[contenthash].css' : '[name].css'
