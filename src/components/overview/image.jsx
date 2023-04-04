@@ -12,7 +12,7 @@ const ImageGallery = (props) => {
 
 
   const [main, setMain] = useState('');
-
+  //comment
   useEffect(() => {
     if (mainPhotos[0] !== undefined) {
       if (props.resetMain) {
