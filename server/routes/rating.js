@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const fs = require('fs');
 const { api, config } = require('../config.js');
+
+const multer = require('multer');
+const upload = multer({dest: 'uploads/'});
+
+const uploadImage = require('../uploadImage.js');
 
 router.get('/reviews', (req, res) => {
   //Gets the total review count for api request count
@@ -69,9 +75,40 @@ router.get('/meta', (req, res) => {
   });
 });
 
+
+//Handles image uploading
+router.post('/images', upload.array('images', 5), async (req, res) => {
+  var imgUrls = [];
+  if (!req.files) {
+    res.statusCode = 404;
+    res.end();
+    return;
+  }
+  for (var i = 0; i < req.files.length; i++) {
+    var file = req.files[i];
+    try {
+      const result = await uploadImage(file);
+      fs.unlink(file.path, (err) => {
+        if (err) {
+          throw(err);
+        }
+      });
+      console.log('Image uploaded succesfully', result);
+      imgUrls.push(result.Location);
+    } catch (err) {
+      console.error('Error uploading image', err);
+      res.statusCode = 404;
+      res.send(JSON.stringify(err));
+      return;
+    }
+  }
+  res.statusCode = 201;
+  res.send(JSON.stringify(imgUrls));
+});
+
+//Handles review posting
 router.post('/reviews', (req, res) => {
   var options = req.body;
-  options.photos = ['https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png'];
   axios.post(`${api}/reviews`, options, config)
   .then(() => {
     res.statusCode = 200;
@@ -98,41 +135,3 @@ module.exports = router;
 
 
 
-//Old stuff
-// router.get('/reviews', async (req, res) => {
-// 	var options = {};
-// 	options.page = req.query.page ? req.query.page : 1;
-// 	options.sort = req.query.sort ? req.query.sort : 'relavant';
-// 	reviewsHandler(options, (err, data) => {
-// 		if (err) {
-// 			res.statusCode = 404;
-// 			res.send(JSON.stringify(err));
-// 		} else {
-// 			res.statusCode = 200;
-// 			res.send(JSON.stringify(data));
-// 		}
-// 	});
-// });
-
-// //Handles api request to reviews
-// var reviewsHandler = (options, cb) => {
-// 	axios.get(`${api}/reviews/?product_id=71701&count=2&sort=newest&page=${options.page}`, config)
-// .then((apiData) => {
-// 	if (!apiData) {
-// 		cb({err: 'Server request recieved no data'}, null);
-// 		throw apiData;
-// 	}
-// 	if (apiData.data.results) {
-// 		cb(null, apiData.data);
-// 		// console.log('---review data--->', apiData.data);
-// 	} else {
-// 		console.log('No review data');
-// 		cb({err: 'Server request failed no reviews fetched'}, null);
-// 	}
-// })
-// .catch((error) => {
-// 	console.log('---server error--->', error);
-// 	cb(error, null);
-// });
-// };
-//

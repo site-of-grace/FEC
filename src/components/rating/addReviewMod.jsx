@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import {useSelector} from 'react-redux';
 
-const AddReviewMod = ({setAddReview}) => {
+const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 	const mainProduct = useSelector((state) => state.overview.mainProduct);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
 	const [stars, setStars] = useState([]);
@@ -12,9 +12,11 @@ const AddReviewMod = ({setAddReview}) => {
 	const ratings = ['', 'Poor', 'Fair', 'Average', 'Good', 'Great'];
 	const [attributeSelection, setAttributeSelection] = useState([]);
 	const [charLeft, setCharLeft] = useState(50);
-	const [curImgs, setCurImgs] = useState([]);
 	const [validationError, setValidationError] = useState(null);
 	const[attrLength, setAttrLength] = useState(0);
+	const [curImgs, setCurImgs] = useState([]);
+	const [imagesData, setImagesData] = useState([]);
+	const [imageError, setImageError] = useState('');
 
 	var characteristics = {};
 	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
@@ -23,6 +25,7 @@ const AddReviewMod = ({setAddReview}) => {
 	characteristics['Quality'] = ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'];
 	characteristics['Length'] = ['Runs short', 'Runs slighlty short', 'Perfect', 'Runs slightly long', 'Runs long'];
 	characteristics['Fit'] = ['Runs tight', 'Runs slighlty tight', 'Perfect', 'Runs slighlty long', 'Runs long'];
+
 	const starHighlight = (id, clicked) => {
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
@@ -79,18 +82,31 @@ const AddReviewMod = ({setAddReview}) => {
 	};
 
 	const handleUpload = (e, changeImage) => {
+		var file = e.target.files[0];
+		if (file.size > 50000) {
+			setImageError('Image size is to large![50kb max]');
+			return;
+		}
+		if (imageError) {
+			setImageError('');
+		}
 		var fr = new FileReader();
-		fr.readAsDataURL(e.target.files[0]);
+		fr.readAsDataURL(file);
 		fr.onloadend = () => {
 			if (changeImage) {
 				var newImgs = [].concat(curImgs);
+				var newImgsData = [].concat(imagesData);
+				newImgsData[e.target.id] = file;
 				newImgs[e.target.id] = fr.result;
 				setCurImgs(newImgs);
+				setImagesData(newImgsData);
 			} else {
+				setImagesData([file].concat(imagesData));
 				setCurImgs([fr.result].concat(curImgs));
 			}
 		};
 	};
+
 
 	const handleSubmit = (e) => {
 		setValidationError(null);
@@ -156,14 +172,34 @@ const AddReviewMod = ({setAddReview}) => {
 		}
 		formVals.rating = Number(userRating);
 		sendReview(formVals);
-		setAddReview(false);
 	};
-	const sendReview = (formVals) => {
+
+	const handleImageUpload = () => {
+		if (imagesData.length === 0) {
+			return [];
+		}
+		var formData = new FormData();
+		imagesData.forEach(image => {
+			formData.append('images', image);
+		});
+		return axios.post('/rating/images', formData, {'Authorization': 'multipart/form-data'})
+				.then((data) => {
+					return data.data;
+				})
+				.catch((err) => {
+					console.log('Server error for image uploaded', err);
+					return [];
+				});
+	};
+
+	const sendReview = async (formVals) => {
+		setUploadInProgress(true);
+		var urls = await handleImageUpload();
+		formVals['photos'] = urls;
 		formVals['product_id'] = mainProduct.id;
-		console.log(formVals);
 		axios.post('/rating/reviews', formVals)
 		.then(() => {
-			console.log('Review posted');
+			setUploadInProgress(false);
 			location.reload();
 		})
 		.catch((err) => {
@@ -202,15 +238,15 @@ const AddReviewMod = ({setAddReview}) => {
 				<div className='review-bar'/>
 				<div id="rating-imageUpload">
 					<h3>Upload your photos</h3>
+					<div style={{'color': 'red'}}>{imageError}</div>
 					{curImgs.length < 5 ? <input style={{'marginBottom': '20px', 'marginLeft': '240px'}} type="file" accept=".png, .jpg, .jpeg" onChange={handleUpload}/> : null}
 					{curImgs.map((curImg, idx) => {
 						return(
 						<div key={idx * 12} style={{'display': 'inline-block', 'marginRight': '20px'}}>
 							<input  style={{'position':'absolute', 'display':'inline-block'}} id={idx} type="file" accept=".png, .jpg, .jpeg" onChange={(e) => handleUpload(e, true)}/>
 							<img src={curImg}/>
-						</div>
-						);
-					})}
+						</div>);
+						})}
 				</div>
 				<div className='review-bar'/>
 				<h3>What is your nickname (mandatory)</h3>
@@ -221,7 +257,7 @@ const AddReviewMod = ({setAddReview}) => {
 				<div>For authentication reasons, you will not be emailed</div>
 				<div className='review-bar'/>
 				<div className='review-bar'/>
-				<button style={{'marginTop': '20px'}} onClick={handleSubmit}>Submit Review</button>
+				{!uploadInProgress ? <button style={{'marginTop': '20px'}} onClick={handleSubmit}>Submit Review</button> : null}
 			</form>
 			{validationError ? <div style={{'color': 'red'}}>You must enter the following: {validationError}</div> : null}
 		</div>

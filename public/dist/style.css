@@ -970,6 +970,14 @@ li.carousel-card > img {
     height: 70px;
     object-fit: cover;
   }
+  .loading-img {
+    z-index: 10;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    top: 10%;
+    width: 100px;
+  }
 /*======================= REVIEW CSS END ===========================*/
 
 /*======================= Q&A CSS START ===========================*/
