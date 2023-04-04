@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import styles from './styles.module.css';
@@ -57,8 +57,8 @@ export default function Carousel({ items, outfits = false }) {
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
-
     setShowRight(!isDisabled('next'));
+
   };
 
   const moveNext = () => {
@@ -73,19 +73,14 @@ export default function Carousel({ items, outfits = false }) {
     setShowRight(!isDisabled('next'));
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (outfits && myOutfit.length > 1) {
       setCurrentIndex(items.length - 1);
       moveNext();
     }
   }, [myOutfit]);
-  
-  useEffect(() => {
-    setCurrentIndex(0);
-    moveNext();
-  }, [prevProduct]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!!carouselRef && !!carouselRef.current) {
       carouselRef.current.scrollLeft = currentIndex * itemWidth;
     }
@@ -130,7 +125,6 @@ export default function Carousel({ items, outfits = false }) {
       return;
     }
     console.log('rerender carousel on new products');
-    // setIsVisible(true);
     setCurrentIndex(0);
     setWidth(window.innerWidth);
 
@@ -163,8 +157,6 @@ export default function Carousel({ items, outfits = false }) {
             data-testid="chevron-right"
             className={`${styles.chevron} ${styles['chevron-right']}`}
             onClick={moveNext}
-            // style={currentOffset > -(carouselRef.current?.scrollWidth - carouselRef.current?.clientWidth) ? defaultStyle : disabledStyle}
-            // style={!isDisabled('next') ? defaultStyle : disabledStyle}
             style={showRight ? defaultStyle : disabledStyle}
           />
         )}
