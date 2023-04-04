@@ -10,22 +10,28 @@ import { RxCaretUp, RxCaretDown, RxCaretRight, RxCaretLeft } from "react-icons/r
 const ImageGallery = (props) => {
   const { mainProduct, styles, mainPhotos } = useSelector((state) => state.overview); // store.slice
 
+
+  const [main, setMain] = useState('');
+
   useEffect(() => {
     if (mainPhotos[0] !== undefined) {
-      setMain(mainPhotos[0].url);
+      if (props.resetMain) {
+        setMain(props.expandedMain);
+        props.setResetMain(false);
+      } else{
+        setMain(mainPhotos[0].url);
+      }
     }
   }, [mainPhotos]);
 
 
-  const [main, setMain] = useState('');
+
 
 
   useEffect(() => {
     if (main && main.length > 0) {
-
       props.setExpandedMain(main);
       document.getElementById(main).scrollIntoView({behavior: 'smooth', block: 'end'});
-
     }
   }, [main]);
 
@@ -73,8 +79,8 @@ const ImageGallery = (props) => {
            <div id='upButton' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => { document.getElementById('imageGallery').scrollBy(0, -74)}}><RxCaretUp size={30}/></div>
             <div id='imageGallery'>
               {mainPhotos.map((photo) => {
-                return <div onClick={() => { setMain(photo.url); }} key={photo.url} value='test'>
-                  <img className='imageGalleryItem' src={photo.url}></img>
+                return <div onClick={() => { setMain(photo.url); }} value='test'>
+                  <img className='imageGalleryItem' src={photo.thumbnail_url}></img>
                   <div className='selectorSpace'>
                     <div id={photo.url} className={(main === photo.url) ? 'show selectColor' : 'hide selectColor'}></div>
                   </div>
