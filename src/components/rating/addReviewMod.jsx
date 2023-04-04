@@ -16,6 +16,8 @@ const AddReviewMod = ({setAddReview}) => {
 	const [charLeft, setCharLeft] = useState(50);
 	const [validationError, setValidationError] = useState(null);
 	const[attrLength, setAttrLength] = useState(0);
+	const [curImgs, setCurImgs] = useState([]);
+	const [imagesData, setImagesData] = useState([]);
 
 	var characteristics = {};
 	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
@@ -78,6 +80,25 @@ const AddReviewMod = ({setAddReview}) => {
 
 	const handleTextInput = (e) => {
 		setCharLeft(50 - e.target.value.length);
+	};
+
+	const handleUpload = (e, changeImage) => {
+		var file = e.target.files[0];
+		var fr = new FileReader();
+		fr.readAsDataURL(file);
+		fr.onloadend = () => {
+			if (changeImage) {
+				var newImgs = [].concat(curImgs);
+				var newImgsData = [].concat(imagesData);
+				newImgsData[e.target.id] = file;
+				newImgs[e.target.id] = fr.result;
+				setCurImgs(newImgs);
+				setImagesData(newImgsData);
+			} else {
+				setImagesData([file].concat(imagesData));
+				setCurImgs([fr.result].concat(curImgs));
+			}
+		};
 	};
 
 
@@ -147,7 +168,28 @@ const AddReviewMod = ({setAddReview}) => {
 		sendReview(formVals);
 		setAddReview(false);
 	};
-	const sendReview = (formVals) => {
+
+	const handleImageUpload = () => {
+		if (imagesData.length === 0) {
+			return [];
+		}
+		var formData = new FormData();
+		imagesData.forEach(image => {
+			formData.append('images', image);
+		});
+		return axios.post('/rating/images', formData, {'Authorization': 'multipart/form-data'})
+				.then((data) => {
+					return data.data;
+				})
+				.catch((err) => {
+					console.log('Server error for image uploaded', err);
+					return [];
+				});
+	};
+
+	const sendReview = async (formVals) => {
+		var urls = await handleImageUpload();
+		formVals['photos'] = urls;
 		formVals['product_id'] = mainProduct.id;
 		axios.post('/rating/reviews', formVals)
 		.then(() => {
@@ -188,7 +230,17 @@ const AddReviewMod = ({setAddReview}) => {
 				<textarea name="body" rows='16' cols='70' maxLength="1000" placeholder="Why did you like the product or not?" onChange={handleTextInput} required/>
 				{charLeft > 0 ? <div>Minimum required characters left [{charLeft}]</div> : <div>Minimum Reached</div>}
 				<div className='review-bar'/>
-				<ImageUpload />
+				<div id="rating-imageUpload">
+					<h3>Upload your photos</h3>
+					{curImgs.length < 5 ? <input style={{'marginBottom': '20px', 'marginLeft': '240px'}} type="file" accept=".png, .jpg, .jpeg" onChange={handleUpload}/> : null}
+					{curImgs.map((curImg, idx) => {
+						return(
+						<div key={idx * 12} style={{'display': 'inline-block', 'marginRight': '20px'}}>
+							<input  style={{'position':'absolute', 'display':'inline-block'}} id={idx} type="file" accept=".png, .jpg, .jpeg" onChange={(e) => handleUpload(e, true)}/>
+							<img src={curImg}/>
+						</div>);
+						})}
+				</div>
 				<div className='review-bar'/>
 				<h3>What is your nickname (mandatory)</h3>
 				<input type="text" placeholder="Example: jackson11!" name="nickname" maxLength="60"/>

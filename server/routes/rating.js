@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const fs = require('fs');
 const { api, config } = require('../config.js');
 
 const multer = require('multer');
@@ -77,6 +78,7 @@ router.get('/meta', (req, res) => {
 
 //Handles image uploading
 router.post('/images', upload.array('images', 5), async (req, res) => {
+  var imgUrls = [];
   if (!req.files) {
     res.statusCode = 404;
     res.end();
@@ -86,8 +88,13 @@ router.post('/images', upload.array('images', 5), async (req, res) => {
     var file = req.files[i];
     try {
       const result = await uploadImage(file);
-      console.log(result);
+      fs.unlink(file.path, (err) => {
+        if (err) {
+          throw(err);
+        }
+      });
       console.log('Image uploaded succesfully', result);
+      imgUrls.push(result.Location);
     } catch (err) {
       console.error('Error uploading image', err);
       res.statusCode = 404;
@@ -96,12 +103,11 @@ router.post('/images', upload.array('images', 5), async (req, res) => {
     }
   }
   res.statusCode = 201;
-  res.end();
+  res.send(JSON.stringify(imgUrls));
 });
 
 //Handles review posting
 router.post('/reviews', (req, res) => {
-  console.log(req.body);
   var options = req.body;
   axios.post(`${api}/reviews`, options, config)
   .then(() => {
