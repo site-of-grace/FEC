@@ -4,9 +4,7 @@ import axios from 'axios';
 
 import {useSelector} from 'react-redux';
 
-import ImageUpload from './imageUpload.jsx';
-
-const AddReviewMod = ({setAddReview}) => {
+const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 	const mainProduct = useSelector((state) => state.overview.mainProduct);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
 	const [stars, setStars] = useState([]);
@@ -18,6 +16,7 @@ const AddReviewMod = ({setAddReview}) => {
 	const[attrLength, setAttrLength] = useState(0);
 	const [curImgs, setCurImgs] = useState([]);
 	const [imagesData, setImagesData] = useState([]);
+	const [imageError, setImageError] = useState('');
 
 	var characteristics = {};
 	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
@@ -84,6 +83,13 @@ const AddReviewMod = ({setAddReview}) => {
 
 	const handleUpload = (e, changeImage) => {
 		var file = e.target.files[0];
+		if (file.size > 50000) {
+			setImageError('Image size is to large![50kb max]');
+			return;
+		}
+		if (imageError) {
+			setImageError('');
+		}
 		var fr = new FileReader();
 		fr.readAsDataURL(file);
 		fr.onloadend = () => {
@@ -166,7 +172,6 @@ const AddReviewMod = ({setAddReview}) => {
 		}
 		formVals.rating = Number(userRating);
 		sendReview(formVals);
-		setAddReview(false);
 	};
 
 	const handleImageUpload = () => {
@@ -188,12 +193,13 @@ const AddReviewMod = ({setAddReview}) => {
 	};
 
 	const sendReview = async (formVals) => {
+		setUploadInProgress(true);
 		var urls = await handleImageUpload();
 		formVals['photos'] = urls;
 		formVals['product_id'] = mainProduct.id;
 		axios.post('/rating/reviews', formVals)
 		.then(() => {
-			console.log('Review posted');
+			setUploadInProgress(false);
 			location.reload();
 		})
 		.catch((err) => {
@@ -232,6 +238,7 @@ const AddReviewMod = ({setAddReview}) => {
 				<div className='review-bar'/>
 				<div id="rating-imageUpload">
 					<h3>Upload your photos</h3>
+					<div style={{'color': 'red'}}>{imageError}</div>
 					{curImgs.length < 5 ? <input style={{'marginBottom': '20px', 'marginLeft': '240px'}} type="file" accept=".png, .jpg, .jpeg" onChange={handleUpload}/> : null}
 					{curImgs.map((curImg, idx) => {
 						return(
@@ -250,7 +257,7 @@ const AddReviewMod = ({setAddReview}) => {
 				<div>For authentication reasons, you will not be emailed</div>
 				<div className='review-bar'/>
 				<div className='review-bar'/>
-				<button style={{'marginTop': '20px'}} onClick={handleSubmit}>Submit Review</button>
+				{!uploadInProgress ? <button style={{'marginTop': '20px'}} onClick={handleSubmit}>Submit Review</button> : null}
 			</form>
 			{validationError ? <div style={{'color': 'red'}}>You must enter the following: {validationError}</div> : null}
 		</div>
