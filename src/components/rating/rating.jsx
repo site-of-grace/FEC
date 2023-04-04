@@ -10,7 +10,7 @@ import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful, setAverage, setRatingMetaTotal} from '../../store/ratingSlice';
 
-import _ from 'lodash';
+import orderBy from 'lodash/orderBy';
 
 const Rating = () => {
 	const [uploadInProgress, setUploadInProgress] = useState(false);
@@ -27,7 +27,7 @@ const Rating = () => {
       var helpfulScore = Math.floor(reviews[i-1].helpfulness*helpfulnessWeight);
       reviews[i-1].score = dateScore + helpfulScore;
     }
-    var relevantReviews = _.orderBy(reviews, 'score', 'desc');
+    var relevantReviews = orderBy(reviews, 'score', 'desc');
     dispatch(setReviewsRelevant(relevantReviews));
     dispatch(setReviews(relevantReviews));
   };

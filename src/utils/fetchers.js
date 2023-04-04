@@ -1,5 +1,5 @@
 import axios from 'axios';
-import _ from 'lodash';
+import partialRight from 'lodash/partialRight';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
@@ -39,6 +39,6 @@ export default function manualSWR({ path, params, type, onSuccess} ) {
     options.onSuccess = onSuccess;
   }
 
-  const fetchFunction = type === 'get' ? _.partialRight(fetcher, params) : postRequest;
+  const fetchFunction = type === 'get' ? partialRight(fetcher, params) : postRequest;
   return useSWRMutation(path, fetchFunction, options);
 }

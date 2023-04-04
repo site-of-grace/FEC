@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOutfits } from '../../store/overviewSlice';
 import { setProducts, addToCache, reloadCache } from '../../store/productSlice';
 import styles from './styles.module.css';
-import _ from 'lodash';
+import uniq from 'lodash/uniq';
 const ActionRows = lazy(() => import('./ActionRows.jsx'));
 
 const RelatedItems = () => {
@@ -119,7 +119,7 @@ const RelatedItems = () => {
     if (prevProduct?.id) {
       fetcher(
         '/related?id=' + mainProduct.id,
-        { cache: [..._.uniq(cacheArray), prevProduct.id] },
+        { cache: [...uniq(cacheArray), prevProduct.id] },
         onSuccess
       );
     }
