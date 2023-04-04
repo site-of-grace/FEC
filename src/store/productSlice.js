@@ -18,7 +18,7 @@ const currentSlice = createSlice({
       for (let i = 0; i < action.payload.length; i++) {
         let current = action.payload[i];
 
-        if (!current.id) {
+        if (!current?.id) {
           continue;
         }
 
@@ -51,6 +51,11 @@ const currentSlice = createSlice({
     },
     addToCache: (state, action) => {
       let current = action.payload;
+
+      if (!current?.id) {
+        return;
+      }
+
       if (state.cache[current.id]) {
         return;
       }
