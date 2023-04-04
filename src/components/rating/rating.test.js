@@ -49,16 +49,26 @@ describe('Rating Beginning Elements', () => {
 
   describe('ReviewList', () => {
     test('renders a review when provided with a list of reviews', () => {
-      const reviews = [
-        {
-          id: 1,
-          rating: 4,
-          body: 'This product is great!',
-          author: 'John Doe',
-          date: '2022-01-01',
+      const fakeReview = {  "review_id": 5,
+      "rating": 3,
+      "summary": "I'm enjoying wearing these shades",
+      "recommend": false,
+      "response": null,
+      "body": "Comfortable and practical.",
+      "date": "2019-04-14T00:00:00.000Z",
+      "reviewer_name": "shortandsweeet",
+      "helpfulness": 5,
+      "photos": [{
+          "id": 1,
+          "url": "urlplaceholder/review_5_photo_number_1.jpg"
         },
-      ];
-      const store = mockStore({ rating: { reviews } });
+        {
+          "id": 2,
+          "url": "urlplaceholder/review_5_photo_number_2.jpg"
+        },
+      ]};
+
+      const store = mockStore({ rating: { reviews: [fakeReview] } });
 
       const { getByText } = render(
         <Provider store={store}>
@@ -66,7 +76,7 @@ describe('Rating Beginning Elements', () => {
         </Provider>
       );
 
-      const review = screen.getByText('This product is great!');
+      const review = screen.getByText("I'm enjoying wearing these shades");
       expect(review).toBeInTheDocument();
     });
 });
