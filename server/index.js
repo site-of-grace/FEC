@@ -10,6 +10,7 @@ app.use(express.raw());
 app.use(express.json());
 
 // Routes
+app.use('/interaction', routes.interaction);
 app.use('/related', routes.related);
 app.use('/rating', routes.rating);
 
