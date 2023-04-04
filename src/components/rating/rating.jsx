@@ -13,7 +13,7 @@ import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setRevi
 import _ from 'lodash';
 
 const Rating = () => {
-
+	const [uploadInProgress, setUploadInProgress] = useState(false);
   const [addReview, setAddReview] = useState(false);
 
   const dispatch = useDispatch();
@@ -96,11 +96,12 @@ const Rating = () => {
   return (
     <div className='widget' id='rating'>
       {addReview ? <div id='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
+      {uploadInProgress ? <img className='loading-img' src='./icons/loading.gif' /> : null}
       <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
       <div id='rating-main'>
         <Breakdown />
         <ReviewList setAddReview={setAddReview}/>
-        {addReview ? <AddReviewMod /> : null}
+        {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}
       </div>
     </div>
   );
