@@ -13,7 +13,7 @@ import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setRevi
 import _ from 'lodash';
 
 const Rating = () => {
-
+	const [uploadInProgress, setUploadInProgress] = useState(false);
   const [addReview, setAddReview] = useState(false);
 
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ const Rating = () => {
 
 
   var fetchReviews = (metaData, product_id) => {
+    console.log(metaData, 'Meta data');
     var options = {params: {product_id, metaData}};
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
@@ -96,11 +97,11 @@ const Rating = () => {
   return (
     <div className='widget' id='rating'>
       {addReview ? <div id='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
-      <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
+      {uploadInProgress ? <img className='loading-img' src='./icons/loading.gif' /> : null}
       <div id='rating-main'>
         <Breakdown />
         <ReviewList setAddReview={setAddReview}/>
-        {addReview ? <AddReviewMod setAddReview={setAddReview}/> : null}
+        {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}
       </div>
     </div>
   );

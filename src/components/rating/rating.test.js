@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor} from '../../store/test-utils';
 
 import Rating from './rating.jsx';
 import ReviewList from './reviewList.jsx';
+import Breakdown from './breakdown.jsx';
 
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -10,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import fakeReviewData from './utils/fakeReviewData.jsx';
+import fakeMetaData from './utils/fakeMetaData.jsx';
 
 const mockStore = configureStore([]);
 
@@ -54,7 +56,7 @@ describe('Rating Beginning Elements', () => {
 
       const store = mockStore({ rating: { reviews: fakeReviewData } });
 
-      const { getByText } = render(
+      render(
         <Provider store={store}>
           <ReviewList />
         </Provider>
@@ -71,5 +73,35 @@ describe('Rating Beginning Elements', () => {
 });
 
 describe('Breakdown', () => {
+  test('renders correctly when given metaData', () => {
+    var storeObj = {
+      ratingMeta: fakeMetaData,
+      average: 3.25,
+      ratingMetaTotal: 100,
+      filterRating: false
+    };
+    const store = mockStore({ rating:  storeObj });
 
+    render(
+      <Provider store={store}>
+        <Breakdown />
+      </Provider>
+    );
+
+  expect(document.getElementById('rating-average').innerHTML).toBe('3.3');
+  expect(document.getElementById('rating-recommended').innerHTML).toBe('88% of reviews recommended this product');
+
+  var starsChildren = document.getElementsByClassName('stars-container')[0].children;
+  expect(starsChildren.length).toBe(5);
+  for (var i = 0; i < starsChildren.length; i++) {
+    var curStar = starsChildren[i];
+    if (i <= 2) {
+      expect(curStar.src).toBe('http://localhost/icons/fullStar.png');
+    } else if (i === 3) {
+      expect(curStar.src).toBe('http://localhost/icons/quarterStar.png');
+    } else {
+      expect(curStar.src).toBe('http://localhost/icons/unfilledStar.png');
+    }
+  }
+  });
 });
