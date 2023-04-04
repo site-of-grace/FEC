@@ -1,11 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-const ImageUpload = () => {
+const ImageUpload = ({upload}) => {
 	const [curImgs, setCurImgs] = useState([]);
 	const [imagesData, setImagesData] = useState([]);
 	const [uploaded, setUploaded] = useState(false);
+
 	var handleSubmit = (e) => 	{
-		e.preventDefault();
+		if (e) {
+			e.preventDefault();
+		}
+		if (imagesData.length === 0) {
+			return;
+		}
 		var formData = new FormData();
 		imagesData.forEach(image => {
 			formData.append('images', image);
@@ -19,6 +25,8 @@ const ImageUpload = () => {
 					console.log('Server error for image uploaded', err);
 				});
 	};
+
+	useEffect(() => {if (upload === true) {handleSubmit();}}, [upload]);
 
 	const handleUpload = (e, changeImage) => {
 		var file = e.target.files[0];
@@ -40,7 +48,7 @@ const ImageUpload = () => {
 	};
 
 	return(
-		<form id="rating-imageUpload">
+		<div id="rating-imageUpload">
 			<h3>Upload your photos</h3>
 			{curImgs.length < 5 && !uploaded? <input style={{'marginBottom': '20px', 'marginLeft': '240px'}} type="file" accept=".png, .jpg, .jpeg" onChange={handleUpload}/> : null}
 			{curImgs.map((curImg, idx) => {
@@ -50,8 +58,7 @@ const ImageUpload = () => {
 					<img src={curImg}/>
 				</div>);
 				})}
-				{!uploaded ? <button onClick={handleSubmit}>Upload</button> : null}
-		</form>
+		</div>
 	);
 };
 
