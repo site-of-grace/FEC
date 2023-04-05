@@ -18,6 +18,8 @@ const Rating = () => {
 	const [uploadInProgress, setUploadInProgress] = useState(false);
   const [addReview, setAddReview] = useState(false);
 
+  const [allowRender, setAllowRender] = useState(false);
+
   const dispatch = useDispatch();
   //current product ids = 71697, 71698, 71699, 71700, 71701
   const mainProduct  = useSelector((state) => state.overview.mainProduct);
