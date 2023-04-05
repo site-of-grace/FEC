@@ -66,7 +66,7 @@ const Questions = () => {
   }, [dispatch, mainProduct.id]);
   
   
-  // console.log('mainProduct=====> ', mainProduct);  
+  console.log('mainProduct=====> ', mainProduct);  
   
   if (loading) {
     return <div>Loading questions...</div>;
