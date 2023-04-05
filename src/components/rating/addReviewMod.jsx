@@ -30,7 +30,7 @@ const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
 			if (!clicked || i > id) { //Highlight to hovered
-				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id, true);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/unfilledStar.png'}></img>);
+				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id, true);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/largeUnfilledStar.png'}></img>);
 			} else { //Highlight to clicked
 				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} key={i} id={i} src={'./icons/glowingStar.png'}></img>);
 			}
@@ -43,7 +43,7 @@ const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 		setUserRating(0);
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
-			newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} id={i} key={i} src='./icons/unfilledStar.png'></img>);
+			newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} id={i} key={i} src='./icons/largeUnfilledStar.png'></img>);
 		}
 		setStars(newStars);
 	};
