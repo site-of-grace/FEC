@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSlice';
 import { setQuestionId, setQuestionBody, setQuestionDate, setAskerName, setQuestionHelpfulness, setReported, setAnswers, setQuestionArr } from '../../store/questionsSlice';
+import QuestionForm from './QuestionForm.jsx';
+
 const axios = require('axios');
 
 const Questions = () => {
@@ -15,6 +17,8 @@ const Questions = () => {
   const [loading, setLoading] = useState(true);
   const [clickedAnswers, setClickedAnswers] = useState([]);
   const [numQuestions, setNumQuestions] = useState(2);
+  const [showModal, setShowModal] = useState(false);
+
 
   
   const getQuestions = (product_id) => {
@@ -56,7 +60,15 @@ const Questions = () => {
   
   const handleLoadMore = () => {
     setNumQuestions(numQuestions + 2);
-  }
+  };
+  
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   
     
   useEffect(() => {
@@ -66,7 +78,7 @@ const Questions = () => {
   }, [dispatch, mainProduct.id]);
   
   
-  // console.log('mainProduct=====> ', mainProduct);  
+  console.log('mainProduct=====> ', mainProduct);  
   
   if (loading) {
     return <div>Loading questions...</div>;
@@ -147,6 +159,31 @@ const Questions = () => {
             MORE ANSWERED QUESTIONS
           </button>
         )}
+      <>
+      <button 
+        onClick={handleOpenModal} 
+        style={{
+          fontSize: "1.5rem",
+          backgroundColor: "transparent",
+          border: "2px solid black",
+          padding: "1rem 2rem",
+          margin: "2rem auto",
+          display: "block",
+        }}
+      >
+        ASK YOUR QUESTION
+      </button>
+      {showModal && (
+        <div>
+          <QuestionForm 
+            mainProduct={mainProduct}
+            handleCloseModal={handleCloseModal} 
+            showModal={showModal}
+            title={`About the ${mainProduct.name}`}
+          />
+        </div>
+      )}
+    </>
     </>
   );
 };
