@@ -12,7 +12,7 @@ import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setRevi
 
 import orderBy from 'lodash/orderBy';
 
-import styles from './rating.module.css';
+import styles from './cssModules/rating.module.css';
 
 const Rating = () => {
 	const [uploadInProgress, setUploadInProgress] = useState(false);
@@ -98,8 +98,8 @@ const Rating = () => {
 
   return (
     <div className='widget' id={`${styles.rating}`}>
-      {addReview ? <div id='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
-      {uploadInProgress ? <img className='loading-img' src='./icons/loading.gif' /> : null}
+      {addReview ? <div  id={`${styles['rating-overlay']}`} onClick={() => setAddReview(false)}></div> : null}
+      {uploadInProgress ? <img className={`${styles['loading-img']}`} src='./icons/loading.gif' /> : null}
       <div id={`${styles['rating-main']}`}>
         <Breakdown />
         <ReviewList setAddReview={setAddReview}/>

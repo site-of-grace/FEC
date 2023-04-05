@@ -1,0 +1,73 @@
+.review-star {
+	width: 15px;
+}
+#review-stars {
+	display: inline-block;
+}
+.review-date-name {
+	font-size: 13px;
+	float: right;
+	width: 60%;
+	max-width: fit-content;
+}
+/* Single review ====*/
+.review, .review h1 {
+	color: rgb(68, 68, 68);
+	margin-bottom: 50px;
+}
+.review-date-name {
+	font-size: 13px;
+	float: right;
+	width: 60%;
+	max-width: fit-content;
+}
+.review-summary {
+	font-weight: bold;
+	font-size: 25px;
+	margin: 10px 0px 10px 0px;
+}
+.review-body {
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+.review-photo {
+	border-radius: 5px;
+	border: 1px solid black;
+	width: 150px;
+}
+.review-photo:hover {
+	border-radius: 10px;
+}
+.review-response {
+	background-color: rgb(227, 227, 227);
+	border-radius: 4px;
+	padding: 20px 10px 20px 20px;
+	font-weight: bold;
+}
+.review-bar {
+	height: 1px;
+	border-radius: 10px;
+	background-color: rgb(68, 68, 68);
+	margin-top: 5px;
+}
+
+/* Helpful */
+.review-helpful, .review-helpful button {
+	font-size: 15px;
+	padding: 0px;
+}
+.review-helpful button {
+	color: rgb(85, 85, 85);
+	text-decoration: underline;
+	background: none;
+	border: none;
+	margin-left: 5px;
+}
+.review-helpful button:hover {
+	color: black;
+}
+.helpfulness {
+	color: rgb(122, 122, 122);
+	display: inline;
+	font-size: 12px;
+}

@@ -5,7 +5,7 @@ import SortOptions from './sortOptions.jsx';
 
 import Review from './review.jsx';
 
-import styles from './reviews.module.css';
+import styles from './cssModules/reviewsList.module.css';
 //Only displays 2 at a time
 const ReviewList = ({setAddReview}) => {
 	const reviews = useSelector((state) => state.rating.reviews);
