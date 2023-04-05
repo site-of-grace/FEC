@@ -12,6 +12,7 @@ const Overview = () => {
 
   const [expandedView, setExpandedView] = useState(false);
   const [expandedMain, setExpandedMain] = useState('');
+  const [resetMain, setResetMain] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -78,6 +79,9 @@ const Overview = () => {
             <ImageGallery
               setExpandedView={setExpandedView}
               setExpandedMain={setExpandedMain}
+              expandedMain={expandedMain}
+              setResetMain={setResetMain}
+              resetMain={resetMain}
             />
           </div>
         ) : (
@@ -95,6 +99,7 @@ const Overview = () => {
             <ExpandedView
               setExpandedView={setExpandedView}
               expandedMain={expandedMain}
+              setResetMain={setResetMain}
             />
           </div>
         ) : (

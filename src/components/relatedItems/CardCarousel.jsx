@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import _ from 'lodash';
+import partialRight from 'lodash/partialRight';
 
 const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -116,8 +116,8 @@ const CardCarousel = ({ show, cardItems, changePhoto, onMouseEnter, onMouseLeave
           className={`carousel-card ${determineClasses(indexes, i)}`}
           onClick={
             indexes.nextIndex === i
-              ? _.partialRight(clickHandler, cycleCards.bind(null, i))
-              : _.partialRight(clickHandler, cycleBackwards.bind(null, i))
+              ? partialRight(clickHandler, cycleCards.bind(null, i))
+              : partialRight(clickHandler, cycleBackwards.bind(null, i))
           }
         >
           <img

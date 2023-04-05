@@ -10,7 +10,9 @@ import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful, setAverage, setRatingMetaTotal} from '../../store/ratingSlice';
 
-import _ from 'lodash';
+import orderBy from 'lodash/orderBy';
+
+import styles from './cssModules/rating.module.css';
 
 const Rating = () => {
 	const [uploadInProgress, setUploadInProgress] = useState(false);
@@ -27,7 +29,7 @@ const Rating = () => {
       var helpfulScore = Math.floor(reviews[i-1].helpfulness*helpfulnessWeight);
       reviews[i-1].score = dateScore + helpfulScore;
     }
-    var relevantReviews = _.orderBy(reviews, 'score', 'desc');
+    var relevantReviews = orderBy(reviews, 'score', 'desc');
     dispatch(setReviewsRelevant(relevantReviews));
     dispatch(setReviews(relevantReviews));
   };
@@ -95,10 +97,10 @@ const Rating = () => {
   useEffect(() => { if (id) { fetchMetaData(id);} }, [id]);
 
   return (
-    <div className='widget' id='rating'>
-      {addReview ? <div id='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
-      {uploadInProgress ? <img className='loading-img' src='./icons/loading.gif' /> : null}
-      <div id='rating-main'>
+    <div className='widget' id={`${styles.rating}`}>
+      {addReview ? <div  id={`${styles['rating-overlay']}`} onClick={() => setAddReview(false)}></div> : null}
+      {uploadInProgress ? <img className={`${styles['loading-img']}`} src='./icons/loading.gif' /> : null}
+      <div id={`${styles['rating-main']}`}>
         <Breakdown />
         <ReviewList setAddReview={setAddReview}/>
         {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}

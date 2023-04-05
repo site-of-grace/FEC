@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector, useDispatch } from 'react-redux';
 import {setReviewsHelpful, setReviews} from '../../store/ratingSlice';
 
-import _ from 'lodash';
+import orderBy from 'lodash/orderBy';
 
 var SortOptions = function() {
 	const dispatch = useDispatch();
@@ -18,7 +18,7 @@ var SortOptions = function() {
 			dispatch(setReviews(rating.reviewsRecent));
 		} else {
 			if (rating.reviewsHelpful.length === 0 ) { //Checks if reviewsHelpful is filled
-				var helfpulReviews = _.orderBy(rating.reviews, 'helpfulness', 'desc');
+				var helfpulReviews = orderBy(rating.reviews, 'helpfulness', 'desc');
 				dispatch(setReviewsHelpful(helfpulReviews));
 				dispatch(setReviews(helfpulReviews));
 				console.log(helfpulReviews);

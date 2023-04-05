@@ -4,7 +4,9 @@ import axios from 'axios';
 
 import {useSelector} from 'react-redux';
 
-const AddReviewMod = ({setAddReview}) => {
+import styles from './cssModules/addReview.module.css';
+
+const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 	const mainProduct = useSelector((state) => state.overview.mainProduct);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
 	const [stars, setStars] = useState([]);
@@ -12,9 +14,11 @@ const AddReviewMod = ({setAddReview}) => {
 	const ratings = ['', 'Poor', 'Fair', 'Average', 'Good', 'Great'];
 	const [attributeSelection, setAttributeSelection] = useState([]);
 	const [charLeft, setCharLeft] = useState(50);
-	const [curImgs, setCurImgs] = useState([]);
 	const [validationError, setValidationError] = useState(null);
 	const[attrLength, setAttrLength] = useState(0);
+	const [curImgs, setCurImgs] = useState([]);
+	const [imagesData, setImagesData] = useState([]);
+	const [imageError, setImageError] = useState('');
 
 	var characteristics = {};
 	characteristics['Size'] = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
@@ -23,13 +27,14 @@ const AddReviewMod = ({setAddReview}) => {
 	characteristics['Quality'] = ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'];
 	characteristics['Length'] = ['Runs short', 'Runs slighlty short', 'Perfect', 'Runs slightly long', 'Runs long'];
 	characteristics['Fit'] = ['Runs tight', 'Runs slighlty tight', 'Perfect', 'Runs slighlty long', 'Runs long'];
+
 	const starHighlight = (id, clicked) => {
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
 			if (!clicked || i > id) { //Highlight to hovered
-				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id, true);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/unfilledStar.png'}></img>);
+				newStars.push(<img className={`${styles['review-star']}`} onMouseEnter={(e) => starHighlight(e.target.id)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id, true);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/largeUnfilledStar.png'}></img>);
 			} else { //Highlight to clicked
-				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} key={i} id={i} src={'./icons/glowingStar.png'}></img>);
+				newStars.push(<img className={`${styles['review-star']}`} onMouseEnter={(e) => starHighlight(e.target.id)} key={i} id={i} src={'./icons/glowingStar.png'}></img>);
 			}
 		}
 		setStars(newStars);
@@ -40,7 +45,7 @@ const AddReviewMod = ({setAddReview}) => {
 		setUserRating(0);
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
-			newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} id={i} key={i} src='./icons/unfilledStar.png'></img>);
+			newStars.push(<img className={`${styles['review-star']}`} onMouseEnter={(e) => starHighlight(e.target.id)} id={i} key={i} src='./icons/largeUnfilledStar.png'></img>);
 		}
 		setStars(newStars);
 	};
@@ -55,12 +60,12 @@ const AddReviewMod = ({setAddReview}) => {
 			var choices = characteristics[attribute];
 			var key = 0;
 			attributes.push(
-				<div className ='attributeSelections'>
+				<div className ={`${styles['attributeSelections']}`}>
 					<h3>{attribute}</h3>
 					{choices.map((choice, idx) => {
 						key++;
 						return (
-						<div className='attributeSelection' key={key*123}>
+						<div className ={`${styles['attributeSelection']}`} key={key*123}>
 							<div>{choice}</div>
 							<input type='radio' id={choice + attribute} name={attribute} value={idx+1}/>
 							<label htmlFor={choice + attribute}/>
@@ -79,18 +84,31 @@ const AddReviewMod = ({setAddReview}) => {
 	};
 
 	const handleUpload = (e, changeImage) => {
+		var file = e.target.files[0];
+		if (file.size > 50000) {
+			setImageError('Image size is to large![50kb max]');
+			return;
+		}
+		if (imageError) {
+			setImageError('');
+		}
 		var fr = new FileReader();
-		fr.readAsDataURL(e.target.files[0]);
+		fr.readAsDataURL(file);
 		fr.onloadend = () => {
 			if (changeImage) {
 				var newImgs = [].concat(curImgs);
+				var newImgsData = [].concat(imagesData);
+				newImgsData[e.target.id] = file;
 				newImgs[e.target.id] = fr.result;
 				setCurImgs(newImgs);
+				setImagesData(newImgsData);
 			} else {
+				setImagesData([file].concat(imagesData));
 				setCurImgs([fr.result].concat(curImgs));
 			}
 		};
 	};
+
 
 	const handleSubmit = (e) => {
 		setValidationError(null);
@@ -156,14 +174,34 @@ const AddReviewMod = ({setAddReview}) => {
 		}
 		formVals.rating = Number(userRating);
 		sendReview(formVals);
-		setAddReview(false);
 	};
-	const sendReview = (formVals) => {
+
+	const handleImageUpload = () => {
+		if (imagesData.length === 0) {
+			return [];
+		}
+		var formData = new FormData();
+		imagesData.forEach(image => {
+			formData.append('images', image);
+		});
+		return axios.post('/rating/images', formData, {'Authorization': 'multipart/form-data'})
+				.then((data) => {
+					return data.data;
+				})
+				.catch((err) => {
+					console.log('Server error for image uploaded', err);
+					return [];
+				});
+	};
+
+	const sendReview = async (formVals) => {
+		setUploadInProgress(true);
+		var urls = await handleImageUpload();
+		formVals['photos'] = urls;
 		formVals['product_id'] = mainProduct.id;
-		console.log(formVals);
 		axios.post('/rating/reviews', formVals)
 		.then(() => {
-			console.log('Review posted');
+			setUploadInProgress(false);
 			location.reload();
 		})
 		.catch((err) => {
@@ -172,17 +210,17 @@ const AddReviewMod = ({setAddReview}) => {
 	};
 
 	return(
-		<div id='addReviewMod'>
+		<div id={`${styles['addReviewMod']}`}>
 			<h1>Write Your Review</h1>
 			<h2>About the {mainProduct.name}</h2>
 			<div className='review-bar'/>
 			<h3>Overall Rating</h3>
 			{stars}
-			<div id='userRatingChoice'>{ratings[userRating]}</div>
+			<div id={`${styles['userRatingChoice']}`}>{ratings[userRating]}</div>
 			<div className='review-bar'/>
 			<form id='rating-input'>
 				<h3>Recommended?</h3>
-				<div className='coolRadio'>
+				<div className ={`${styles['coolRadio']}`}>
 					No
 					<input type='radio' id='rating-input-no' name='recommended' value='no'/>
 					<label style={{'marginRight': '10px'}} htmlFor='rating-input-no'/>
@@ -200,17 +238,17 @@ const AddReviewMod = ({setAddReview}) => {
 				<textarea name="body" rows='16' cols='70' maxLength="1000" placeholder="Why did you like the product or not?" onChange={handleTextInput} required/>
 				{charLeft > 0 ? <div>Minimum required characters left [{charLeft}]</div> : <div>Minimum Reached</div>}
 				<div className='review-bar'/>
-				<div id="rating-imageUpload">
+				<div id={`${styles['rating-imageUpload']}`}>
 					<h3>Upload your photos</h3>
+					<div style={{'color': 'red'}}>{imageError}</div>
 					{curImgs.length < 5 ? <input style={{'marginBottom': '20px', 'marginLeft': '240px'}} type="file" accept=".png, .jpg, .jpeg" onChange={handleUpload}/> : null}
 					{curImgs.map((curImg, idx) => {
 						return(
 						<div key={idx * 12} style={{'display': 'inline-block', 'marginRight': '20px'}}>
 							<input  style={{'position':'absolute', 'display':'inline-block'}} id={idx} type="file" accept=".png, .jpg, .jpeg" onChange={(e) => handleUpload(e, true)}/>
 							<img src={curImg}/>
-						</div>
-						);
-					})}
+						</div>);
+						})}
 				</div>
 				<div className='review-bar'/>
 				<h3>What is your nickname (mandatory)</h3>
@@ -221,7 +259,7 @@ const AddReviewMod = ({setAddReview}) => {
 				<div>For authentication reasons, you will not be emailed</div>
 				<div className='review-bar'/>
 				<div className='review-bar'/>
-				<button style={{'marginTop': '20px'}} onClick={handleSubmit}>Submit Review</button>
+				{!uploadInProgress ? <button style={{'marginTop': '20px'}} onClick={handleSubmit}>Submit Review</button> : null}
 			</form>
 			{validationError ? <div style={{'color': 'red'}}>You must enter the following: {validationError}</div> : null}
 		</div>
