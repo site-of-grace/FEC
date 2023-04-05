@@ -176,7 +176,8 @@ const Questions = () => {
       {showModal && (
         <div>
           <QuestionForm 
-            onClose={handleCloseModal} 
+            mainProduct={mainProduct}
+            handleCloseModal={handleCloseModal} 
             showModal={showModal}
             title={`About the ${mainProduct.name}`}
           />

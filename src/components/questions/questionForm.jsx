@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSlice';
 import { setQuestionId, setQuestionBody, setQuestionDate, setAskerName, setQuestionHelpfulness, setReported, setAnswers, setQuestionArr } from '../../store/questionsSlice';
+const axios = require('axios');
 
 
 
 
-const QuestionForm = ({ onClose, showModal, title, handleCloseModal}) => {
+const QuestionForm = ({ showModal, title, handleCloseModal, mainProduct}) => {
   const [question, setQuestion] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
@@ -34,18 +35,34 @@ const QuestionForm = ({ onClose, showModal, title, handleCloseModal}) => {
     e.preventDefault();
     console.log("WE ARE GETTING HERE")
 
+    let payload = { 
+      body: question,
+      name: nickname,
+      email: email,
+      product_id: mainProduct.name
+    };
+
+    console.log('payload====> ', payload);
+    axios.post('/qa/questions', payload)
+    .then((response) => {
+      console.log('Good post response=====>', response);
+    })
+    .catch((err) => {
+      console.log('err in post request: ', err); 
+    });
+    
     //reset
     setQuestion('');
     setNickname('');
     setEmail('');
     // setIsOpen(false);
-    onClose();
+    handleCloseModal();
   };
 
   return (
     <div>
         {showModal && (
-          <>
+          <form onSubmit={handleSubmit}>
             <div>
               <label>Ask Your Question</label>
               <p>{title}</p>
@@ -69,9 +86,9 @@ const QuestionForm = ({ onClose, showModal, title, handleCloseModal}) => {
                   placeholder="Example: jackson11!"
                 />
 
-                <p>For privacy reasons, do not use your full name or email address.</p>
               </label>
               </p>
+                <p>For privacy reasons, do not use your full name or email address.</p>
               <label>
                 Your email:
                 <input
@@ -84,7 +101,7 @@ const QuestionForm = ({ onClose, showModal, title, handleCloseModal}) => {
               </label>
               <button type="submit" onClick={(e) => {handleSubmit(e); handleCloseModal();}}>Submit Question</button>
               </div>
-          </>
+          </form>
         )}
 
     </div>
