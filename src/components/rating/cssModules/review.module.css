@@ -44,13 +44,6 @@
 	padding: 20px 10px 20px 20px;
 	font-weight: bold;
 }
-.review-bar {
-	height: 1px;
-	border-radius: 10px;
-	background-color: rgb(68, 68, 68);
-	margin-top: 5px;
-}
-
 /* Helpful */
 .review-helpful, .review-helpful button {
 	font-size: 15px;

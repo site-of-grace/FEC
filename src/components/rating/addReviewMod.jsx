@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import {useSelector} from 'react-redux';
 
+import styles from './cssModules/addReview.module.css';
+
 const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 	const mainProduct = useSelector((state) => state.overview.mainProduct);
 	const metaData = useSelector((state) => state.rating.ratingMeta);
@@ -30,9 +32,9 @@ const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
 			if (!clicked || i > id) { //Highlight to hovered
-				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id, true);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/largeUnfilledStar.png'}></img>);
+				newStars.push(<img className={`${styles['review-star']}`} onMouseEnter={(e) => starHighlight(e.target.id)} onMouseLeave={starsEmpty} onClick={(e) => {starHighlight(e.target.id, true);}} id={i} key={i} src={i <= id ? './icons/glowingStar.png' : './icons/largeUnfilledStar.png'}></img>);
 			} else { //Highlight to clicked
-				newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} key={i} id={i} src={'./icons/glowingStar.png'}></img>);
+				newStars.push(<img className={`${styles['review-star']}`} onMouseEnter={(e) => starHighlight(e.target.id)} key={i} id={i} src={'./icons/glowingStar.png'}></img>);
 			}
 		}
 		setStars(newStars);
@@ -43,7 +45,7 @@ const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 		setUserRating(0);
 		var newStars = [];
 		for (var i = 1; i <= 5; i++) {
-			newStars.push(<img className='review-star' onMouseEnter={(e) => starHighlight(e.target.id)} id={i} key={i} src='./icons/largeUnfilledStar.png'></img>);
+			newStars.push(<img className={`${styles['review-star']}`} onMouseEnter={(e) => starHighlight(e.target.id)} id={i} key={i} src='./icons/largeUnfilledStar.png'></img>);
 		}
 		setStars(newStars);
 	};
@@ -58,12 +60,12 @@ const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 			var choices = characteristics[attribute];
 			var key = 0;
 			attributes.push(
-				<div className ='attributeSelections'>
+				<div className ={`${styles['attributeSelections']}`}>
 					<h3>{attribute}</h3>
 					{choices.map((choice, idx) => {
 						key++;
 						return (
-						<div className='attributeSelection' key={key*123}>
+						<div className ={`${styles['attributeSelection']}`} key={key*123}>
 							<div>{choice}</div>
 							<input type='radio' id={choice + attribute} name={attribute} value={idx+1}/>
 							<label htmlFor={choice + attribute}/>
@@ -208,17 +210,17 @@ const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 	};
 
 	return(
-		<div id='addReviewMod'>
+		<div id={`${styles['addReviewMod']}`}>
 			<h1>Write Your Review</h1>
 			<h2>About the {mainProduct.name}</h2>
 			<div className='review-bar'/>
 			<h3>Overall Rating</h3>
 			{stars}
-			<div id='userRatingChoice'>{ratings[userRating]}</div>
+			<div id={`${styles['userRatingChoice']}`}>{ratings[userRating]}</div>
 			<div className='review-bar'/>
 			<form id='rating-input'>
 				<h3>Recommended?</h3>
-				<div className='coolRadio'>
+				<div className ={`${styles['coolRadio']}`}>
 					No
 					<input type='radio' id='rating-input-no' name='recommended' value='no'/>
 					<label style={{'marginRight': '10px'}} htmlFor='rating-input-no'/>
@@ -236,7 +238,7 @@ const AddReviewMod = ({setUploadInProgress, uploadInProgress}) => {
 				<textarea name="body" rows='16' cols='70' maxLength="1000" placeholder="Why did you like the product or not?" onChange={handleTextInput} required/>
 				{charLeft > 0 ? <div>Minimum required characters left [{charLeft}]</div> : <div>Minimum Reached</div>}
 				<div className='review-bar'/>
-				<div id="rating-imageUpload">
+				<div id={`${styles['rating-imageUpload']}`}>
 					<h3>Upload your photos</h3>
 					<div style={{'color': 'red'}}>{imageError}</div>
 					{curImgs.length < 5 ? <input style={{'marginBottom': '20px', 'marginLeft': '240px'}} type="file" accept=".png, .jpg, .jpeg" onChange={handleUpload}/> : null}
