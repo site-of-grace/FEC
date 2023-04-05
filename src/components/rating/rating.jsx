@@ -18,7 +18,8 @@ const Rating = () => {
 
   const dispatch = useDispatch();
   //current product ids = 71697, 71698, 71699, 71700, 71701
-  const mainProduct  = useSelector((state) => state.overview.mainProduct);
+  // const mainProduct  = useSelector((state) => state.overview.mainProduct); fix --------------------------
+  const mainProduct = {id: '71701'}
 
   var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
     var helpfulnessWeight = 4; //Make helpfulness a bit more important
