@@ -97,7 +97,7 @@ const ExpandedView = (props) => {
       <div id='Small_Gallery_Container'>
         {mainPhotos.map((photos) => {
           return (<div className='Small_Thumbnail_Container'>
-            <img className='Small_Thumbnail' src={photos.url} onClick={() => {showSelected(photos.url)}}></img>
+            <img className='Small_Thumbnail' src={photos.thumbnail_url} onClick={() => {showSelected(photos.url)}}></img>
             <div id={photos.url} className='hide selectColor' ></div>
           </div>);
         })}
@@ -125,7 +125,7 @@ const ExpandedView = (props) => {
     </div>
 
       <div id='closeButton' className={(zoom) ? 'hide' : 'show'}>
-        <div onClick={() => {props.setExpandedView(false)}}><GrClose size={20} /></div>
+        <div onClick={() => {props.setExpandedView(false); props.setResetMain(true); }}><GrClose size={20} /></div>
       </div>
     </div>
   );

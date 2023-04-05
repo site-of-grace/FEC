@@ -14,6 +14,7 @@ const StyleSelector = (props) => {
 
   //This sets the checkMark Variable automatically at render w/ the first thumbnail on list
   useEffect(() => {
+    console.log('----> styles', styles);
     if (styles.results === undefined) {
       dispatch(setSelectedstyle({}));
     } else {
@@ -67,12 +68,13 @@ const StyleSelector = (props) => {
     }
 
     //Change the redux state so that the big display photo displays all the photos from the selected style
+    console.log('======>', data.photos);
     dispatch(setMainPhotos(data.photos));
   };
 
   return (Object.keys(styles).length) ? (
     <div id='styleContainer'>
-      <span><b>{'STYLE>  '}</b></span>
+      <span onClick={() => {console.log(mainProduct)}}><b>{'STYLE>  '}</b></span>
        <span id='productStyle'>{styles.results[0].name}</span>
       <div>
         <ul id='styleSelector'>
