@@ -28,7 +28,7 @@ const AtrributeBreakdown = () => {
 				if (i === 0) {
 					textStyle = {};
 				} else if (i === 2) {
-					textStyle = {'float': 'right', 'transform': 'translateX(-5px)'};
+					textStyle = {'transform': 'translateX(40px)'};
 				}
 				barDivs.push(<div className={`${styles['rating-attrBarContainer']}`} key={i*10} >
 					<div className={`${styles['rating-attrBar3']}`}></div>
