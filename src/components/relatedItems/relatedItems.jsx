@@ -3,6 +3,7 @@ import manualSWR, { fetcher } from '../../utils/fetchers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOutfits } from '../../store/overviewSlice';
 import { setProducts, addToCache, reloadCache } from '../../store/productSlice';
+import useClickTracking from '../../hooks/useClickTracking';
 import styles from './styles.module.css';
 import uniq from 'lodash/uniq';
 const ActionRows = lazy(() => import('./ActionRows.jsx'));
@@ -12,7 +13,8 @@ const RelatedItems = () => {
   const { products, cache, cacheArray } = useSelector(state => state.products);
   const { myOutfit, mainProduct, prevProduct } = useSelector(state => state.overview);
   const [showRelated, setShowRelated] = useState(false);
-  const relatedRef = useRef();
+  // const relatedRef = useRef();
+  const relatedRef = useClickTracking();
   const onSuccess = data => {
     console.log('related api call res', data);
     let products = data;
@@ -128,7 +130,7 @@ const RelatedItems = () => {
   return (
     <>
       <h1 className={styles.title}>RELATED ITEMS</h1>
-      <div ref={relatedRef}>
+      <div ref={relatedRef} data-widget="RelatedItems">
         {showRelated && (
           <Suspense fallback={<div>Loading...</div>}>
             <ActionRows products={products} />

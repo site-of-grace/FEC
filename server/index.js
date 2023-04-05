@@ -10,6 +10,7 @@ app.use(express.raw());
 app.use(express.json());
 
 // Routes
+app.use('/interaction', routes.interaction);
 app.use('/related', routes.related);
 app.use('/rating', routes.rating);
 
@@ -123,6 +124,27 @@ app.get('/questions', (req, res) => {
         res.send(error);
       });
     });
+    
+    
+
+app.post('/qa/questions', (req, res) => {
+  const { body, name, email, product_id } = req.body;
+  // console.log('body, name, email, product_id, config====>  ', body, name, email, product_id, config);
+  // console.log('req.body===', req.body);
+  axios.post(`${api}/qa/questions`, { body, name, email, product_id }, config)
+  .then((data) => {
+    if (!data) {
+      throw data;
+    }
+    console.log('OK request on questions route. data.data===> ', data.data);
+    res.sendStatus(201);
+  })
+  .catch((error) => {
+    // console.log('error on questions route ', error);
+    res.send(error);
+  });
+});
+
 // ===================================================
 
 
