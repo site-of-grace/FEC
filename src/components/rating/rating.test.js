@@ -17,36 +17,36 @@ const mockStore = configureStore([]);
 
 describe('Rating Beginning Elements', () => {
   test('renders the main div', () => {
-    render(<Rating />);
-    const container = document.querySelector('#rating-main');
+    const {getByTestId} = render(<Rating />);
+    const container = getByTestId('rating-main');
     expect(container).toBeInTheDocument();
   });
 
   test('renders Breakdown elements at start', () => {
-    render(<Rating />);
-    const container = document.getElementById('rating-breakdown');
+    const {getByTestId} = render(<Rating />);
+    const container = getByTestId('rating-breakdown');
     expect(container).toBeInTheDocument();
     const expectedChildren = ['rating-breakdown-title', 'rating-average', 'rating-starsAverage', 'rating-recommended', 'rating-attrBreakdown'];
     expectedChildren.forEach((childId) => {
-      var element = document.getElementById(childId);
+      var element = getByTestId(childId);
       expect(container.children).toContain(element);
     });
   });
 
   test('renders Review List elements at start', () => {
-    render(<Rating />);
-    const container = document.getElementById('review-list-section');
+    const {getByTestId} = render(<Rating />);
+    const container = getByTestId('review-list-section');
     expect(container).toBeInTheDocument();
 
-    const sortOptions = document.getElementById('sort-bar');
+    const sortOptions = getByTestId('sort-bar');
     expect(container.children).toContain(sortOptions);
-    const selector = document.getElementById('sort-options');
+    const selector = getByTestId('sort-options');
     expect(sortOptions.children).toContain(selector);
 
-    const list = document.getElementById('review-list');
+    const list = getByTestId('review-list');
     expect(container.children).toContain(list);
 
-    const addReview = document.getElementById('rating-add');
+    const addReview = getByTestId('rating-add');
     expect(list.children).toContain(addReview);
   });
 });
@@ -56,17 +56,17 @@ describe('Rating Beginning Elements', () => {
 
       const store = mockStore({ rating: { reviews: fakeReviewData } });
 
-      render(
+      const {getAllByTestId} = render(
         <Provider store={store}>
           <ReviewList />
         </Provider>
       );
-    var review = document.getElementsByClassName('review')[0];
+    var review = getAllByTestId('review')[0];
     expect(review).toBeInTheDocument();
     var expectedClasses = ['review-stars', 'review-date-name', 'review-summary', 'review-body', 'review-photo', 'review-response', 'review-helpful', 'review-star'];
 
     expectedClasses.forEach((curClass) => {
-      const element = document.getElementsByClassName(curClass)[0];
+      const element = getAllByTestId(curClass)[0];
       expect(element).toBeInTheDocument();
     });
   });
@@ -82,14 +82,14 @@ describe('Breakdown', () => {
     };
     const store = mockStore({ rating:  storeObj });
 
-    render(
+    const {getByTestId} = render(
       <Provider store={store}>
         <Breakdown />
       </Provider>
     );
 
-  expect(document.getElementById('rating-average').innerHTML).toBe('3.3');
-  expect(document.getElementById('rating-recommended').innerHTML).toBe('88% of reviews recommended this product');
+  expect(getByTestId('rating-average').innerHTML).toBe('3.3');
+  expect(getByTestId('rating-recommended').innerHTML).toBe('88% of reviews recommended this product');
 
   var starsChildren = document.getElementsByClassName('stars-container')[0].children;
   expect(starsChildren.length).toBe(5);

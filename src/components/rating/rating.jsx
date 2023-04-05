@@ -97,10 +97,10 @@ const Rating = () => {
   useEffect(() => { if (id) { fetchMetaData(id);} }, [id]);
 
   return (
-    <div className='widget' id={`${styles.rating}`}>
-      {addReview ? <div  id={`${styles['rating-overlay']}`} onClick={() => setAddReview(false)}></div> : null}
-      {uploadInProgress ? <img className={`${styles['loading-img']}`} src='./icons/loading.gif' /> : null}
-      <div id={`${styles['rating-main']}`}>
+    <div className='widget' id={`${styles.rating}`} data-testid='rating'>
+      {addReview ? <div  id={`${styles['rating-overlay']}`} data-testid='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
+      {uploadInProgress ? <img className={`${styles['loading-img']}`} data-testid='loading-img' src='./icons/loading.gif' /> : null}
+      <div id={`${styles['rating-main']}`} data-testid='rating-main'>
         <Breakdown />
         <ReviewList setAddReview={setAddReview}/>
         {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}
