@@ -4,6 +4,8 @@ import {useSelector } from 'react-redux';
 import SortOptions from './sortOptions.jsx';
 
 import Review from './review.jsx';
+
+import styles from './reviews.module.css';
 //Only displays 2 at a time
 const ReviewList = ({setAddReview}) => {
 	const reviews = useSelector((state) => state.rating.reviews);
@@ -23,12 +25,12 @@ const ReviewList = ({setAddReview}) => {
 	useEffect(() => {setCurReviews([reviews[0], reviews[1]]); setCurReviewPos(0);}, [reviews]); //On reviews change reset curReviews stuff
 
 	return (
-		<div id='review-list-section'>
+		<div id={`${styles['review-list-section']}`}>
 			<SortOptions />
-		<div id='review-list'>
-			{selectedImg ? <div id='review-imgModel'> {/*If theres a selectedImg url*/}
-				<img className={'review-selectedImg'} src={selectedImg}></img>
-				<div id='rating-overlay' onClick={() => setSelectedImg(false)}></div>
+		<div id={`${styles['review-list']}`}>
+			{selectedImg ? <div id={`${styles['review-imgModel']}`}> {/*If theres a selectedImg url*/}
+				<img src={selectedImg}></img>
+				<div id={styles['image-overlay']} onClick={() => setSelectedImg(false)}></div>
 			</div> : null}
 
 			{!filterRating ? curReviews.map((curReview) => {
@@ -45,8 +47,8 @@ const ReviewList = ({setAddReview}) => {
 			}) : null}
 
 			{/*If more reviews left show expand button*/}
-			{reviews[curReviewPos + 2] && !filterRating ? <button id='rating-expand' className='rating-button' onClick={handleExpand}>MORE REVIEWS</button> : null}
-			<button id='rating-add' className='rating-button' onClick={() => setAddReview(true)}>ADD A REVIEW +</button>
+			{reviews[curReviewPos + 2] && !filterRating ? <button className={`${styles['rating-button']}`} onClick={handleExpand}>MORE REVIEWS</button> : null}
+			<button className={`${styles['rating-button']}`} onClick={() => setAddReview(true)}>ADD A REVIEW +</button>
 		</div>
 		</div>
 	);

@@ -620,7 +620,7 @@ li.carousel-card > img {
 
 
 /*======================= REVIEW CSS START ===========================*/
-  #rating {
+  /* #rating {
     min-height: 700px;
   }
   #rating-main {
@@ -628,18 +628,18 @@ li.carousel-card > img {
     flex-flow: row wrap;
     flex: 1 100%;
     justify-content: center;
-  }
+  } */
   /* Review list === */
-  #review-list-section {
+  /* #review-list-section {
     min-width: 400px;
     flex: 3;
-  }
-  #review-list {
+  } */
+  /* #review-list {
     overflow-y: scroll;
     max-height: 550px;
     width: 80%;
     margin: auto auto;
-  }
+  } */
   .rating-button {
     color: rgb(41, 41, 41);
     background-color: white;
@@ -728,7 +728,7 @@ li.carousel-card > img {
   /* -- */
 
   /* Popup image model */
-  #review-imgModel {
+  /* #review-imgModel {
     position: fixed;
     margin: 0 auto;
     top: 15%;
@@ -747,7 +747,7 @@ li.carousel-card > img {
     border: 2px solid black;
     z-index: 3;
     margin: auto auto;
-  }
+  } */
   /* -- */
 
   /*Sort options*/
@@ -942,16 +942,18 @@ li.carousel-card > img {
     border: 2px solid rgb(199, 199, 199);
     border-radius: 10px;
   }
-  #rating-overlay {
+  /* #rating-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.396);/* Black with opacity */
+    background-color: rgba(0, 0, 0, 0.396);
     z-index: 1;
     cursor: auto;
   }
+  */
+
   #rating-input {
     color: rgb(68, 68, 68);
   }
@@ -968,14 +970,14 @@ li.carousel-card > img {
     height: 70px;
     object-fit: cover;
   }
-  .loading-img {
+  /* .loading-img {
     z-index: 10;
     position: fixed;
     left: 50%;
     transform: translate(-50%);
     top: 10%;
     width: 100px;
-  }
+  } */
 /*======================= REVIEW CSS END ===========================*/
 
 /*======================= Q&A CSS START ===========================*/
