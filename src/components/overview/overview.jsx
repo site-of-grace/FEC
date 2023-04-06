@@ -4,15 +4,18 @@ import { setMainProduct, setStyles, setMainPhotos } from '../../store/overviewSl
 import ProductInformation from './productInformation.jsx';
 import ImageGallery from './image.jsx';
 import ExpandedView from './expandedView.jsx';
+import useClickTracking from '../../hooks/useClickTracking';
 var axios = require('axios');
 
-const Overview = () => {
+const Overview = (props) => {
   const { mainProduct } = useSelector(state => state.overview); // store.slice
   const dispatch = useDispatch();
 
   const [expandedView, setExpandedView] = useState(false);
   const [expandedMain, setExpandedMain] = useState('');
   const [resetMain, setResetMain] = useState(false);
+  const overviewRef = useClickTracking();
+
 
   useEffect(() => {
     async function fetchData() {
@@ -72,7 +75,7 @@ const Overview = () => {
   }, [id]);
 
   return (
-    <div>
+    <div ref={overviewRef} data-widget='Overview' id='overviewMain'>
       <div id="overviewWidget">
         {!expandedView ? (
           <div id="overview2-3">
@@ -89,7 +92,7 @@ const Overview = () => {
         )}
         {!expandedView ? (
           <div id="overview1-3">
-            <ProductInformation />
+            <ProductInformation setCart={props.setCart} cart={props.cart}/>
           </div>
         ) : (
           ''

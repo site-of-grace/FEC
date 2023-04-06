@@ -5,9 +5,19 @@ const routes = require('./routes');
 const app = express();
 const port = process.env.PORT || 3000;
 const { api, initialProduct, config } = require('./config.js');
+const compression = require('compression');
 app.use(express.static(__dirname + '/../public/dist'));
 app.use(express.raw());
 app.use(express.json());
+
+
+app.use(compression());
+app.use(express.static('public', {
+  setHeaders: function (res, path, stat) {
+    res.set('Content-Encoding', 'gzip');
+  }
+}));
+
 
 // Routes
 app.use('/interaction', routes.interaction);

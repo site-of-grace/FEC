@@ -5,9 +5,18 @@ var SRC_DIR = path.join(__dirname, '/src');
 var DIST_DIR = path.join(__dirname, '/public/dist');
 const port = process.env.PORT || 3000;
 const livePort = process.env.LIVE_PORT || 5000;
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   mode: 'development',
+  plugins: [
+    new CompressionWebpackPlugin({
+      algorithm: 'gzip',
+      test: /\.jsx$|\.css$/, // Compress only JS and CSS files
+      threshold: 10240, // Only compress files larger than 10 KB
+      minRatio: 0.8, // Only compress files if the compression ratio is at least 80%
+    }),
+  ],
   devServer: {
     static: './public/dist',
     hot: true,
