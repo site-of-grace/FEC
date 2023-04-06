@@ -98,7 +98,7 @@ const ExpandedView = (props) => {
         {mainPhotos.map((photos) => {
           return (<div className='Small_Thumbnail_Container'>
             <img className='Small_Thumbnail' src={photos.thumbnail_url} onClick={() => {showSelected(photos.url)}}></img>
-            <div id={photos.url} className='hide selectColor' ></div>
+            <div id={photos.url} className='hide selectColor'></div>
           </div>);
         })}
       </div>

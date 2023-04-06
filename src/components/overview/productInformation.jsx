@@ -32,7 +32,7 @@ const ProductInformation = (props) => {
       </div>
         <StyleSelector />
         <div id='Overview_Cart'>
-          <Cart />
+          <Cart setCart={props.setCart} cart={props.cart}/>
         </div>
     </div>
   );

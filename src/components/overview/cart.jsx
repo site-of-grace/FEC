@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMainProduct, setStyles, setMainPhotos, setSelectedstyle, setMyOutfit } from '../../store/overviewSlice';
 var axios = require('axios');
 
-const Cart = () => {
+const Cart = (props) => {
   const { mainProduct, styles, mainPhotos, selectedStyle, myOutfit } = useSelector((state) => state.overview); // store.slice
   const dispatch = useDispatch();
 
@@ -121,6 +121,9 @@ const Cart = () => {
       document.getElementById('selectSizeWarning').classList.add('showWarning');
     } else {
       console.log('SKUNUMBER', size, 'QUANTITY', quantity);
+      var newQuantity = (props.cart + Number(quantity));
+      props.setCart(newQuantity);
+
       axios.post('/cart', {sku_id: Number(size), count: quantity.toString()})
         .then((data) => {
          if (!data) {
