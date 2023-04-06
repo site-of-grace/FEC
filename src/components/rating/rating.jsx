@@ -10,6 +10,8 @@ import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setReviewsHelpful, setAverage, setRatingMetaTotal} from '../../store/ratingSlice';
 
+import useClickTracking from '../../hooks/useClickTracking';
+
 import orderBy from 'lodash/orderBy';
 
 import styles from './cssModules/rating.module.css';
@@ -23,7 +25,7 @@ const Rating = () => {
   const [addReview, setAddReview] = useState(false);
   const [renderComponent, setRenderComponent] = useState(false);
 
-  const ratingRef = useRef(null); // Ref for component
+  const ratingRef = useClickTracking();
   const observerRef = useRef(null); // Ref for the Intersection Observer
 
   var runObserver = (metaData, product_id) => {
@@ -133,7 +135,7 @@ const Rating = () => {
   useEffect(() => { if (id) { fetchMetaData(id);}}, [id]);
 
   return (
-    <div className='widget' id={`${styles.rating}`} ref={ratingRef}>
+    <div className='widget' id={`${styles.rating}`} ref={ratingRef} data-widget="Rating">
       {renderComponent ?
       <>
         {addReview ? <div  id={`${styles['rating-overlay']}`} onClick={() => setAddReview(false)}></div> : null}
