@@ -29,9 +29,9 @@ var SortOptions = function() {
 	};
 
 	return(
-		<div id='sort-bar'>
+		<div id='sort-bar' data-testid='sort-bar'>
 			<div>{rating.reviews.length} reviews, sorted by</div>
-			<select onChange={handleSort} name='sort-options' id='sort-options'>
+			<select onChange={handleSort} name='sort-options' id='sort-options' data-testid='sort-options'>
 			<option value='relevant'>relevance</option>
 			<option value='helpful'>helpful</option>
 			<option value='recent'>recent</option>

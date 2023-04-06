@@ -12,6 +12,8 @@ import {setRatingMeta, setReviews, setReviewsRelevant, setReviewsRecent, setRevi
 
 import orderBy from 'lodash/orderBy';
 
+import styles from './cssModules/rating.module.css';
+
 const Rating = () => {
 	const [uploadInProgress, setUploadInProgress] = useState(false);
   const [addReview, setAddReview] = useState(false);
@@ -55,6 +57,7 @@ const Rating = () => {
 
 
   var fetchReviews = (metaData, product_id) => {
+    console.log(metaData, 'Meta data');
     var options = {params: {product_id, metaData}};
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
@@ -94,11 +97,10 @@ const Rating = () => {
   useEffect(() => { if (id) { fetchMetaData(id);} }, [id]);
 
   return (
-    <div className='widget' id='rating'>
-      {addReview ? <div id='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
-      {uploadInProgress ? <img className='loading-img' src='./icons/loading.gif' /> : null}
-      <h1 className='title' style={{'color': 'gold'}}>RATING</h1>
-      <div id='rating-main'>
+    <div className='widget' id={`${styles.rating}`} data-testid='rating'>
+      {addReview ? <div  id={`${styles['rating-overlay']}`} data-testid='rating-overlay' onClick={() => setAddReview(false)}></div> : null}
+      {uploadInProgress ? <img className={`${styles['loading-img']}`} data-testid='loading-img' src='./icons/loading.gif' /> : null}
+      <div id={`${styles['rating-main']}`} data-testid='rating-main'>
         <Breakdown />
         <ReviewList setAddReview={setAddReview}/>
         {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}

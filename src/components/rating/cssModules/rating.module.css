@@ -1,0 +1,28 @@
+#rating {
+	min-height: 700px;
+	border: none;
+}
+#rating-main {
+	display: flex;
+	flex-flow: row wrap;
+	flex: 1 100%;
+	justify-content: center;
+}
+#rating-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.396);/* Black with opacity */
+	z-index: 1;
+	cursor: auto;
+}
+.loading-img {
+	z-index: 10;
+	position: fixed;
+	left: 50%;
+	transform: translate(-50%);
+	top: 10%;
+	width: 100px;
+}
