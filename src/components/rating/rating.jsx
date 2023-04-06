@@ -61,7 +61,7 @@ const Rating = () => {
   //current product ids = 71697, 71698, 71699, 71700, 71701
   const mainProduct  = useSelector((state) => state.overview.mainProduct);
 
-  var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
+  const sortRelevant = (reviews, onStart = true) => { //Sorts the reviews considering helpful and date
     var helpfulnessWeight = 4; //Make helpfulness a bit more important
     for (var i = 1; i <= reviews.length; i++) {
       var dateScore = reviews.length - i;
@@ -69,7 +69,9 @@ const Rating = () => {
       reviews[i-1].score = dateScore + helpfulScore;
     }
     var relevantReviews = orderBy(reviews, 'score', 'desc');
-    dispatch(setReviewsRelevant(relevantReviews));
+    if (onStart) {
+      dispatch(setReviewsRelevant(relevantReviews));
+    }
     dispatch(setReviews(relevantReviews));
   };
 
@@ -142,7 +144,7 @@ const Rating = () => {
         {uploadInProgress ? <img className={`${styles['loading-img']}`} src='./icons/loading.gif' /> : null}
         <div id={`${styles['rating-main']}`}>
           <Breakdown />
-          <ReviewList setAddReview={setAddReview}/>
+          <ReviewList setAddReview={setAddReview} sortRelevant={sortRelevant}/>
           {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}
         </div>
       </>: null}

@@ -9,12 +9,14 @@ import styles from './cssModules/reviewsList.module.css';
 
 import SearchReviews from './searchReviews.jsx';
 //Only displays 2 at a time
-const ReviewList = ({setAddReview}) => {
+const ReviewList = ({setAddReview, sortRelevant}) => {
 	const reviews = useSelector((state) => state.rating.reviews);
 	const filterRating = useSelector((state) => state.rating.filterRating);
 	const [curReviews, setCurReviews] = useState([]);
 	const [curReviewPos, setCurReviewPos] = useState(0);
 	const [selectedImg, setSelectedImg] = useState(false);
+
+	const [search, setSearch] = useState(false);
 
 	//Adds next 2 reviews in reviews to curReviews
 	var handleExpand = () => {
@@ -28,8 +30,8 @@ const ReviewList = ({setAddReview}) => {
 
 	return (
 		<div id={`${styles['review-list-section']}`}>
-			<SearchReviews />
-			<SortOptions />
+			<SearchReviews setSearch={setSearch}/>
+			<SortOptions search={search} sortRelevant={sortRelevant}/>
 		<div id={`${styles['review-list']}`}>
 			{selectedImg ? <div id={`${styles['review-imgModel']}`}> {/*If theres a selectedImg url*/}
 				<img src={selectedImg}></img>

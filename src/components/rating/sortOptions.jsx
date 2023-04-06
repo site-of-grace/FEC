@@ -4,7 +4,7 @@ import {setReviewsHelpful, setReviews} from '../../store/ratingSlice';
 
 import orderBy from 'lodash/orderBy';
 
-var SortOptions = function() {
+var SortOptions = function({sortRelevant, search}) {
 	const dispatch = useDispatch();
 
 	const rating = useSelector((state) => state.rating); // review.slice
@@ -13,13 +13,24 @@ var SortOptions = function() {
 	const handleSort = (e) => {
 		var sortOption =  e.target.value;
 		if (sortOption === 'relevant') { //Already knows reviewsRelevant is filled
-			dispatch(setReviews(rating.reviewsRelevant));
+			if (!search) {
+				dispatch(setReviews(rating.reviewsRelevant));
+			} else {
+				sortRelevant(rating.reviews, false);
+			}
 		} else if (sortOption === 'recent') {
-			dispatch(setReviews(rating.reviewsRecent));
+			if (!search) {
+				dispatch(setReviews(rating.reviewsRecent));
+			} else {
+				var recentReviews = orderBy(rating.reviews, 'date', 'desc');
+				dispatch(setReviews(recentReviews));
+			}
 		} else {
-			if (rating.reviewsHelpful.length === 0 ) { //Checks if reviewsHelpful is filled
+			if (rating.reviewsHelpful.length === 0 || search) { //Checks if reviewsHelpful is filled or search
 				var helfpulReviews = orderBy(rating.reviews, 'helpfulness', 'desc');
-				dispatch(setReviewsHelpful(helfpulReviews));
+				if (!search) {
+					dispatch(setReviewsHelpful(helfpulReviews));
+				}
 				dispatch(setReviews(helfpulReviews));
 				console.log(helfpulReviews);
 			} else { //If filled skip sorting
