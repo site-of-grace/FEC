@@ -31,7 +31,7 @@ const AtrributeBreakdown = () => {
 					textStyle = {'transform': 'translateX(40px)'};
 				}
 				barDivs.push(<div className={`${styles['rating-attrBarContainer']}`} data-testid='rating-attrBarContainer' key={i*10} >
-					<div className={`${styles['rating-attrBar3']}`}></div>
+					<div className={`${styles['rating-attrBar3']}`} data-testid='rating-attrBar3'></div>
 					<div style={textStyle} className={`${styles['rating-attrBarText']}`} data-testid='rating-attrBarText'>{name[i]}</div>
 				</div>);
 			}
@@ -41,7 +41,7 @@ const AtrributeBreakdown = () => {
 			var marginLeft = endSize * ratingPercent; //Puts arrow in correct spot
 
 			attributeDivs.push(<div className={`${styles['rating-attrBarSection']}`} data-testid='rating-attrBarSection' key={attributes[key].id}>
-				<div style={{'fontSize': '10px', 'color': 'rgb(33, 33, 33)', 'transform': 'translateY(10px)'}}>{key}</div>
+				<div data-testid='rating-attrText' style={{'fontSize': '10px', 'color': 'rgb(33, 33, 33)', 'transform': 'translateY(10px)'}}>{key}</div>
 				<div className={`${styles['rating-attrArrow']}`} data-testid='rating-attrArrow' style={{'marginLeft': marginLeft}}>▼</div>
 				{barDivs}
 			</div>);

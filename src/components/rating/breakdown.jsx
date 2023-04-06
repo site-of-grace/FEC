@@ -70,7 +70,7 @@ const Breakdown = () => {
 			progressBars.push(
 				<div key={i * 10} className={`${styles['rating-progressBarSection']}`} data-testid='rating-progressBarSection'>
 					<div onClick={(e) => handleRatingSelection(e.target.innerHTML[0])} className={`${styles['rating-progressBar-rating']}`} data-testid='rating-progressBar-rating'>{i} stars</div>
-					<div className={`${styles['rating-progressBar']}`}>
+					<div className={`${styles['rating-progressBar']}`} data-testid='rating-progressBar'>
 						<div style={{'width': `${filledWidth}px`}} className={`${styles['rating-progressBarFill']}`} data-testid='rating-progressBarFill'></div>
 						<div style={{'width': `${width}px`}} className={`${styles['rating-progressBarEmpty']}`} data-testid='rating-progressBarEmpty'></div>
 					</div>
