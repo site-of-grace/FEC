@@ -21,8 +21,9 @@ const Overview = (props) => {
     async function fetchData() {
       try {
         const cachedMainProduct = JSON.parse(localStorage.getItem('mainProduct'));
-        if (cachedMainProduct) {
+        if (cachedMainProduct && cachedMainProduct.validPhotos) {
           dispatch(setMainProduct(cachedMainProduct));
+          return;
         }
 
         const productInfo = await axios.get('/initialRender');
