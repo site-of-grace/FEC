@@ -1,4 +1,9 @@
 export function findFirstThumbnail(styles) {
+
+  if (!styles) {
+    return '/icons/placeholder.svg';
+  }
+
   for (let i = 0; i < styles.length; i++) {
     const style = styles[i];
     if (style.photos[0].thumbnail_url !== null) {
