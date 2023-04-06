@@ -1,0 +1,84 @@
+.rating-progressBarSection {
+	margin-bottom: 15px;
+}
+.rating-progressBar-rating {
+	color: rgb(113, 113, 113);
+	font-size: 15px;
+	display: inline-block;
+	text-decoration: underline;
+	cursor: pointer;
+	user-select: none;
+}
+.rating-progressBar-rating:hover {
+	color:green;
+}
+.rating-progressBar {
+	display: inline-block;
+	margin-left: 5px;
+}
+.rating-progressBarEmpty {
+	height: 7px;
+	background-color: rgb(230, 230, 230);
+}
+.rating-progressBarFill {
+	height: 7px;
+	background-color: green;
+	transform: translateY(7px);
+}
+.rating-progressBar-ratingAmount{
+	float: right;
+	font-size: 10px;
+	font-weight: bold;
+	color: rgba(0, 0, 0, 0.224);
+}
+#rating-breakdown {
+	transform: translateY(-30px);
+	margin-left: 15%;
+}
+#rating-average {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 50px;
+	font-weight: 900;
+	color: rgb(85, 85, 85);
+	display: inline-block;
+}
+#rating-starsAverage {
+	transform: translateY(-20px);
+	display: inline-block;
+}
+#rating-recommended {
+	display: block;
+	font-size: 15px;
+	margin: 15px 0 15px 0;
+	color: rgb(147, 147, 147);
+}
+#rating-removeFilters{
+	text-decoration: underline;
+	cursor: pointer;
+	user-select: none;
+}
+#rating-removeFilters:hover {
+	color: green;
+}
+
+.rating-attrBarSection{
+	margin-top: 10px;
+}
+.rating-attrBarContainer{
+	display: inline-block;
+}
+.rating-attrBarText{
+	font-size: 9px;
+	color: rgb(33, 33, 33);
+}
+.rating-attrBar3{
+	margin-right: 5px;
+	height: 7px;
+	width: 80px;
+	background-color: rgb(230, 230, 230);
+}
+.rating-attrArrow{
+	transform: translate(-3px, 12px);
+	color: green;
+	font-size: 13px;
+}
