@@ -20,7 +20,9 @@ import 'intersection-observer';
 
 var runObserverOccured = false;
 
+var reviewsRendered = false;
 const Rating = () => {
+  localStorage.clear();
 	const [uploadInProgress, setUploadInProgress] = useState(false);
   const [addReview, setAddReview] = useState(false);
   const [renderComponent, setRenderComponent] = useState(false);
@@ -28,14 +30,14 @@ const Rating = () => {
   const ratingRef = useClickTracking();
   const observerRef = useRef(null); // Ref for the Intersection Observer
 
-  var runObserver = (metaData, product_id) => {
+  var runObserver = (metaData) => {
     runObserverOccured = true;
     observerRef.current = new IntersectionObserver( (entries) => { //Function runs when component is in view
       entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            console.log('Review list rendered!!!!!');
+            reviewsRendered = true;
             setRenderComponent(true);
-            fetchReviews(metaData, product_id);
+            fetchReviews(metaData);
             observerRef.current.unobserve(ratingRef.current);
           }
         });
@@ -60,7 +62,6 @@ const Rating = () => {
   const dispatch = useDispatch();
   //current product ids = 71697, 71698, 71699, 71700, 71701
   const mainProduct  = useSelector((state) => state.overview.mainProduct);
-
   const sortRelevant = (reviews, onStart = true) => { //Sorts the reviews considering helpful and date
     var helpfulnessWeight = 4; //Make helpfulness a bit more important
     for (var i = 1; i <= reviews.length; i++) {
@@ -96,8 +97,9 @@ const Rating = () => {
     dispatch(setAverage((Math.round(longAverage * 4) / 4)));
   };
 
+  var fetchReviews = (metaData) => {
+    var product_id = mainProduct.id;
 
-  var fetchReviews = (metaData, product_id) => {
     var options = {params: {product_id, metaData}};
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
@@ -124,8 +126,10 @@ const Rating = () => {
       calculateAverage(serverData.data);
 
       dispatch(setRatingMeta(serverData.data));
-
-      if (!runObserverOccured && id) {runObserver(serverData.data, product_id);} //Run the checker to see if we can render reviews
+      if (!runObserverOccured && id) {runObserver(serverData.data);} //Run the checker to see if we can render reviews
+      else if (reviewsRendered && id) {
+        fetchReviews(serverData.data);
+      }
     })
     .catch((err) => {
       console.log('Error from server ==> ', err);
