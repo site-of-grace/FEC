@@ -44,41 +44,6 @@ app.get('/productStyles', (req, res) => {
 
 
 
-  app.post('/cart', (req, res) => {
-
-
-    console.log(req.body, 'reqbody');
-
-    axios
-      .post(`${api}/cart`, req.body, config)
-      .then((data) => {
-        if (!data) {
-          throw data;
-        }
-
-          axios.get(`${api}/cart`, config)
-            .then((data) => {
-              console.log(data.data, '<------data');
-
-              if (!data.data) {
-                throw data.data;
-              }
-              res.status(200).send(data.data);
-            })
-            .catch((error) => {
-              console.log('ERROR in get', error);
-            });
-
-
-      })
-      .catch((error) => {
-        console.log('ERRORRRR', error);
-      });
-
-  });
-
-//
-
   app.get('/initialRender', (req, res) => {
   // shoes: 71701
   axios

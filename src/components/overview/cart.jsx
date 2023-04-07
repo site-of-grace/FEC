@@ -123,32 +123,9 @@ const Cart = (props) => {
       console.log('SKUNUMBER', size, 'QUANTITY', quantity);
       var newQuantity = (props.cart + Number(quantity));
       props.setCart(newQuantity);
-
-      axios.post('/cart', {sku_id: Number(size), count: quantity.toString()})
-        .then((data) => {
-         if (!data) {
-          throw data;
-         }
-         console.log('SUCCESSFUL POST REQUEST TO CART');
-         alert('SUCCESSFULLY ADDED TO CART');
-        })
-        .catch((error) => {
-          console.log('SUCCESSFUL POST REQUEST TO CART', error);
-        });
     }
   };
 
-  var testing = {
-    2580526: {quantity: 0, size: 'XS'},
-    2580527: {quantity: 0, size: 'S'},
-    2580528: {quantity: 0, size: 'M'},
-    2580529: {quantity: 0, size: 'L'},
-    2580530: {quantity: 0, size: 'XL'},
-    2580531: {quantity: 0, size: 'XXL'}
-  };
-
-  //testing to see if empty stock works
-  // dispatch(setSelectedstyle({skus: testing}))
 
   return (
     <div>
