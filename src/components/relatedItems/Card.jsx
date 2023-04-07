@@ -9,7 +9,7 @@ import { findFirstThumbnail } from '../../utils/traverse.js';
 
 const Card = forwardRef(({ product, outfit, addToOutfit }, ref) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [photo, setPhoto] = useState(findFirstThumbnail(product.styles));
+  const [photo, setPhoto] = useState(findFirstThumbnail(product?.styles));
   const { mainProduct } = useSelector(state => state.overview);
   const dispatch = useDispatch();
   const onClick = () => {
