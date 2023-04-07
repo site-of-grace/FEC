@@ -18,8 +18,6 @@ import styles from './cssModules/rating.module.css';
 
 import 'intersection-observer';
 
-var runObserverOccured = false;
-
 const Rating = ({test}) => {
 	const [uploadInProgress, setUploadInProgress] = useState(false);
   const [addReview, setAddReview] = useState(false);
@@ -28,19 +26,18 @@ const Rating = ({test}) => {
   const ratingRef = useClickTracking();
   const observerRef = useRef(null); // Ref for the Intersection Observer
 
-  var runObserver = (metaData, product_id) => {
-    runObserverOccured = true;
+  var runObserver = (metaData) => {
     observerRef.current = new IntersectionObserver( (entries) => { //Function runs when component is in view
       entries.forEach((entry) => {
           if (entry.isIntersecting) {
             console.log('Review list rendered!!!!!');
             setRenderComponent(true);
-            fetchReviews(metaData, product_id);
+            fetchReviews(metaData);
             observerRef.current.unobserve(ratingRef.current);
           }
         });
       }, {
-        threshold: .6
+        threshold: .1
       });
       if (ratingRef.current) {
         observerRef.current.observe(ratingRef.current);
@@ -52,12 +49,6 @@ const Rating = ({test}) => {
     if (test) { //Render component immidietly if in testing mode
       setRenderComponent(true);
     }
-    // Cleanup function
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
   }, []);
 
   const dispatch = useDispatch();
@@ -98,8 +89,8 @@ const Rating = ({test}) => {
   };
 
 
-  var fetchReviews = (metaData, product_id) => {
-    console.log(metaData, 'Meta data');
+  var fetchReviews = (metaData) => {
+    var product_id = mainProduct.id;
     var options = {params: {product_id, metaData}};
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
@@ -127,7 +118,11 @@ const Rating = ({test}) => {
 
       dispatch(setRatingMeta(serverData.data));
 
-      if (!runObserverOccured && id) {runObserver(serverData.data, product_id);} //Run the checker to see if we can render reviews
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+
+     runObserver(serverData.data);
     })
     .catch((err) => {
       console.log('Error from server ==> ', err);
@@ -138,7 +133,7 @@ const Rating = ({test}) => {
 
   useEffect(() => { if (id) { fetchMetaData(id);}}, [id]);
   return (
-    <div className='widget' id={`${styles.rating}`} ref={ratingRef} data-widget="Rating" >
+    <div id='Rating' className={`${styles.rating}`} ref={ratingRef} data-widget="Rating">
       {renderComponent ?
       <>
       {addReview ? <div  id={`${styles['rating-overlay']}`} onClick={() => setAddReview(false)} data-testid='rating-overlay'></div> : null}
