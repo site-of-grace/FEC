@@ -1,12 +1,12 @@
 # Grace Outfitters
 
-![demo](https://user-images.githubusercontent.com/110412045/230535719-953d6827-dd61-45b9-be81-a5cb264e54e4.gif)
-
 ![GitHub top language](https://img.shields.io/github/languages/top/site-of-grace/FEC?style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/site-of-grace/FEC?style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues/site-of-grace/FEC?style=flat-square)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/site-of-grace/FEC?style=flat-square)
 ![GitHub contributors](https://img.shields.io/github/contributors/site-of-grace/FEC?style=flat-square)
+
+![demo](https://user-images.githubusercontent.com/110412045/230535719-953d6827-dd61-45b9-be81-a5cb264e54e4.gif)
 
 Grace Outfitters is a web app displaying relevant information for a single product in the catalog of an online retailer. It is organized by products, which can have many sizes and styles that result in unique SKUs (stock keeping units). The product detail page presents items at the product level and allows further breakdown by style or size within the page.
 
