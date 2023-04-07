@@ -10,7 +10,7 @@ const ProductInformation = (props) => {
 
   const { mainProduct, styles, mainPhotos, products } = useSelector((state) => state.overview); // store.slice
 
-  const { average, ratingMeta, reviews } = useSelector((state) => state.rating); // store.slice
+  const { average, ratingMeta, reviews, ratingMetaTotal } = useSelector((state) => state.rating); // store.slice
   const dispatch = useDispatch();
 
 
@@ -25,7 +25,7 @@ const ProductInformation = (props) => {
     <div id='productInformation'>
       <div id='Overview-Rating-Review'>
         <div id='Overview-Rating' onClick={() => {console.log(reviews)}}>{Stars({number: average})}</div>
-        <div id='Overview-Review'>{(average !== 0) ? <a href='#rating-main'>Read all&nbsp;{reviews.length}&nbsp;reviews</a> : ''}</div>
+        <div id='Overview-Review'>{(average !== 0) ? <a href='#Rating'>Read all&nbsp;{ratingMetaTotal}&nbsp;reviews</a> : ''}</div>
       </div>
       <div id='Overview-Product-Info'>
         <h3 style={{color: 'grey', 'margin-bottom': '-10px'}}>{mainProduct.category}</h3>
