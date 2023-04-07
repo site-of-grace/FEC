@@ -14,13 +14,25 @@ Grace Outfitters is a web app displaying relevant information for a single produ
 
 Grace Outfitters is composed of four modules: Product Overview, Ratings & Reviews, Questions & Answers, and Related Items & Outfit Creation. Each module displays information related to the product being viewed and provides functionality for users to interact with the product.
 
+## Preview
+
+```
+![Product Overview Example](product-overview.png)
+
+![Ratings & Reviews Example](ratings-reviews.png)
+
+![Questions & Answers Example](questions-answers.png)
+
+![Related Items & Outfit Creation Example](related-items.png)
+```
+
 ## Table of Contents
 
+- [Preview](#preview)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Examples](#examples)
 - [Status](#status)
 - [License](#license)
 - [Contact](#contact)
@@ -49,15 +61,16 @@ To install and run Grace Outfitters locally, follow these steps:
    ```
 2. Navigate to the root directory of the project.
    ```
-   cd project-atelier
+   cd FEC
    ```
 3. Install the dependencies with npm.
    ```
    npm install
    ```
-4. Start the server with npm.
+4. Build the Frontend and Serve with npm.
    ```
-   npm start
+   npm run build
+   npm run start
    ```
 5. Open your browser and go to http://localhost:3000 to view the app.
 
@@ -84,19 +97,6 @@ Grace Outfitters has many features and functionalities that enhance the user exp
 - Carousel component that displays related products and outfit items in a scrollable list
 - Comparison table that shows the differences and similarities between two products
 
-## Examples
-
-Here are some examples of how Grace Outfitters looks like and how users can interact with it:
-
-```
-![Product Overview Example](product-overview.png)
-
-![Ratings & Reviews Example](ratings-reviews.png)
-
-![Questions & Answers Example](questions-answers.png)
-
-![Related Items & Outfit Creation Example](related-items.png)
-```
 
 ## Status
 
