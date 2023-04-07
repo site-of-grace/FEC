@@ -68,13 +68,13 @@ const Breakdown = () => {
 			}
 			var filledWidth = Math.round(width*ratingPercent);
 			progressBars.push(
-				<div key={i * 10} className={`${styles['rating-progressBarSection']}`}>
-					<div onClick={(e) => handleRatingSelection(e.target.innerHTML[0])} className={`${styles['rating-progressBar-rating']}`}>{i} stars</div>
-					<div className={`${styles['rating-progressBar']}`}>
-						<div style={{'width': `${filledWidth}px`}} className={`${styles['rating-progressBarFill']}`}></div>
-						<div style={{'width': `${width}px`}} className={`${styles['rating-progressBarEmpty']}`}></div>
+				<div key={i * 10} className={`${styles['rating-progressBarSection']}`} data-testid='rating-progressBarSection'>
+					<div onClick={(e) => handleRatingSelection(e.target.innerHTML[0])} className={`${styles['rating-progressBar-rating']}`} data-testid='rating-progressBar-rating'>{i} stars</div>
+					<div className={`${styles['rating-progressBar']}`} data-testid='rating-progressBar'>
+						<div style={{'width': `${filledWidth}px`}} className={`${styles['rating-progressBarFill']}`} data-testid='rating-progressBarFill'></div>
+						<div style={{'width': `${width}px`}} className={`${styles['rating-progressBarEmpty']}`} data-testid='rating-progressBarEmpty'></div>
 					</div>
-					<div className={`${styles['rating-progressBar-ratingAmount']}`}>{metaData.ratings[i]}</div>
+					<div className={`${styles['rating-progressBar-ratingAmount']}`} data-testid='rating-progressBar-ratingAmount'>{metaData.ratings[i]}</div>
 					<div></div>
 				</div>
 			);
@@ -82,13 +82,13 @@ const Breakdown = () => {
 	}
 
 	return (
-		<div id={`${styles['rating-breakdown']}`}>
-			<div id={`${styles['rating-breakdown-title']}`}>RATINGS & REVIEWS</div>
-			<div id={`${styles['rating-average']}`}>{Math.round(averageRating*10)/10}</div> {/*Rounds to nearest single decimal*/}
-			<div id={`${styles['rating-starsAverage']}`}>{starsDiv}</div>
-			<div id={`${styles['rating-recommended']}`}>{percentRecommended}% of reviews recommended this product</div>
+		<div id={`${styles['rating-breakdown']}`} data-testid='rating-breakdown'>
+			<div id={`${styles['rating-breakdown-title']}`} data-testid='rating-breakdown-title'>RATINGS & REVIEWS</div>
+			<div id={`${styles['rating-average']}`} data-testid='rating-average'>{Math.round(averageRating*10)/10}</div> {/*Rounds to nearest single decimal*/}
+			<div id={`${styles['rating-starsAverage']}`} data-testid='rating-starsAverage'>{starsDiv}</div>
+			<div id={`${styles['rating-recommended']}`} data-testid='rating-recommended'>{percentRecommended}% of reviews recommended this product</div>
 			{progressBars}
-			{filterRating ? <div style={{'color': 'red'}}>Filters Applied <div id={`${styles['rating-removeFilters']}`} onClick={handleRatingSelection}>Remove All Filters</div></div> : null}
+			{filterRating ? <div style={{'color': 'red'}}>Filters Applied <div id={`${styles['rating-removeFilters']}`} data-testid='rating-removeFilters' onClick={handleRatingSelection}>Remove All Filters</div></div> : null}
 
 			<AtrributeBreakdown />
 		</div>

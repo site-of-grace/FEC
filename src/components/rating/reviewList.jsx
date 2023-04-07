@@ -25,17 +25,17 @@ const ReviewList = ({setAddReview}) => {
 	useEffect(() => {setCurReviews([reviews[0], reviews[1]]); setCurReviewPos(0);}, [reviews]); //On reviews change reset curReviews stuff
 
 	return (
-		<div id={`${styles['review-list-section']}`}>
+		<div id={`${styles['review-list-section']}`} data-testid='review-list-section'>
 			<SortOptions />
-		<div id={`${styles['review-list']}`}>
-			{selectedImg ? <div id={`${styles['review-imgModel']}`}> {/*If theres a selectedImg url*/}
+		<div id={`${styles['review-list']}`} data-testid='review-list'>
+			{selectedImg ? <div id={`${styles['review-imgModel']}`} data-testid='review-imgModel'> {/*If theres a selectedImg url*/}
 				<img src={selectedImg}></img>
-				<div id={styles['image-overlay']} onClick={() => setSelectedImg(false)}></div>
+				<div id={styles['image-overlay']} onClick={() => setSelectedImg(false)} data-testid='image-overlay'></div>
 			</div> : null}
 
 			{!filterRating ? curReviews.map((curReview) => {
 				if (curReview) { {/*Only displays if curReview is not undefined*/}
-					return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>;
+					return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg} data-testid='review_id'/>;
 				}
 			}) : null}
 
@@ -43,12 +43,12 @@ const ReviewList = ({setAddReview}) => {
 				if (!filterRating[curReview.rating]) {
 					return;
 				}
-				return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg}/>;
+				return <Review key={curReview['review_id']} review={curReview} setSelectedImg={setSelectedImg} data-testid='review_id'/>;
 			}) : null}
 
 			{/*If more reviews left show expand button*/}
-			{reviews[curReviewPos + 2] && !filterRating ? <button className={`${styles['rating-button']}`} onClick={handleExpand}>MORE REVIEWS</button> : null}
-			<button className={`${styles['rating-button']}`} onClick={() => setAddReview(true)}>ADD A REVIEW +</button>
+			{reviews[curReviewPos + 2] && !filterRating ? <button className={`${styles['rating-button']}`} onClick={handleExpand} data-testid='rating-more'>MORE REVIEWS</button> : null}
+			<button className={`${styles['rating-button']}`} data-testid='rating-add' onClick={() => setAddReview(true)}>ADD A REVIEW +</button>
 		</div>
 		</div>
 	);
