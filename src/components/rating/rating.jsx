@@ -21,7 +21,7 @@ import 'intersection-observer';
 var runObserverOccured = false;
 
 var reviewsRendered = false;
-const Rating = () => {
+const Rating = ({test}) => {
   localStorage.clear();
 	const [uploadInProgress, setUploadInProgress] = useState(false);
   const [addReview, setAddReview] = useState(false);
@@ -42,7 +42,7 @@ const Rating = () => {
           }
         });
       }, {
-        threshold: .4
+        threshold: .6
       });
       if (ratingRef.current) {
         observerRef.current.observe(ratingRef.current);
@@ -51,6 +51,9 @@ const Rating = () => {
   };
 
   useEffect(() => {
+    if (test) { //Render component immidietly if in testing mode
+      setRenderComponent(true);
+    }
     // Cleanup function
     return () => {
       if (observerRef.current) {
@@ -139,17 +142,16 @@ const Rating = () => {
   const { id } = mainProduct;
 
   useEffect(() => { if (id) { fetchMetaData(id);}}, [id]);
-
   return (
-    <div className='widget' id={`${styles.rating}`} ref={ratingRef} data-widget="Rating">
+    <div className='widget' id={`${styles.rating}`} ref={ratingRef} data-widget="Rating" >
       {renderComponent ?
       <>
-        {addReview ? <div  id={`${styles['rating-overlay']}`} onClick={() => setAddReview(false)}></div> : null}
-        {uploadInProgress ? <img className={`${styles['loading-img']}`} src='./icons/loading.gif' /> : null}
-        <div id={`${styles['rating-main']}`}>
-          <Breakdown />
-          <ReviewList setAddReview={setAddReview} sortRelevant={sortRelevant}/>
-          {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}
+      {addReview ? <div  id={`${styles['rating-overlay']}`} onClick={() => setAddReview(false)} data-testid='rating-overlay'></div> : null}
+      {uploadInProgress ? <img className={`${styles['loading-img']}`} data-testid='loading-img' src='./icons/loading.gif' /> : null}
+      <div id={`${styles['rating-main']}`} data-testid='rating-main'>
+        <Breakdown />
+        <ReviewList setAddReview={setAddReview} sortRelevant={sortRelevant}/>
+        {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}
         </div>
       </>: null}
     </div>

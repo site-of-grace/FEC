@@ -32,33 +32,33 @@ const Review = ({review, setSelectedImg}) => {
 	//Sets star element depending on rating
 	for (var i = 1; i <= 5; i++) {
 		if (i <= review.rating) {
-			stars.push(<img className={`${styles['review-star']}`} key={i} src='./icons/fullStar.png'></img>);
+			stars.push(<img className={`${styles['review-star']}`} key={i} src='./icons/fullStar.png' data-testid='review-star'></img>);
 		} else {
-			stars.push(<img className={`${styles['review-star']}`} key={i} src='./icons/unfilledStar.png'></img>);
+			stars.push(<img className={`${styles['review-star']}`} key={i} src='./icons/unfilledStar.png' data-testid='review-star'></img>);
 		}
 	}
 	return (
-		<div className={`${styles['review']}`}>
-			<div id={`${styles['review-stars']}`}>
+		<div className={`${styles['review']}`} data-testid='review'>
+			<div id={`${styles['review-stars']}`} data-testid='review-stars'>
 				{stars}
 			</div>
-			<div className={`${styles['review-date-name']}`}>{review['reviewer_name']}, {date}</div>
-			<div className={`${styles['review-summary']}`}>{review.summary}</div>
-			<div className={`${styles['review-body']}`}>
+			<div className={`${styles['review-date-name']}`} data-testid='review-date-name'>{review['reviewer_name']}, {date}</div>
+			<div className={`${styles['review-summary']}`} data-testid='review-summary'>{review.summary}</div>
+			<div className={`${styles['review-body']}`} data-testid='review-body'>
 				{/*Shows only 250 characters at once and allows expansion*/}
 				{expand ? review.body : review.body.slice(0, 250)}
 				{!expand && review.body.length > 250 ? '...' : ''}
-				{!expand && review.body.length > 250 ? <button onClick={() => setExpand(true)}style={{'fontSize': '5px'}}>Show more</button> : null}
+				{!expand && review.body.length > 250 ? <button data-testid='expand' onClick={() => setExpand(true)}style={{'fontSize': '5px'}}>Show more</button> : null}
 			</div>
 			{review.photos.map((curPhoto) => {
 				{/*Displays a icon onClick sets selectedImg in reviewList*/}
-				return <img onClick={() => setSelectedImg(curPhoto.url)} className={`${styles['review-photo']}`}src={curPhoto.url} key={curPhoto.id}></img>;
+				return <img onClick={() => setSelectedImg(curPhoto.url)} className={`${styles['review-photo']}`} data-testid='review-photo' src={curPhoto.url} key={curPhoto.id}></img>;
 			})}
 			{/*Shows recommended, seller response, and helpful*/}
 			{review.recommend ? <p style={{'fontSize': '12px'}}>✔ I recommend this product</p> : null}
-			{review.response ? <div className={`${styles['review-response']}`}>Response from seller: <div style={{'fontWeight': '100'}}>{review.response}</div></ div> : null}
-			<div className={`${styles['review-helpful']}`}>Helpful? <button style={voted ? {'color': 'red'} : {}}  onClick={handleHelpfulness}>Yes</button> <div className={`${styles['helpfulness']}`}>{`(${helpfulness})`}</div></div>
-			<div className='review-bar'></div>
+			{review.response ? <div className={`${styles['review-response']}`} data-testid='review-response'>Response from seller: <div style={{'fontWeight': '100'}}>{review.response}</div></ div> : null}
+			<div className={`${styles['review-helpful']}`} data-testid='review-helpful'>Helpful? <button style={voted ? {'color': 'red'} : {}}  onClick={handleHelpfulness}>Yes</button> <div className={`${styles['helpfulness']}`}>{`(${helpfulness})`}</div></div>
+			<div className='review-bar' data-testid='review-bar'></div>
 		</div>
 	);
 };
