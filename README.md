@@ -1,12 +1,18 @@
-# Project Atelier
+# Grace Outfitters
 
 ```
-![Project Atelier Logo](logo.png)
+![Grace Outfitters Banner Here](logo.png)
 ```
 
-Project Atelier is a web application that displays relevant information for a single product in the catalog of an online retailer. It is organized by products, which can have many sizes and styles that result in unique SKUs (stock keeping units). The product detail page presents items at the product level and allows further breakdown by style or size within the page.
+![GitHub top language](https://img.shields.io/github/languages/top/site-of-grace/FEC?style=flat-square)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/site-of-grace/FEC?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/site-of-grace/FEC?style=flat-square)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/site-of-grace/FEC?style=flat-square)
+![GitHub contributors](https://img.shields.io/github/contributors/site-of-grace/FEC?style=flat-square)
 
-Project Atelier is composed of four modules: Product Overview, Ratings & Reviews, Questions & Answers, and Related Items & Outfit Creation. Each module displays information related to the product being viewed and provides functionality for users to interact with the product.
+Grace Outfitters is a web app displaying relevant information for a single product in the catalog of an online retailer. It is organized by products, which can have many sizes and styles that result in unique SKUs (stock keeping units). The product detail page presents items at the product level and allows further breakdown by style or size within the page.
+
+Grace Outfitters is composed of four modules: Product Overview, Ratings & Reviews, Questions & Answers, and Related Items & Outfit Creation. Each module displays information related to the product being viewed and provides functionality for users to interact with the product.
 
 ## Table of Contents
 
@@ -21,7 +27,7 @@ Project Atelier is composed of four modules: Product Overview, Ratings & Reviews
 
 ## Tech Stack
 
-Project Atelier is built with the following technologies, frameworks, libraries, and tools:
+Grace Outfitters is built with the following technologies, frameworks, libraries, and tools:
 
 - React
 - Redux
@@ -33,15 +39,9 @@ Project Atelier is built with the following technologies, frameworks, libraries,
 - Webpack
 - Babel
 
-![GitHub top language](https://img.shields.io/github/languages/top/site-of-grace/FEC?style=flat-square)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/site-of-grace/FEC?style=flat-square)
-![GitHub issues](https://img.shields.io/github/issues/site-of-grace/FEC?style=flat-square)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/site-of-grace/FEC?style=flat-square)
-![GitHub contributors](https://img.shields.io/github/contributors/site-of-grace/FEC?style=flat-square)
-
 ## Installation
 
-To install and run Project Atelier locally, follow these steps:
+To install and run Grace Outfitters locally, follow these steps:
 
 1. Clone this repository to your local machine.
    ```
@@ -63,7 +63,7 @@ To install and run Project Atelier locally, follow these steps:
 
 ## Usage
 
-To use Project Atelier, you can either browse through the products in the catalog or search for a specific product by its name or ID. Once you select a product, you will see its details on the product detail page. You can also interact with the product by:
+To use Grace Outfitters, you can either browse through the products in the catalog or search for a specific product by its name or ID. Once you select a product, you will see its details on the product detail page. You can also interact with the product by:
 
 - Zooming in and out of the product image
 - Selecting a different style or size of the product
@@ -74,7 +74,7 @@ To use Project Atelier, you can either browse through the products in the catalo
 
 ## Features
 
-Project Atelier has many features and functionalities that enhance the user experience and provide useful information about the products. Some of them are:
+Grace Outfitters has many features and functionalities that enhance the user experience and provide useful information about the products. Some of them are:
 
 - Responsive design that adapts to different screen sizes and devices
 - Dynamic rendering of data from an API based on user input and selection
@@ -86,7 +86,7 @@ Project Atelier has many features and functionalities that enhance the user expe
 
 ## Examples
 
-Here are some examples of how Project Atelier looks like and how users can interact with it:
+Here are some examples of how Grace Outfitters looks like and how users can interact with it:
 
 ```
 ![Product Overview Example](product-overview.png)
@@ -100,7 +100,7 @@ Here are some examples of how Project Atelier looks like and how users can inter
 
 ## Status
 
-Project Atelier is currently in progress. Some features or improvements that are planned for the future are:
+Grace Outfitters is currently in progress. Some features or improvements that are planned for the future are:
 
 - Implementing authentication and authorization for users and admins
 - Adding more tests and code coverage for all modules
@@ -109,4 +109,4 @@ Project Atelier is currently in progress. Some features or improvements that are
 
 ## License
 
-Project Atelier is licensed under the MIT License.
+Grace Outfitters is licensed under the MIT License.
