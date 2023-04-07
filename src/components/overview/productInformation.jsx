@@ -14,8 +14,11 @@ const ProductInformation = (props) => {
   const dispatch = useDispatch();
 
 
-
-
+  //This will restart the strike through and sales price if the before product was on sale and we 'change' main product.
+  useEffect(() => {
+    document.querySelector('#productPrice').classList.remove('strikeThrough');
+    document.getElementById('salePrice').innerText = '';
+  }, [mainProduct]);
 
 
   return (

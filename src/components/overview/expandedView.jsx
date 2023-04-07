@@ -97,7 +97,7 @@ const ExpandedView = (props) => {
       <div id='Small_Gallery_Container'>
         {mainPhotos.map((photos) => {
           return (<div className='Small_Thumbnail_Container'>
-            <img className='Small_Thumbnail' src={photos.thumbnail_url} onClick={() => {showSelected(photos.url)}}></img>
+            <img className='Small_Thumbnail' src={photos.thumbnail_url} onClick={() => {showSelected(photos.url)}} alt=''></img>
             <div id={photos.url} className='hide selectColor'></div>
           </div>);
         })}
@@ -114,7 +114,7 @@ const ExpandedView = (props) => {
 
         <div id='Expanded_Photo_Container'>
           <figure onClick={() => {zoomie();}} style={{display: 'inline-block'}}>
-            <img id='expandedPhoto'src={mainZoomPhoto}></img>
+            <img id='expandedPhoto'src={mainZoomPhoto} alt=''></img>
           </figure>
         </div>
 
