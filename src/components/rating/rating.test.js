@@ -17,14 +17,14 @@ import fakeMetaData from './utils/fakeMetaData.jsx';
 const mockStore = configureStore([]);
 
 describe('Rating Beginning Elements', () => {
-  test('renders the main div', () => {
-    const {getByTestId} = render(<Rating />);
+  test('renders the main div when rendered', () => {
+    const {getByTestId} = render(<Rating test={true}/>);
     const container = getByTestId('rating-main');
     expect(container).toBeInTheDocument();
   });
 
-  test('renders Breakdown elements at start', () => {
-    const {getByTestId} = render(<Rating />);
+  test('renders Breakdown elements when rendered', () => {
+    const {getByTestId} = render(<Rating test={true}/>);
     const container = getByTestId('rating-breakdown');
     expect(container).toBeInTheDocument();
     const expectedChildren = ['rating-breakdown-title', 'rating-average', 'rating-starsAverage', 'rating-recommended', 'rating-attrBreakdown'];
@@ -35,7 +35,7 @@ describe('Rating Beginning Elements', () => {
   });
 
   test('renders Review List elements at start', () => {
-    const {getByTestId} = render(<Rating />);
+    const {getByTestId} = render(<Rating test={true}/>);
     const container = getByTestId('review-list-section');
     expect(container).toBeInTheDocument();
 
