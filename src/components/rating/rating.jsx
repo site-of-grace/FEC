@@ -18,11 +18,7 @@ import styles from './cssModules/rating.module.css';
 
 import 'intersection-observer';
 
-var runObserverOccured = false;
-
-var reviewsRendered = false;
 const Rating = ({test}) => {
-  localStorage.clear();
 	const [uploadInProgress, setUploadInProgress] = useState(false);
   const [addReview, setAddReview] = useState(false);
   const [renderComponent, setRenderComponent] = useState(false);
@@ -31,18 +27,17 @@ const Rating = ({test}) => {
   const observerRef = useRef(null); // Ref for the Intersection Observer
 
   var runObserver = (metaData) => {
-    runObserverOccured = true;
     observerRef.current = new IntersectionObserver( (entries) => { //Function runs when component is in view
       entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            reviewsRendered = true;
+            console.log('Review list rendered!!!!!');
             setRenderComponent(true);
             fetchReviews(metaData);
             observerRef.current.unobserve(ratingRef.current);
           }
         });
       }, {
-        threshold: .6
+        threshold: .1
       });
       if (ratingRef.current) {
         observerRef.current.observe(ratingRef.current);
@@ -54,18 +49,13 @@ const Rating = ({test}) => {
     if (test) { //Render component immidietly if in testing mode
       setRenderComponent(true);
     }
-    // Cleanup function
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
   }, []);
 
   const dispatch = useDispatch();
   //current product ids = 71697, 71698, 71699, 71700, 71701
   const mainProduct  = useSelector((state) => state.overview.mainProduct);
-  const sortRelevant = (reviews, onStart = true) => { //Sorts the reviews considering helpful and date
+
+  var sortRelevant = (reviews) => { //Sorts the reviews considering helpful and date
     var helpfulnessWeight = 4; //Make helpfulness a bit more important
     for (var i = 1; i <= reviews.length; i++) {
       var dateScore = reviews.length - i;
@@ -73,9 +63,7 @@ const Rating = ({test}) => {
       reviews[i-1].score = dateScore + helpfulScore;
     }
     var relevantReviews = orderBy(reviews, 'score', 'desc');
-    if (onStart) {
-      dispatch(setReviewsRelevant(relevantReviews));
-    }
+    dispatch(setReviewsRelevant(relevantReviews));
     dispatch(setReviews(relevantReviews));
   };
 
@@ -100,9 +88,9 @@ const Rating = ({test}) => {
     dispatch(setAverage((Math.round(longAverage * 4) / 4)));
   };
 
+
   var fetchReviews = (metaData) => {
     var product_id = mainProduct.id;
-
     var options = {params: {product_id, metaData}};
 		axios.get('/rating/reviews' , options)
 		.then((serverData) => {
@@ -129,10 +117,12 @@ const Rating = ({test}) => {
       calculateAverage(serverData.data);
 
       dispatch(setRatingMeta(serverData.data));
-      if (!runObserverOccured && id) {runObserver(serverData.data);} //Run the checker to see if we can render reviews
-      else if (reviewsRendered && id) {
-        fetchReviews(serverData.data);
+
+      if (observerRef.current) {
+        observerRef.current.disconnect();
       }
+
+     runObserver(serverData.data);
     })
     .catch((err) => {
       console.log('Error from server ==> ', err);
@@ -143,14 +133,14 @@ const Rating = ({test}) => {
 
   useEffect(() => { if (id) { fetchMetaData(id);}}, [id]);
   return (
-    <div className='widget' id={`${styles.rating}`} ref={ratingRef} data-widget="Rating" >
+    <div id='Rating' className={`${styles.rating}`} ref={ratingRef} data-widget="Rating">
       {renderComponent ?
       <>
       {addReview ? <div  id={`${styles['rating-overlay']}`} onClick={() => setAddReview(false)} data-testid='rating-overlay'></div> : null}
       {uploadInProgress ? <img className={`${styles['loading-img']}`} data-testid='loading-img' src='./icons/loading.gif' /> : null}
       <div id={`${styles['rating-main']}`} data-testid='rating-main'>
         <Breakdown />
-        <ReviewList setAddReview={setAddReview} sortRelevant={sortRelevant}/>
+        <ReviewList setAddReview={setAddReview}/>
         {addReview ? <AddReviewMod setUploadInProgress={setUploadInProgress} uploadInProgress={uploadInProgress}/> : null}
         </div>
       </>: null}

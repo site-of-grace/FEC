@@ -10,22 +10,6 @@ const SearchReviews = ({setSearch}) => {
 	const dispatch = useDispatch();
 
 	const rating = useSelector((state) => state.rating);
-	/*
-	{
-    "review_id": 1279152,
-    "rating": 5,
-    "summary": "Super stylish and comfy!",
-    "recommend": true,
-    "response": null,
-    "body": "I got this as a gift for my husband and he LOVES them! Recommended! ",
-    "date": "2023-03-02T00:00:00.000Z",
-    "reviewer_name": "jackie80",
-    "helpfulness": 1,
-    "photos": [],
-    "score": 33
-}
-	 */
-
 
 	const handleInput = (e) => {
 		var sortOption = document.getElementById('sort-options').value;
@@ -44,6 +28,7 @@ const SearchReviews = ({setSearch}) => {
 			dispatch(setReviews(sortedList));
 		} else {
 			setSearch(false);
+			dispatch(setReviews(rating[reviewListName[sortOption]]));
 		}
 	};
 
