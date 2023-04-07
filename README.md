@@ -16,15 +16,8 @@ Grace Outfitters is composed of four modules: Product Overview, Ratings & Review
 
 ## Preview
 
-```
-![Product Overview Example](product-overview.png)
+![demo](https://user-images.githubusercontent.com/110412045/230535719-953d6827-dd61-45b9-be81-a5cb264e54e4.gif)
 
-![Ratings & Reviews Example](ratings-reviews.png)
-
-![Questions & Answers Example](questions-answers.png)
-
-![Related Items & Outfit Creation Example](related-items.png)
-```
 
 ## Table of Contents
 
