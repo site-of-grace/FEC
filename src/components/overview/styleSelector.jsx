@@ -11,7 +11,6 @@ const StyleSelector = (props) => {
   const [checkMark, setCheckMark] = useState('');
 
 
-
   //This sets the checkMark Variable automatically at render w/ the first thumbnail on list
   useEffect(() => {
     console.log('----> styles', styles);
@@ -23,8 +22,6 @@ const StyleSelector = (props) => {
       document.querySelector(`#checkMark-${styles.results[0].style_id}`).classList.add('showCheckMark');
     }
   }, [styles]);
-
-
 
 
 
@@ -68,7 +65,6 @@ const StyleSelector = (props) => {
     }
 
     //Change the redux state so that the big display photo displays all the photos from the selected style
-    console.log('======>', data.photos);
     dispatch(setMainPhotos(data.photos));
   };
 
@@ -81,8 +77,8 @@ const StyleSelector = (props) => {
           {styles.results.map((styles) => {
             return <div className='container' key={`key-${styles.style_id}`}>
               <li onClick={() => {thumbnailUpdate(styles);}} className='thumbnailStyle'>
-                <img className='styles' src={`${styles.photos[0].thumbnail_url}`}></img>
-                <img id={`checkMark-${styles.style_id}`} className='hideCheckMark' src='./icons/checkmark.jpeg'></img>
+                <img className='styles' src={`${styles.photos[0].thumbnail_url}`} alt=''></img>
+                <img id={`checkMark-${styles.style_id}`} className='hideCheckMark' src='./icons/checkmark.jpeg' alt=''></img>
               </li>
             </div>;
           })}

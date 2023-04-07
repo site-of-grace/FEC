@@ -244,6 +244,7 @@ li.carousel-card > img {
   display: block;
 }
 
+
 #quantitySelector {
   border-style: solid;
   display: inline-block;
@@ -289,6 +290,10 @@ li.carousel-card > img {
   margin-right: 10px;
 }
 
+#split {
+  border-style: solid;
+  height: 100px;
+}
 #features {
   width: 40%;
   display: inline-block;
@@ -297,6 +302,7 @@ li.carousel-card > img {
 
 #featureList {
   list-style: none;
+
 }
 
 #featureList li:before {
@@ -467,6 +473,7 @@ li.carousel-card > img {
 .Small_Thumbnail {
   height: 50px;
   width: 50px;
+  border-radius: 50%;
 }
 
 .Small_Thumbnail_Container {
