@@ -76,11 +76,11 @@ const ImageGallery = (props) => {
   return (mainPhotos.length !== 0) ? (
     <div id='test'>
         <div id='gallery'>
-           <div id='upButton' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => { document.getElementById('imageGallery').scrollBy(0, -74)}}><RxCaretUp size={30}/></div>
+           <div id='upButton' className={(mainPhotos.length <= 7) ? 'hide' : ''} onClick={() => { document.getElementById('imageGallery').scrollBy(0, -74)}} alt='gallery up button'><RxCaretUp size={30}/></div>
             <div id='imageGallery'>
               {mainPhotos.map((photo) => {
                 return <div onClick={() => { setMain(photo.url); }} value='test'>
-                  <img className='imageGalleryItem' src={photo.thumbnail_url}></img>
+                  <img className='imageGalleryItem' src={photo.thumbnail_url} alt=''></img>
                   <div className='selectorSpace'>
                     <div id={photo.url} className={(main === photo.url) ? 'show selectColor' : 'hide selectColor'}></div>
                   </div>
@@ -95,7 +95,7 @@ const ImageGallery = (props) => {
           <div id='backButton' className={(mainPhotos[0].url === main) ? 'hide' : ''} onClick={backButton}><RxCaretLeft size={50}/></div>
         </div>
         <div id='photo_container'>
-          <img id='thePhoto' src={main} onClick={() => {showExpanded();}}></img>
+          <img id='thePhoto' src={main} onClick={() => {showExpanded();}} alt=''></img>
         </div>
 
         <div className='foward_button'>

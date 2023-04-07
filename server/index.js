@@ -19,6 +19,9 @@ app.use(express.static('public', {
 }));
 
 
+
+
+
 // Routes
 app.use('/interaction', routes.interaction);
 app.use('/related', routes.related);
@@ -134,8 +137,8 @@ app.get('/questions', (req, res) => {
         res.send(error);
       });
     });
-    
-    
+
+
 
 app.post('/qa/questions', (req, res) => {
   const { body, name, email, product_id } = req.body;
