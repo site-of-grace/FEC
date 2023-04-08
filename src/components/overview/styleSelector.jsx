@@ -75,12 +75,12 @@ const StyleSelector = (props) => {
       <div>
         <ul id='styleSelector'>
           {styles.results.map((styles) => {
-            return <div className='container' key={`key-${styles.style_id}`}>
-              <li onClick={() => {thumbnailUpdate(styles);}} className='thumbnailStyle'>
+            return <li className='container' key={`key-${styles.style_id}`}>
+              <div onClick={() => {thumbnailUpdate(styles);}} className='thumbnailStyle'>
                 <img className='styles' src={`${styles.photos[0].thumbnail_url}`} alt=''></img>
                 <img id={`checkMark-${styles.style_id}`} className='hideCheckMark' src='./icons/checkmark.jpeg' alt=''></img>
-              </li>
-            </div>;
+              </div>
+            </li>;
           })}
         </ul>
       </div>
