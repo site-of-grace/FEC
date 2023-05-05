@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const { calculateAverage, getThumbnailMap } = require('../utils.js');
-const { initialProduct, api, config } = require('../config.js');
+const { initialProduct, api, productsApi, config } = require('../config.js');
 
 router.get('/', async (req, res) => {
   try {
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
       cache = new Set(cache);
     }
 
-    const { data } = await axios.get(`${api}/products/${currentId}/related`, config);
+    const { data } = await axios.get(`${productsApi}/products/${currentId}/related`, config);
 
     const related = [];
     const products = [];
@@ -37,10 +37,10 @@ router.get('/', async (req, res) => {
       }
 
       relatedSet.add(productId);
-      related.push(limit(() => axios.get(`${api}/products/${productId}/related`, config)));
-      products.push(limit(() => axios.get(`${api}/products/${productId}`, config)));
+      related.push(limit(() => axios.get(`${productsApi}/products/${productId}/related`, config)));
+      products.push(limit(() => axios.get(`${productsApi}/products/${productId}`, config)));
       reviews.push(limit(() => axios.get(`${api}/reviews/meta/?product_id=${productId}`, config)));
-      styles.push(limit(() => axios.get(`${api}/products/${productId}/styles`, config)));
+      styles.push(limit(() => axios.get(`${productsApi}/products/${productId}/styles`, config)));
     });
 
     const relatedData = await Promise.all(related);
@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
     console.log('related result', result.length);
     res.status(200).send(result);
   } catch (err) {
-    console.error('Error in /related');
+    console.error('Error in /related', err);
     res.status(500).send({ error: 'Internal server error in /related' });
   }
 });

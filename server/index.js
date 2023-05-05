@@ -4,7 +4,7 @@ const express = require('express');
 const routes = require('./routes');
 const app = express();
 const port = process.env.PORT || 3000;
-const { api, initialProduct, config } = require('./config.js');
+const { api, initialProduct, productsApi, config } = require('./config.js');
 const compression = require('compression');
 app.use(express.static(__dirname + '/../public/dist'));
 app.use(express.raw());
@@ -30,7 +30,7 @@ app.use('/rating', routes.rating);
 app.get('/productStyles', (req, res) => {
   var productId = req.query.id;
   axios
-    .get(`${api}/products/${productId}/styles`, config)
+    .get(`${productsApi}/products/${productId}/styles`)
     .then((data) => {
       if (!data) {
         throw data;
@@ -47,7 +47,7 @@ app.get('/productStyles', (req, res) => {
   app.get('/initialRender', (req, res) => {
   // shoes: 71701
   axios
-    .get(`${api}/products/${initialProduct}`, config)
+    .get(`${productsApi}/products/${initialProduct}`)
     .then((data) => {
       if (!data) {
         throw data;
